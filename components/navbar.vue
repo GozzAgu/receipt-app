@@ -1,0 +1,12 @@
+<template>
+  <div class="shadow-md">
+    <div class="flex gap-x-[0.5em] py-[1em] px-[1em]">
+      <img class="w-[2em]" src="/public/snapbill-logo.png" />
+      <p class="font-bold text-lg text-sky-600">snapB!LL</p>
+    </div>
+  </div>
+</template>
+
+<script setup>
+
+</script>
