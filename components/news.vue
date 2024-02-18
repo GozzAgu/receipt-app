@@ -1,10 +1,9 @@
 <template>
-  <div class="mt-[2em] px-[1em]">
+  <div class="mt-[2em] pt-[2em] px-[1em] bg-slate-200">
     <p class="font-semibold text-sky-600 mb-[1em]">Latest News</p>
     <div class="grid grid-cols-2 gap-[1em]">
-      <div class="shadow-md mb-[1em] p-[0.5em] bg-slate-100" v-for="article in articles">
+      <div class="shadow-md mb-[1em] p-[1em] bg-white rounded-xl" v-for="article in articles">
         <p class="font-semibold text-sm">{{ article.title }}</p>
-        <hr>
         <img class="mt-[2em]" :src="article.image" />
       </div>
     </div>

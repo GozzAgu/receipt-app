@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[1em] my-[2em]">
+  <div class="px-[1em] mt-[2em]">
     <p class="text-gray-50 bg-sky-700 p-[0.5em] rounded-lg mb-[1.5em] text-sm">
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
@@ -136,7 +136,6 @@
       </button>
     </div>
   </div>
-  <hr>
 </template>
 
 <script setup>
