@@ -1,12 +1,16 @@
 <template>
-  <div class="mt-[2em] pt-[2em] px-[1em] bg-slate-200">
+  <div class="mt-[2em] pt-[2em] px-[1em] bg-slate-100">
     <p class="font-semibold text-sky-600 mb-[1em]">Latest News</p>
-    <div class="grid grid-cols-2 gap-[1em]">
+
+    <div v-if="articles" class="grid grid-cols-2 gap-[1em]">
       <div class="shadow-md mb-[1em] p-[1em] bg-white rounded-xl" v-for="article in articles">
         <p class="font-semibold text-sm">{{ article.title }}</p>
         <img class="mt-[2em]" :src="article.image" />
       </div>
     </div>
+
+    <div v-else class="loader m-auto py-[3em]"></div>
+
   </div>
 </template>
 
@@ -30,8 +34,6 @@ const articles = ref('')
 const fetchNews = async() => {
   const params = {
     lang: 'en',
-    // ps: pageSize,
-    // cp: pageNumber
   }
 
   await axios.get(baseUrl.value, {params})
@@ -62,5 +64,20 @@ onMounted(() => {
 </script>
 
 <style scoped>
-   
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 60px;
+  aspect-ratio: 4;
+  --c:#000 90%,#0000;
+  background: 
+    radial-gradient(circle closest-side at left  6px top 50%,var(--c)),
+    radial-gradient(circle closest-side                     ,var(--c)),
+    radial-gradient(circle closest-side at right 6px top 50%,var(--c));
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  animation: l4 1s infinite alternate;
+}
+@keyframes l4 {
+    to{width:25px;aspect-ratio: 1}
+}
 </style>
