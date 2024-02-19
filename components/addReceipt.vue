@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[1em] pt-[2em] bg-slate-100">
+  <div class="px-[1em] pt-[6em] bg-slate-100">
     <p class="text-gray-50 bg-sky-700 p-[0.5em] rounded-t-lg text-sm">
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
@@ -14,6 +14,7 @@
         </label>
         <input 
           v-model="companyDetails.customerName"
+          :class="borderError"
           class="
             focus:border-sky-500 
             focus:outline-none 
@@ -34,6 +35,7 @@
         </label>
         <input 
           v-model="companyDetails.customerAddress"
+          :class="borderError"
           class="
             focus:border-sky-500 
             focus:outline-none 
@@ -54,6 +56,7 @@
         </label>
         <input 
           v-model="companyDetails.customerNumber"
+          :class="borderError"
           class="
             focus:border-sky-500 
             focus:outline-none 
@@ -74,6 +77,7 @@
         </label>
         <input 
           v-model="companyDetails.name"
+          :class="borderError"
           class="
             focus:border-sky-500 
             focus:outline-none 
@@ -94,6 +98,7 @@
         </label>
         <input 
           v-model="companyDetails.address"
+          :class="borderError"
           class="
             focus:border-sky-500 
             focus:outline-none 
@@ -114,6 +119,7 @@
         </label>
         <input 
           v-model="companyDetails.productName"
+          :class="borderError"
           class="
             focus:border-sky-500 
             focus:outline-none 
@@ -134,6 +140,7 @@
         </label>
         <input 
           v-model="companyDetails.productDescription"
+          :class="borderError"
           class="
             focus:border-sky-500 
             focus:outline-none 
@@ -155,6 +162,7 @@
           </label>
           <input 
             v-model="companyDetails.productQuantity"
+            :class="borderError"
             class="
               focus:border-sky-500 
               focus:outline-none 
@@ -207,11 +215,11 @@
 
 <script setup>
 import store from '../details.json'
-import { collection, getDocs, addDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 
 const db = inject('firestore')
 const details = store
-const isValid = ref(false)
+const isValid = ref(true)
 const companyDetails = ref({
   customerName: '',
   customerAddress: '',
@@ -227,7 +235,7 @@ const companyDetails = ref({
 const fetchR = async() => {
   const querySnapshot = await getDocs(collection(db, "receipts"))
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
+    console.log(doc.id, " => ", doc.data())
   });
 }
 
@@ -256,13 +264,19 @@ const validateForm = () => {
 
 const addR = async() => {
   if (!validateForm()) {
-    alert('Please fill in all fields');
+    // alert('Please fill in all fields');
     return;
+  }
+  if(companyDetails.value.productQuantity > 1) {
+    
+    const newPrice = companyDetails.value.productQuantity * companyDetails.value.productPrice
+    companyDetails.value.productPrice = newPrice
   }
   const docRef = await addDoc(collection(db, "receipts"), {
     customer: companyDetails.value
   });
   details.push(docRef)
+  companyDetails.value = ''
 }
 </script>
 
