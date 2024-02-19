@@ -4,6 +4,10 @@
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
     
+    <div class="fixed top-[6em] right-8">
+      <Toast v-if="isValid === false"/>
+    </div>
+
     <div class="bg-slate-100 px-[1em] py-[1.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <p class="text-base font-medium">Receipt Form</p>
 
@@ -207,7 +211,7 @@
           p-[0.5em] 
           hover:bg-sky-900"
       >
-        Generate
+        Generate Receipt
       </button>
     </div>
   </div>
@@ -215,7 +219,7 @@
 
 <script setup>
 import store from '../details.json'
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, doc } from "firebase/firestore";
 
 const router = useRouter()
 const db = inject('firestore')
@@ -253,8 +257,12 @@ const borderError = computed(() => {
 })
 
 const validateForm = () => {
-  for (const i in companyDetails.value) {
-    if (!companyDetails.value[i]) {
+  for (const [key, value] of Object.entries(companyDetails.value)) {
+    console.log(key, value)
+    if(key == 'id') {
+      continue;
+    }
+    if (value == '') {
       isValid.value = false
       return false;
     }
@@ -274,11 +282,13 @@ const addR = async() => {
     companyDetails.value.productPrice = newPrice
   }
   const docRef = await addDoc(collection(db, "receipts"), {
-    customer: companyDetails.value
+    customer: companyDetails.value,
   });
-  details.push(docRef)
+  companyDetails.value.id = docRef.id
+  
+  details.push({...companyDetails.value, id: docRef.id})
+  router.push('/receipt', { params: {id: companyDetails.value.id} })
   companyDetails.value = ''
-  router.push('/receipt')
 }
 </script>
 

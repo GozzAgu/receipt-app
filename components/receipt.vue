@@ -65,9 +65,36 @@
       </button>
     </div>
   </div>
+
+  <pre>{{ rpt }}</pre>
 </template>
 
 <script setup>
+import { collection, getDocs } from "firebase/firestore";
 
+const route = useRoute()
+const receipts = ref([])
 
+const r = computed(() => {
+  return route.params.id
+})
+
+const rpt = computed(() => {
+  return receipts.value.find(re => re.id == r.value)
+}) 
+
+const db = inject('firestore')
+
+const fetchR = async() => {
+  const querySnapshot = await getDocs(collection(db, "receipts"))
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data())
+    receipts.value.push({...doc.data(), id: doc.id})
+  });
+}
+onMounted(() => {
+  fetchR()
+  console.log(rpt.value)
+})
+ 
 </script>
