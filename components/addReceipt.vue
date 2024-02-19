@@ -1,127 +1,194 @@
 <template>
-  <div class="px-[1em] mt-[2em]">
-    <p class="text-gray-50 bg-sky-700 p-[0.5em] rounded-lg mb-[1.5em] text-sm">
+  <div class="px-[1em] pt-[2em] bg-slate-100">
+    <p class="text-gray-50 bg-sky-700 p-[0.5em] rounded-t-lg text-sm">
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
     
-    <div class="bg-slate-100 px-[1em] py-[1.5em] rounded-lg grid grid-cols-1 gap-y-[1em]">
+    <div class="bg-slate-100 px-[1em] py-[1.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <p class="text-base font-medium">Receipt Form</p>
-      <label class="block text-xs text-gray-700">Customer's Name</label>
-      <input 
-        v-model="companyDetails.customerName"
-        class="
-          focus:border-sky-500 
-          focus:outline-none 
-          border
-          px-[1em] 
-          py-[0.2em] 
-          w-full" 
-        placeholder="" 
-      />
 
-      <label class="block text-xs text-gray-700">Customer's Address</label>
-      <input 
-        v-model="companyDetails.customerAddress"
-        class="
-          focus:border-sky-500 
-          focus:outline-none 
-          border
-          px-[1em] 
-          py-[0.2em] 
-          w-full" 
-        placeholder="" 
-      />
+      <div>
+        <label class="block text-xs text-gray-700 mb-[0.5em]">
+          Customer's Name 
+          <span class="text-red-500">*</span>
+        </label>
+        <input 
+          v-model="companyDetails.customerName"
+          class="
+            focus:border-sky-500 
+            focus:outline-none 
+            border
+            border-slate-400
+            rounded-lg
+            px-[1em] 
+            py-[0.2em] 
+            w-full" 
+          placeholder="" 
+        />
+      </div>
 
-      <label class="block text-xs text-gray-700">Customer's Number</label>
-      <input 
-        v-model="companyDetails.customerNumber"
-        class="
-          focus:border-sky-500 
-          focus:outline-none 
-          border
-          px-[1em] 
-          py-[0.2em] 
-          w-full" 
-        placeholder="" 
-      />
+      <div>
+        <label class="block text-xs text-gray-700 mb-[0.5em]">
+          Customer's Address
+          <span class="text-red-500">*</span>
+        </label>
+        <input 
+          v-model="companyDetails.customerAddress"
+          class="
+            focus:border-sky-500 
+            focus:outline-none 
+            border
+            border-slate-400
+            rounded-lg
+            px-[1em] 
+            py-[0.2em] 
+            w-full" 
+          placeholder="" 
+        />
+      </div>
 
-      <label class="block text-xs text-gray-700">Company Name</label>
-      <input 
-        v-model="companyDetails.name"
-        class="
-          focus:border-sky-500 
-          focus:outline-none 
-          border
-          px-[1em] 
-          py-[0.2em] 
-          w-full" 
-        placeholder="" 
-      />
+      <div>
+        <label class="block text-xs text-gray-700 mb-[0.5em]">
+          Customer's Number
+          <span class="text-red-500">*</span>
+        </label>
+        <input 
+          v-model="companyDetails.customerNumber"
+          class="
+            focus:border-sky-500 
+            focus:outline-none 
+            border
+            border-slate-400
+            rounded-lg
+            px-[1em] 
+            py-[0.2em] 
+            w-full" 
+          placeholder="" 
+        />
+      </div>
 
-      <label class="block text-xs text-gray-700">Company Address</label>
-      <input 
-        v-model="companyDetails.address"
-        class="
-          focus:border-sky-500 
-          focus:outline-none 
-          border
-          px-[1em] 
-          py-[0.2em] 
-          w-full" 
-        placeholder="" 
-      />
+      <div>
+        <label class="block text-xs text-gray-700 mb-[0.5em]">
+          Company Name
+          <span class="text-red-500">*</span>
+        </label>
+        <input 
+          v-model="companyDetails.name"
+          class="
+            focus:border-sky-500 
+            focus:outline-none 
+            border
+            border-slate-400
+            rounded-lg
+            px-[1em] 
+            py-[0.2em] 
+            w-full" 
+          placeholder="" 
+        />
+      </div>
 
-      <label class="block text-xs text-gray-700">Product Name</label>
-      <input 
-        v-model="companyDetails.productName"
-        class="
-          focus:border-sky-500 
-          focus:outline-none 
-          border
-          px-[1em] 
-          py-[0.2em] 
-          w-full" 
-        placeholder="" 
-      />
+      <div>
+        <label class="block text-xs text-gray-700 mb-[0.5em]">
+          Company Address
+          <span class="text-red-500">*</span>
+        </label>
+        <input 
+          v-model="companyDetails.address"
+          class="
+            focus:border-sky-500 
+            focus:outline-none 
+            border
+            border-slate-400
+            rounded-lg
+            px-[1em] 
+            py-[0.2em] 
+            w-full" 
+          placeholder="" 
+        />
+      </div>
 
-      <label class="block text-xs text-gray-700">Product Description</label>
-      <input 
-        v-model="companyDetails.productDescription"
-        class="
-          focus:border-sky-500 
-          focus:outline-none 
-          border
-          px-[1em] 
-          py-[0.2em] 
-          w-full" 
-        placeholder="" 
-      />
+      <div>
+        <label class="block text-xs text-gray-700 mb-[0.5em]">
+          Product Name
+          <span class="text-red-500">*</span>
+        </label>
+        <input 
+          v-model="companyDetails.productName"
+          class="
+            focus:border-sky-500 
+            focus:outline-none 
+            border
+            border-slate-400
+            rounded-lg
+            px-[1em] 
+            py-[0.2em] 
+            w-full" 
+          placeholder="" 
+        />
+      </div>
 
-      <label class="block text-xs text-gray-700">Product Quantity</label>
-      <input 
-        v-model="companyDetails.productQuantity"
-        class="
-          focus:border-sky-500 
-          focus:outline-none 
-          border
-          px-[1em] 
-          py-[0.2em] 
-          w-full" 
-        placeholder="" 
-      />
+      <div>
+        <label class="block text-xs text-gray-700 mb-[0.5em]">
+          Product Description
+          <span class="text-red-500">*</span>
+        </label>
+        <input 
+          v-model="companyDetails.productDescription"
+          class="
+            focus:border-sky-500 
+            focus:outline-none 
+            border
+            border-slate-400
+            rounded-lg
+            px-[1em] 
+            py-[0.2em] 
+            w-full" 
+          placeholder="" 
+        />
+      </div>
 
-      <label class="block text-xs text-gray-700">Product Price</label>
-      <input 
-        v-model="companyDetails.productPrice"
-        class="
-          focus:border-sky-500 
-          focus:outline-none 
-          border
-          px-[1em] 
-          py-[0.2em] 
-          w-full" 
-        placeholder="" 
-      />
+      <div class="flex gap-x-[1em]">
+        <div>
+          <label class="block text-xs text-gray-700 mb-[0.5em]">
+            Product Quantity
+            <span class="text-red-500">*</span>
+          </label>
+          <input 
+            v-model="companyDetails.productQuantity"
+            class="
+              focus:border-sky-500 
+              focus:outline-none 
+              border
+              border-slate-400
+              rounded-lg
+              px-[1em] 
+              py-[0.2em] 
+              w-full" 
+            placeholder="" 
+          />
+        </div>
+  
+        <div>
+          <label class="block text-xs text-gray-700 mb-[0.5em]">
+            Product Price
+            <span class="text-red-500">*</span>
+          </label>
+          <input 
+            v-model="companyDetails.productPrice"
+            :class="borderError"
+            class="
+              focus:border-sky-500 
+              focus:outline-none 
+              border
+              border-slate-400
+              rounded-lg
+              px-[1em] 
+              py-[0.2em] 
+              w-full" 
+            placeholder="" 
+          />
+        </div>
+      </div>
       <button 
         @click="addR" 
         class="
@@ -168,12 +235,22 @@ onMounted(() => {
   fetchR()
 })
 
+const borderError = computed(() => {
+  if(isValid.value == false) {
+    return 'input-border'
+  }else {
+    return ''
+  }
+})
+
 const validateForm = () => {
   for (const i in companyDetails.value) {
     if (!companyDetails.value[i]) {
+      isValid.value = false
       return false;
     }
   }
+  isValid.value = true
   return true;
 };
 
@@ -188,3 +265,9 @@ const addR = async() => {
   details.push(docRef)
 }
 </script>
+
+<style scoped>
+.input-border {
+  border-color: red;
+}
+</style>

@@ -1,16 +1,15 @@
 <template>
-  <div class="mt-[2em] pt-[2em] px-[1em] bg-slate-100">
+  <div class="pt-[4em] px-[1em] bg-slate-100">
     <p class="font-semibold text-sky-600 mb-[1em]">Latest News</p>
 
     <div v-if="articles" class="grid grid-cols-2 gap-[1em]">
       <div class="shadow-md mb-[1em] p-[1em] bg-white rounded-xl" v-for="article in articles">
-        <p class="font-semibold text-sm">{{ article.title }}</p>
+        <p class="line-clamp-3 font-semibold text-sm">{{ article.title }}</p>
         <img class="mt-[2em]" :src="article.image" />
       </div>
     </div>
 
     <div v-else class="loader m-auto py-[3em]"></div>
-
   </div>
 </template>
 
@@ -26,8 +25,6 @@ const apiKey3 = ref('pub_380894594ec8d5990b797d45b3a894cd9b4e4')
 const baseUrl = ref(`https://gnews.io/api/v4/top-headlines?category=general&apikey=${apiKey.value}&page=${pageSize.value}&pageSize=${currentPage.value}`)
 const baseUrl2 = ref(`https://newsapi.org/v2/everything?q=bitcoin&apiKey=${apiKey2.value}`)
 const baseUrl3 = ref(`https://newsdata.io/api/1/news?apikey=${apiKey3.value}`)
-
-
 
 const articles = ref('')
 
