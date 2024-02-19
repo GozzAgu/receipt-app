@@ -217,6 +217,7 @@
 import store from '../details.json'
 import { collection, getDocs, addDoc } from "firebase/firestore";
 
+const router = useRouter()
 const db = inject('firestore')
 const details = store
 const isValid = ref(true)
@@ -277,6 +278,7 @@ const addR = async() => {
   });
   details.push(docRef)
   companyDetails.value = ''
+  router.push('/receipt')
 }
 </script>
 
