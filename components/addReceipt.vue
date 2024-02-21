@@ -3,10 +3,6 @@
     <p class="text-gray-50 bg-sky-700 p-[0.5em] rounded-t-lg text-sm">
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
-    
-    <div class="fixed top-[6em] right-8">
-      <Toast v-if="isValid === false"/>
-    </div>
 
     <div class="bg-slate-100 px-[1em] py-[1.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <p class="text-base font-medium">Receipt Form</p>
@@ -201,18 +197,9 @@
           />
         </div>
       </div>
-      <button 
-        @click="addR" 
-        class="
-          rounded-lg
-          mt-[1em] 
-          bg-sky-700 
-          text-gray-50 
-          p-[0.5em] 
-          hover:bg-sky-900"
-      >
-        Generate Receipt
-      </button>
+
+      <el-button plain @click="addR"> Generate Receipt </el-button>
+
     </div>
   </div>
 </template>
@@ -220,6 +207,7 @@
 <script setup>
 import store from '../details.json'
 import { collection, getDocs, addDoc, doc } from "firebase/firestore";
+import { ElNotification } from 'element-plus'
 
 const router = useRouter()
 const db = inject('firestore')
@@ -236,6 +224,14 @@ const companyDetails = ref({
   productQuantity: 0,
   productPrice: 0
 })
+
+const openError = () => {
+  ElNotification({
+    title: 'Error',
+    message: 'Some fields are empty',
+    type: 'error',
+  })
+}
 
 const fetchR = async() => {
   const querySnapshot = await getDocs(collection(db, "receipts"))
@@ -264,6 +260,7 @@ const validateForm = () => {
     }
     if (value == '') {
       isValid.value = false
+      openError()
       return false;
     }
   }
