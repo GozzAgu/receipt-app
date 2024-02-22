@@ -74,19 +74,20 @@ import { collection, getDocs } from "firebase/firestore";
 
 const route = useRoute()
 const receipts = ref([])
+const nuxtApp = useNuxtApp()
 
 const r = computed(() => {
   return route.params.id
 })
 
+console.log(route.params.id)
+
 const rpt = computed(() => {
-  return receipts.value.find(re => re.id == r.value)
+  return receipts.value.find(re => re.id == r.value) || {}
 }) 
 
-const db = inject('firestore')
-
 const fetchR = async() => {
-  const querySnapshot = await getDocs(collection(db, "receipts"))
+  const querySnapshot = await getDocs(collection(nuxtApp.$firestore, "receipts"))
   querySnapshot.forEach((doc) => {
     console.log(doc.id, " => ", doc.data())
     receipts.value.push({...doc.data(), id: doc.id})

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar class="z-10" />
     <AddReceipt />
     <!-- <News /> -->
   </div>
