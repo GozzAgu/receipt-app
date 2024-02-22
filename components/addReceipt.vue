@@ -1,10 +1,10 @@
 <template>
-  <div class="px-[1em] pt-[6em] bg-slate-100">
+  <div class="px-[1em] pt-[6em] ">
     <p class="text-gray-50 bg-sky-700 p-[0.5em] rounded-t-lg text-sm">
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
 
-    <div class="bg-slate-100 px-[1em] py-[1.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
+    <div class=" px-[1em] py-[1.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <p class="text-base font-medium">Receipt Form</p>
 
       <div>
@@ -12,20 +12,7 @@
           Customer's Name 
           <span class="text-red-500">*</span>
         </label>
-        <input 
-          v-model="companyDetails.customerName"
-          :class="borderError"
-          class="
-            focus:border-sky-500 
-            focus:outline-none 
-            border
-            border-slate-400
-            rounded-lg
-            px-[1em] 
-            py-[0.2em] 
-            w-full" 
-          placeholder="" 
-        />
+        <el-input v-model="companyDetails.customerName" placeholder="" />
       </div>
 
       <div>
@@ -33,20 +20,7 @@
           Customer's Address
           <span class="text-red-500">*</span>
         </label>
-        <input 
-          v-model="companyDetails.customerAddress"
-          :class="borderError"
-          class="
-            focus:border-sky-500 
-            focus:outline-none 
-            border
-            border-slate-400
-            rounded-lg
-            px-[1em] 
-            py-[0.2em] 
-            w-full" 
-          placeholder="" 
-        />
+        <el-input v-model="companyDetails.customerAddress" placeholder="" />
       </div>
 
       <div>
@@ -54,20 +28,7 @@
           Customer's Number
           <span class="text-red-500">*</span>
         </label>
-        <input 
-          v-model="companyDetails.customerNumber"
-          :class="borderError"
-          class="
-            focus:border-sky-500 
-            focus:outline-none 
-            border
-            border-slate-400
-            rounded-lg
-            px-[1em] 
-            py-[0.2em] 
-            w-full" 
-          placeholder="" 
-        />
+        <el-input v-model="companyDetails.customerNumber" placeholder="" />
       </div>
 
       <div>
@@ -75,20 +36,7 @@
           Company Name
           <span class="text-red-500">*</span>
         </label>
-        <input 
-          v-model="companyDetails.name"
-          :class="borderError"
-          class="
-            focus:border-sky-500 
-            focus:outline-none 
-            border
-            border-slate-400
-            rounded-lg
-            px-[1em] 
-            py-[0.2em] 
-            w-full" 
-          placeholder="" 
-        />
+        <el-input v-model="companyDetails.name" placeholder="" />
       </div>
 
       <div>
@@ -96,20 +44,7 @@
           Company Address
           <span class="text-red-500">*</span>
         </label>
-        <input 
-          v-model="companyDetails.address"
-          :class="borderError"
-          class="
-            focus:border-sky-500 
-            focus:outline-none 
-            border
-            border-slate-400
-            rounded-lg
-            px-[1em] 
-            py-[0.2em] 
-            w-full" 
-          placeholder="" 
-        />
+        <el-input v-model="companyDetails.address" placeholder="" />
       </div>
 
       <div>
@@ -117,20 +52,7 @@
           Product Name
           <span class="text-red-500">*</span>
         </label>
-        <input 
-          v-model="companyDetails.productName"
-          :class="borderError"
-          class="
-            focus:border-sky-500 
-            focus:outline-none 
-            border
-            border-slate-400
-            rounded-lg
-            px-[1em] 
-            py-[0.2em] 
-            w-full" 
-          placeholder="" 
-        />
+        <el-input v-model="companyDetails.productName" placeholder="" />
       </div>
 
       <div>
@@ -138,20 +60,7 @@
           Product Description
           <span class="text-red-500">*</span>
         </label>
-        <input 
-          v-model="companyDetails.productDescription"
-          :class="borderError"
-          class="
-            focus:border-sky-500 
-            focus:outline-none 
-            border
-            border-slate-400
-            rounded-lg
-            px-[1em] 
-            py-[0.2em] 
-            w-full" 
-          placeholder="" 
-        />
+        <el-input v-model="companyDetails.productDescription" placeholder="" />
       </div>
 
       <div class="flex gap-x-[1em]">
@@ -160,20 +69,7 @@
             Product Quantity
             <span class="text-red-500">*</span>
           </label>
-          <input 
-            v-model="companyDetails.productQuantity"
-            :class="borderError"
-            class="
-              focus:border-sky-500 
-              focus:outline-none 
-              border
-              border-slate-400
-              rounded-lg
-              px-[1em] 
-              py-[0.2em] 
-              w-full" 
-            placeholder="" 
-          />
+          <el-input v-model="companyDetails.productQuantity" placeholder="" />
         </div>
   
         <div>
@@ -181,24 +77,11 @@
             Product Price
             <span class="text-red-500">*</span>
           </label>
-          <input 
-            v-model="companyDetails.productPrice"
-            :class="borderError"
-            class="
-              focus:border-sky-500 
-              focus:outline-none 
-              border
-              border-slate-400
-              rounded-lg
-              px-[1em] 
-              py-[0.2em] 
-              w-full" 
-            placeholder="" 
-          />
+          <el-input v-model="companyDetails.productPrice" placeholder="" />
         </div>
       </div>
 
-      <el-button plain @click="addR"> Generate Receipt </el-button>
+      <el-button class="mt-[2em]" type="primary" @click="addR"> Generate Receipt </el-button>
 
     </div>
   </div>

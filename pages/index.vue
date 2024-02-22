@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <AddReceipt />
-    <News />
+    <!-- <News /> -->
   </div>
 </template>
 
