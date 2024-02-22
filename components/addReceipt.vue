@@ -28,7 +28,7 @@
         <el-form-item label="Company name" prop="name">
           <el-input v-model="companyDetails.name" placeholder="" />
         </el-form-item>
-        <el-form-item label="Compnay name" prop="address">
+        <el-form-item label="Company address" prop="address">
           <el-input v-model="companyDetails.address" placeholder="" />
         </el-form-item>
         <el-form-item label="Product name" prop="productName">
@@ -37,12 +37,14 @@
         <el-form-item label="Product description" prop="productDescription">
           <el-input v-model="companyDetails.productDescription" placeholder="" />
         </el-form-item>
-        <el-form-item label="Product quantity" prop="productQuantity">
-          <el-input v-model="companyDetails.productQuantity" placeholder="" />
-        </el-form-item>
-        <el-form-item label="Product price" prop="productPrice">
-          <el-input v-model="companyDetails.productPrice" placeholder="" />
-        </el-form-item>
+        <div class="flex gap-x-[1em]">
+          <el-form-item label="Product quantity" prop="productQuantity">
+            <el-input v-model="companyDetails.productQuantity" placeholder="" />
+          </el-form-item>
+          <el-form-item label="Product price" prop="productPrice">
+            <el-input v-model="companyDetails.productPrice" placeholder="" />
+          </el-form-item>
+        </div>
       </el-form>
 
       <el-button class="mt-[2em]" type="primary" @click="addR(ruleFormRef)"> Generate Receipt </el-button>
