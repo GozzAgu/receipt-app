@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[1em] py-[3em] bg-blue-50 h-screen">
+  <div class="px-[1em] py-[3em] bg-blue-50 h-[55em]">
     <div>
       <div class="mt-[4em] py-[2em] bg-white rounded-lg shadow-lg">
         <div class="flex gap-x-[0.5em] pt-[1em] px-[1em]">
