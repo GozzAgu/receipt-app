@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { RuleForm } from './types'
-import { collection, getDocs, addDoc } from "firebase/firestore"
+import { collection, getDocs, addDoc, setDoc, doc } from "firebase/firestore"
 
 
 export const useStore = defineStore('receipts', {
@@ -13,18 +13,22 @@ export const useStore = defineStore('receipts', {
     async addReceipt(newCompanyDetails:RuleForm) {
       const nuxtApp = useNuxtApp()
       const docRef = await addDoc(collection(nuxtApp.$firestore, "receipts"), {
-        customer: newCompanyDetails
+        newCompanyDetails
       });
-      // newCompanyDetails.id = docRef.id
-      this.receipts.push({...newCompanyDetails, id:docRef.id})
+      newCompanyDetails.id = docRef.id
+      const newDocRef = await setDoc(doc(nuxtApp.$firestore, "receipts", docRef.id), {
+        ...newCompanyDetails,
+        id: docRef.id
+      });
+      this.receipts.push(newCompanyDetails)
+      return docRef.id
     },
 
     async fetchReceipts() {
       const nuxtApp = useNuxtApp()
       const querySnapshot = await getDocs(collection(nuxtApp.$firestore, "receipts"))
       querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data())
-        this.receipts.push({...doc.data(), id: doc.id})
+        this.receipts.push({...doc.data(), id: doc.id} as RuleForm)
       });
     }
   },

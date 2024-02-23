@@ -123,9 +123,9 @@ const addR = async (formEl: FormInstance | undefined) => {
           const newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
           newCompanyDetails.productPrice = newPrice
         }
-        store.addReceipt(newCompanyDetails)
-        router.push({ path: '/receipt', params: { id: newCompanyDetails.id } })
-        
+        const res = await store.addReceipt(newCompanyDetails)
+        console.log(res)
+        router.push({path:`/receipt/${res}`})
         companyDetails = {} as RuleForm
       } catch (e) {
         console.log(e)

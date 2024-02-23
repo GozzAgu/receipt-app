@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[1em] my-[2em]">
+  <div class="px-[1em] my-[6em]">
     <p class="text-center text-gray-50 bg-sky-700 p-[0.5em] rounded-lg mb-[1.5em] text-sm">
       Below is your product receipt
     </p>
@@ -75,18 +75,18 @@ import { useStore } from "../store"
 const store = useStore()
 const route = useRoute()
 
-console.log(route.params)
+console.log(route.params.id)
 const r = computed(() => {
-  return route.params
+  return route.params.id
 })
 
 const rpt = computed(() => {
   return store.receipts.find(re => re.id == r.value) || {}
-}) 
+})
 
 onMounted(async () => {
   store.fetchReceipts()
-  console.log(r.value, route.params.id)
+  console.log(rpt.value, route.params.id)
 })
  
 </script>
