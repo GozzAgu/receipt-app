@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <Navbar class="z-10" />
-    <AddReceipt />
-  </div>
+  <Navbar class="z-10" />
+  <ReceiptCards />
 </template>
 
-<script setup lang="ts">
+<script setup>
 
 </script>

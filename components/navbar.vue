@@ -7,8 +7,8 @@
         </NuxtLink>
         <p class="font-bold text-lg text-sky-600">snapB!LL</p>
       </div>
-      <NuxtLink class="font-bold text-sm mt-[0.5em] text-sky-600" to="/receipts">
-        Receipts
+      <NuxtLink class="font-bold text-sm mt-[0.5em] text-sky-600" to="/addReceipts">
+        Generate Receipt
       </NuxtLink>
     </div>
   </div>

@@ -10,7 +10,7 @@
         </div>
 
         <div class="mt-[1em]">
-          <el-button type="primary" plain>View Receipt</el-button>
+          <el-button @click="viewR" type="primary" plain>View Receipt</el-button>
         </div>
       </div>
     </div>
@@ -20,8 +20,13 @@
 <script setup>
 import { useStore } from "../store"
 
+const router = useRouter()
 const store = useStore()
 onMounted(() => {
   store.fetchReceipts()
 })
+
+const viewR = async() => {
+  
+}
 </script>
