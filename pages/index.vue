@@ -2,7 +2,6 @@
   <div>
     <Navbar class="z-10" />
     <AddReceipt />
-    <!-- <News /> -->
   </div>
 </template>
 

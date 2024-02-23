@@ -1,11 +1,11 @@
 <template>
-  <div class="px-[1em] py-[6em] ">
+  <div class="px-[1em] py-[6em] bg-blue-50 ">
     <p class="text-gray-50 bg-blue-400 p-[1em] rounded-t-lg text-sm">
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
 
-    <div class="border-2 border-blue-100 px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
-      <p class="text-base font-medium">Receipt Form</p>
+    <div class=" bg-white px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
+      <el-divider content-position="left"><span class="text-lg text-blue-400">Receipt Form</span></el-divider>
 
       <el-form
         ref="ruleFormRef"
@@ -35,7 +35,7 @@
           <el-input v-model="companyDetails.productName" placeholder="" />
         </el-form-item>
         <el-form-item label="Product description" prop="productDescription">
-          <el-input v-model="companyDetails.productDescription" placeholder="" />
+          <el-input v-model="companyDetails.productDescription" placeholder="" type="textarea"/>
         </el-form-item>
         <div class="flex gap-x-[1em]">
           <el-form-item label="Product quantity" prop="productQuantity">
