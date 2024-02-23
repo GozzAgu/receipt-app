@@ -70,32 +70,23 @@
 </template>
 
 <script setup>
-import { collection, getDocs } from "firebase/firestore";
+import { useStore } from "../store"
 
+const store = useStore()
 const route = useRoute()
-const receipts = ref([])
-const nuxtApp = useNuxtApp()
 
+console.log(route.params)
 const r = computed(() => {
-  return route.params.id
+  return route.params
 })
 
-console.log(route.params.id)
-
 const rpt = computed(() => {
-  return receipts.value.find(re => re.id == r.value) || {}
+  return store.receipts.find(re => re.id == r.value) || {}
 }) 
 
-const fetchR = async() => {
-  const querySnapshot = await getDocs(collection(nuxtApp.$firestore, "receipts"))
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data())
-    receipts.value.push({...doc.data(), id: doc.id})
-  });
-}
-onMounted(() => {
-  fetchR()
-  console.log(rpt.value)
+onMounted(async () => {
+  store.fetchReceipts()
+  console.log(r.value, route.params.id)
 })
  
 </script>

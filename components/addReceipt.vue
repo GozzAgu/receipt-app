@@ -54,18 +54,14 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "~/store"
-import { collection, getDocs, addDoc, doc } from "firebase/firestore"
+import { useStore } from "../store"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { RuleForm } from '../types'
 
 const store = useStore()
 const router = useRouter()
-// const db = inject('firestore')
-const nuxtApp = useNuxtApp()
 const labelPosition = ref<FormProps['labelPosition']>('top')
-
 const ruleFormRef = ref<FormInstance>()
 
 let companyDetails = reactive<RuleForm>({
@@ -111,43 +107,35 @@ const rules = reactive<FormRules<RuleForm>>({
   ],
 })
 
-const fetchR = async() => {
-  const querySnapshot = await getDocs(collection(nuxtApp.$firestore, "receipts"))
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data())
-  });
-}
 
 onMounted(() => {
-  fetchR()
+  store.fetchReceipts()
+  console.log(store.receipts)
 })
 
-const addR = async(formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  await formEl.validate(async(valid, fields) => {
+const addR = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  await formEl.validate(async (valid, fields) => {
     if (valid) {
-      try{
-        if(companyDetails.productQuantity > 1) {
-          
-          const newPrice = companyDetails.productQuantity * companyDetails.productPrice
-          companyDetails.productPrice = newPrice
+      try {
+        let newCompanyDetails = { ...companyDetails }
+        if (newCompanyDetails.productQuantity > 1) {
+          const newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
+          newCompanyDetails.productPrice = newPrice
         }
-        const docRef = await addDoc(collection(nuxtApp.$firestore, "receipts"), {
-          customer: companyDetails,
-        });
-        companyDetails.id = docRef.id
+        store.addReceipt(newCompanyDetails)
+        router.push({ path: '/receipt', params: { id: newCompanyDetails.id } })
         
-        store.receipts.push(companyDetails as never)
-        router.push({path: '/receipt', params: {id: companyDetails.id} })
-        companyDetails = {} as RuleForm;
-      } catch(e) {
+        companyDetails = {} as RuleForm
+      } catch (e) {
         console.log(e)
       }
     } else {
-      console.log('error submit!', fields)
+      console.log('error submit!', fields);
     }
-  })
-}
+  });
+};
+
 </script>
 
 <style scoped>
