@@ -5,7 +5,7 @@
     </p>
     
     <div>
-      <div class="mt-[2em] h-[37em] bg-gray-100 border border-blue-200 rounded-lg shadow-lg">
+      <div class="mt-[4em] py-[2em] bg-gray-100 border border-blue-200 rounded-lg shadow-lg">
         <div class="flex gap-x-[0.5em] pt-[1em] px-[1em]">
           <img class="w-[1em] h-[1em]" src="/public/snapbill-logo.png" />
           <p class="font-bold text-[0.6em] text-sky-600">snapB!LL</p>
