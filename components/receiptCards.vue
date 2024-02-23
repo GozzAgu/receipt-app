@@ -9,7 +9,7 @@
     <ReceiptCard v-if="store.receipts.length > 0"/>
 
     <el-empty v-else>
-      <NuxtLink to="/">
+      <NuxtLink to="/addReceipts">
         <el-button type="primary">Generate Receipt</el-button>
       </NuxtLink>
     </el-empty>
