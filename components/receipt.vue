@@ -16,20 +16,23 @@
             <p>Below are your purchase details from <span>{{ rpt.name }}</span></p>
             <p>Be sure to keep this document safe</p>
           </div>
-          <div class="bg-white py-[1em] border-2 rounded-lg text-xs mt-[2em] grid grid-cols-1 gap-y-[1em]">
-            <div class="grid grid-cols-2 bg-white rounded-lg p-[1em]">
+          <div class="bg-white py-[1em] border rounded-lg text-xs mt-[2em] grid grid-cols-1 gap-y-[1em] px-[0.5em]">
+            <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
               <p>Customer Name </p>
               <p>{{ rpt.customerName }}</p>
             </div>
-            <div class="grid grid-cols-2 bg-white rounded-lg p-[1em]">
+            <hr>
+            <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
               <p>Product Name </p>
               <p>{{ rpt.productName }}</p>
             </div>
-            <div class="grid grid-cols-2 bg-white rounded-lg p-[1em]">
+            <hr>
+            <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
               <p>Product Description </p>
               <p>{{ rpt.productDescription }}</p>
             </div>
-            <div class="grid grid-cols-2 bg-white rounded-lg p-[1em]">
+            <hr>
+            <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
               <p>Product Quantity </p>
               <p>{{ rpt.productQuantity }}</p>
             </div>
@@ -39,12 +42,6 @@
             <p class="text-sm">Total Price </p>
             <p class="">N{{ rpt.productPrice }}</p>
           </div>
-
-          <div class="flex justify-between mt-[2em] text-gray-600">
-            <p class="text-xs mt-[1em]">Customer sign:  ___________</p>
-            <p class="text-xs mt-[1em]">Company sign:  ___________</p>
-          </div>
-         
         </div>
       </div>
 
