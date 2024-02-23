@@ -1,10 +1,10 @@
 <template>
   <div class="px-[1em] py-[6em] ">
-    <p class="text-gray-50 bg-sky-700 p-[0.5em] rounded-t-lg text-sm">
+    <p class="text-gray-50 bg-blue-400 p-[1em] rounded-t-lg text-sm">
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
 
-    <div class=" px-[1em] py-[1.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
+    <div class="border-2 border-blue-100 px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <p class="text-base font-medium">Receipt Form</p>
 
       <el-form
