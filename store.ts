@@ -33,7 +33,7 @@ export const useStore = defineStore('receipts', {
       });
     },
 
-    deleteReceipt(index) {
+    deleteReceipt(index:string) {
       console.log(index)
     }
   },

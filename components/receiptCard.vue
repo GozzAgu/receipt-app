@@ -13,7 +13,7 @@
             <p class="">
               {{ card.customerName }}
             </p>
-            <div class="mt-[0.3em]">
+            <div class="mt-[0.3em] text-red-500">
               <el-icon @click="delR(card.id)"><Remove /></el-icon>
             </div>
           </div>
