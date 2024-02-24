@@ -9,11 +9,13 @@
     <div v-for="card in searchR">
       <div class="bg-slate-50 border shadow-lg rounded-lg text-xs p-[1em]">
         <div class="text-gray-400">
-          <div class="text-base font-medium border-b border-slate-300 text-gray-500">
+          <div class="pb-[0.5em] flex justify-between text-base font-medium border-b border-slate-300 text-gray-500">
             <p class="">
               {{ card.customerName }}
             </p>
-            <i class="ri-delete-bin-6-line text-red-500"></i>
+            <div class="mt-[0.3em]">
+              <el-icon @click="delR(card.id)"><Remove /></el-icon>
+            </div>
           </div>
           
           <p class="my-[0.5em] text-sm">{{ card.productName }}</p>
@@ -32,9 +34,9 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useStore } from "../store"
-import { Search, Tickets } from '@element-plus/icons-vue'
+import { Search, Tickets, Remove } from '@element-plus/icons-vue'
 
 const search = ref('')
 const router = useRouter()
@@ -46,7 +48,11 @@ const searchR = computed(() => {
   });
 })
 
-const viewR = (index) => {
+const viewR = (index:string) => {
   router.push({path:`/receipt/${index}`})
+}
+
+const delR = (index:string) => {
+  store.deleteReceipt(index)
 }
 </script>

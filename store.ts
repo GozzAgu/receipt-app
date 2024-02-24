@@ -31,6 +31,10 @@ export const useStore = defineStore('receipts', {
       querySnapshot.forEach((doc) => {
         this.receipts.push({...doc.data(), id: doc.id} as RuleForm)
       });
+    },
+
+    deleteReceipt(index) {
+      console.log(index)
     }
   },
 })
