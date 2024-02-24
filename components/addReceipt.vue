@@ -107,10 +107,8 @@ const rules = reactive<FormRules<RuleForm>>({
   ],
 })
 
-
 onMounted(() => {
   store.fetchReceipts()
-  console.log(store.receipts)
 })
 
 const currentDate = computed(() => {
@@ -125,7 +123,7 @@ const addR = async (formEl: FormInstance | undefined) => {
       try {
         let newCompanyDetails = { ...companyDetails, date: currentDate.value }
         if (newCompanyDetails.productQuantity > 1) {
-          const newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
+          let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
           newCompanyDetails.productPrice = newPrice
         }
         const res = await store.addReceipt(newCompanyDetails)        
