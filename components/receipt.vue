@@ -43,7 +43,7 @@
 
           <div class="flex w-[full] justify-between bg-white rounded-lg mt-[2em]">
             <p class="text-sm">Total Price </p>
-            <p class="">N{{ rpt.productPrice }}</p>
+            <p class="">₦{{ rpt.productPrice }}</p>
           </div>
         </div>
       </div>

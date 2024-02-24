@@ -5650,6 +5650,11 @@ redis-parser@^3.0.0:
   dependencies:
     redis-errors "^1.0.0"
 
+remixicon@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/remixicon/-/remixicon-4.1.0.tgz#3a0068cef5f431473707f9d2a108968cd467c0aa"
+  integrity sha512-N5dmpN6bjB7GyHi8RqhKp8Fy1cfOch0m75KZQv4ZNFa2ffpXJY2FQ4TdgigZulTdwOoTwLKjBQ7GCC+bEw8LHg==
+
 replace-in-file@^6.1.0:
   version "6.3.5"
   resolved "https://registry.yarnpkg.com/replace-in-file/-/replace-in-file-6.3.5.tgz#ff956b0ab5bc96613207d603d197cd209400a654"
