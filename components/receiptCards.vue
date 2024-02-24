@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[5em] px-[1em] ">
+  <div class="py-[6em] px-[1em] ">
     <el-input
       v-model="search"
       placeholder="Search for a receipt"
