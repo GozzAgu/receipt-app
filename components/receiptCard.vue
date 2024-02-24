@@ -12,7 +12,7 @@
         </div>
 
         <div class="mt-[1em]">
-          <el-button @click="viewR" type="primary" plain>View Receipt</el-button>
+          <el-button @click="viewR(card.id)" type="primary" plain>View Receipt</el-button>
         </div>
       </div>
     </div>
@@ -22,10 +22,10 @@
 <script setup>
 import { useStore } from "../store"
 
-// const router = useRouter()
+const router = useRouter()
 const store = useStore()
 
-const viewR = async() => {
-  
+const viewR = (index) => {
+  router.push({path:`/receipt/${index}`})
 }
 </script>
