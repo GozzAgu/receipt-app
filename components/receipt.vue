@@ -1,7 +1,7 @@
 <template>
-  <div class="px-[1em] py-[3em] bg-blue-50 h-[55em]">
+  <div class="px-[1.5em] py-[3em] bg-blue-50 h-[55em]">
     <div>
-      <div class="mt-[4em] py-[2em] bg-white rounded-lg shadow-lg">
+      <div class="border mt-[4em] px-[1em] py-[2em] bg-white rounded-lg shadow-lg">
         <div class="flex justify-between pt-[1em] px-[1em]">
           <div class="flex gap-x-[0.5em]">
             <img class="w-[1em] h-[1em]" src="/public/snapbill-logo.png" />
