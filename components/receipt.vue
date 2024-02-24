@@ -2,9 +2,12 @@
   <div class="px-[1em] py-[3em] bg-blue-50 h-[55em]">
     <div>
       <div class="mt-[4em] py-[2em] bg-white rounded-lg shadow-lg">
-        <div class="flex gap-x-[0.5em] pt-[1em] px-[1em]">
-          <img class="w-[1em] h-[1em]" src="/public/snapbill-logo.png" />
-          <p class="font-bold text-[0.6em] text-sky-600">snapB!LL</p>
+        <div class="flex justify-between pt-[1em] px-[1em]">
+          <div class="flex gap-x-[0.5em]">
+            <img class="w-[1em] h-[1em]" src="/public/snapbill-logo.png" />
+            <p class="font-bold text-[0.6em] text-sky-600">snapB!LL</p>
+          </div>
+          <p class="text-xs">{{ rpt.date }}</p>
         </div>
 
         <div class="py-[1em] px-[1em] text-sm">
@@ -57,7 +60,6 @@ import { useStore } from "../store"
 const store = useStore()
 const route = useRoute()
 
-console.log(route.params.id)
 const r = computed(() => {
   return route.params.id
 })
@@ -68,7 +70,6 @@ const rpt = computed(() => {
 
 onMounted(async () => {
   store.fetchReceipts()
-  console.log(rpt.value, route.params.id)
 })
  
 </script>

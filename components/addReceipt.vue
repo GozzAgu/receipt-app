@@ -113,18 +113,22 @@ onMounted(() => {
   console.log(store.receipts)
 })
 
+const currentDate = computed(() => {
+  const date = new Date().toJSON().slice(0,10).replace(/-/g,'/')
+  return date
+})
+
 const addR = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
     if (valid) {
       try {
-        let newCompanyDetails = { ...companyDetails }
+        let newCompanyDetails = { ...companyDetails, date: currentDate.value }
         if (newCompanyDetails.productQuantity > 1) {
           const newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
           newCompanyDetails.productPrice = newPrice
         }
-        const res = await store.addReceipt(newCompanyDetails)
-        console.log(res)
+        const res = await store.addReceipt(newCompanyDetails)        
         router.push({path:`/receipt/${res}`})
         companyDetails = {} as RuleForm
       } catch (e) {
