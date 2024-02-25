@@ -56,7 +56,7 @@
           </el-button>
         </NuxtLink>
 
-        <el-button class="mt-[2em]" type="primary" @click="exportToPDF('my-pdf-file.pdf', pdfSection)">
+        <el-button class="mt-[2em]" type="success" @click="exportToPDF('my-pdf-file.pdf', pdfSection)">
           <el-icon><Download /></el-icon>
           <span class="ml-[1em] text-[0.7em]">Download Receipt</span>
         </el-button>
