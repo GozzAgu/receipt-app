@@ -10,4 +10,5 @@ export interface RuleForm {
   productQuantity: number
   productPrice: number
   newPrice: number
+  date: string
 }

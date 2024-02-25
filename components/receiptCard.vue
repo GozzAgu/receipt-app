@@ -13,7 +13,7 @@
             <p class="text-[1em]">
               {{ card.customerName }}
             </p>
-            <div class="flex gap-x-[0.4em]">
+            <div class="flex gap-x-[0.8em]">
               <div class="mt-[0.3em] text-green-500">
                 <el-icon @click="dupR(card.id)"><CopyDocument/></el-icon>
               </div>
@@ -71,7 +71,7 @@ const delR = (id:string) => {
 }
 
 const dupR = (id:string) => {
-  
+  router.push({path:`/dupReceipt/${id}`})
 }
 
 onMounted(() => {
