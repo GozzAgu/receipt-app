@@ -1,7 +1,7 @@
 <template>
   <div class="px-[1.5em] py-[3em] bg-blue-50 h-[50em]">
     <div>
-      <div class="border mt-[4em] px-[1em] py-[2em] bg-white rounded-lg shadow-lg" ref="pdfSection">
+      <div v-loading="loading" class="border mt-[4em] px-[1em] py-[2em] bg-white rounded-lg shadow-lg" ref="pdfSection">
         <div class="flex justify-between pt-[1em] px-[1em]">
           <div class="flex gap-x-[0.5em]">
             <img class="w-[1em] h-[1em]" src="/public/snapbill-logo.png" />
@@ -62,6 +62,13 @@ import html2canvas from 'html2canvas';
 const pdfSection = ref<HTMLElement | null>(null)
 const store = useStore()
 const route = useRoute()
+const loading = ref(true)
+
+const isShown = () => {
+  if(rpt.value) {
+    loading.value = false
+  }
+}
 
 const r = computed(() => {
   return route.params.id
@@ -72,8 +79,8 @@ const rpt = computed(() => {
 })
 
 onMounted(async () => {
+  isShown()
   store.fetchReceipts()
-  console.log()
 })
 
 const exportToPDF = async (filename: string, element: HTMLElement | null) => {
