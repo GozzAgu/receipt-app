@@ -3,13 +3,16 @@
     <p class="border p-[0.5em] shadow-lg animate-bounce my-[1em] text-center text-red-400 font-medium">
       This application is in progress....!
     </p>
-    <ReceiptCard v-if="store.receipts.length > 0"/>
 
-    <el-empty v-else>
-      <NuxtLink to="/addReceipts">
-        <el-button type="primary">Generate Receipt</el-button>
-      </NuxtLink>
-    </el-empty>
+    <div>
+      <ReceiptCard v-if="store.receipts"/>
+  
+      <el-empty v-else>
+        <NuxtLink to="/addReceipts">
+          <el-button type="primary">Generate Receipt</el-button>
+        </NuxtLink>
+      </el-empty>
+    </div>
   </div>
 </template>
 

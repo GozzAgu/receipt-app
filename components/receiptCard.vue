@@ -5,7 +5,7 @@
     :prefix-icon="Search"
   />
 
-  <div class="grid grid-cols-2 gap-x-[1em] gap-y-[1.5em] mt-[2em]">
+  <div v-loading="loading" class="grid grid-cols-2 gap-x-[1em] gap-y-[1.5em] mt-[2em]">
     <div v-for="card in searchR">
       <div class="bg-slate-50 border shadow-lg rounded-lg text-xs p-[1em]">
         <div class="text-gray-400">
@@ -41,6 +41,13 @@ import { Search, Tickets, Remove } from '@element-plus/icons-vue'
 const search = ref('')
 const router = useRouter()
 const store = useStore()
+const loading = ref(true)
+
+const isShown = () => {
+  if(store.receipts) {
+    loading.value = false
+  }
+}
 
 const searchR = computed(() => {
   return store.receipts.filter(r => {
@@ -55,4 +62,8 @@ const viewR = (index:string) => {
 const delR = (index:string) => {
   store.deleteReceipt(index)
 }
+
+onMounted(() => {
+  isShown()
+})
 </script>
