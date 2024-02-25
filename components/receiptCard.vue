@@ -10,7 +10,7 @@
       <div class="bg-slate-50 border shadow-lg rounded-lg text-xs p-[1em]">
         <div class="text-gray-400">
           <div class="pb-[0.5em] flex justify-between text-base font-medium border-b border-slate-300 text-gray-500">
-            <p class="">
+            <p class="text-[1em]">
               {{ card.customerName }}
             </p>
             <div class="mt-[0.3em] text-red-500">
@@ -18,15 +18,15 @@
             </div>
           </div>
           
-          <p class="my-[0.5em] text-sm">{{ card.productName }}</p>
-          <p class="my-[0.5em]">QTY: {{ card.productQuantity }}</p>
-          <p class="my-[0.5em]">PRICE: ₦{{ card.productPrice }}</p>
+          <p class="my-[0.5em] text-[1em]">{{ card.productName }}</p>
+          <p class="my-[0.5em] text-[0.8em]">QTY: {{ card.productQuantity }}</p>
+          <p class="my-[0.5em] text-[0.8em]">PRICE: ₦{{ card.productPrice }}</p>
         </div>
 
         <div class="mt-[1em]">
-          <el-button @click="viewR(card.id)" type="primary" plain>
+          <el-button class="w-[100%]" @click="viewR(card.id)" type="primary" plain>
             <el-icon><Tickets /></el-icon>
-            <span class="ml-[1em]">View Receipt</span>
+            <span class="ml-[1em] text-[0.7em]">View Receipt</span>
           </el-button>
         </div>
       </div>
