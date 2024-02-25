@@ -13,8 +13,13 @@
             <p class="text-[1em]">
               {{ card.customerName }}
             </p>
-            <div class="mt-[0.3em] text-red-500">
-              <el-icon @click="delR(card.id)"><Remove /></el-icon>
+            <div class="flex gap-x-[0.4em]">
+              <div class="mt-[0.3em] text-green-500">
+                <el-icon @click="dupR(card.id)"><CopyDocument/></el-icon>
+              </div>
+              <div class="mt-[0.3em] text-red-500">
+                <el-icon @click="delR(card.id)"><Remove /></el-icon>
+              </div>
             </div>
           </div>
           
@@ -37,7 +42,7 @@
 
 <script setup lang="ts">
 import { useStore } from "../store"
-import { Search, Tickets, Remove } from '@element-plus/icons-vue'
+import { Search, Tickets, Remove, CopyDocument } from '@element-plus/icons-vue'
 
 const search = ref('')
 const router = useRouter()
@@ -63,6 +68,10 @@ const viewR = (index:string) => {
 const delR = (id:string) => {
   store.deleteReceipt(id)
   store.fetchReceipts()
+}
+
+const dupR = (id:string) => {
+  
 }
 
 onMounted(() => {
