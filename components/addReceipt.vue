@@ -1,10 +1,10 @@
 <template>
-  <div class="px-[1em] py-[6em] bg-blue-50 ">
+  <div class="px-[1em] py-[6em] bg-blue-50">
     <p class="text-gray-50 bg-blue-400 p-[1em] rounded-t-lg text-sm">
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
 
-    <div class=" bg-white px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
+    <div v-loading="loading" class=" bg-white px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <el-divider content-position="left"><span class="text-lg text-blue-400">Receipt Form</span></el-divider>
 
       <el-form
@@ -63,6 +63,7 @@ const store = useStore()
 const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
+const loading = ref(false)
 
 let companyDetails = reactive<RuleForm>({
   id: '',
@@ -120,6 +121,7 @@ const addR = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
     if (valid) {
+      loading.value = true
       try {
         let newCompanyDetails = { ...companyDetails, date: currentDate.value }
         if (newCompanyDetails.productQuantity > 1) {
@@ -129,6 +131,7 @@ const addR = async (formEl: FormInstance | undefined) => {
         const res = await store.addReceipt(newCompanyDetails)        
         router.push({path:`/receipt/${res}`})
         companyDetails = {} as RuleForm
+        loading.value = false
       } catch (e) {
         console.log(e)
       }
