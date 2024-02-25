@@ -1,5 +1,12 @@
 <template>
-  <div class="px-[1em] py-[6em] bg-blue-50">
+  <div class="px-[1em] py-[5em] bg-blue-50">
+    <NuxtLink to="/">
+      <el-button class="mb-[1em]" type="primary">
+        <el-icon><Back /></el-icon>
+        <span class="ml-[1em] text-[0.7em]">Back home</span>
+      </el-button>
+    </NuxtLink>
+    
     <p class="text-gray-50 bg-blue-400 p-[1em] rounded-t-lg text-sm">
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
@@ -60,7 +67,7 @@ import { useStore } from "../store"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { RuleForm } from '../types'
-import { Tickets } from '@element-plus/icons-vue'
+import { Tickets, Back } from '@element-plus/icons-vue'
 
 const store = useStore()
 const router = useRouter()
