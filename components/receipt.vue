@@ -48,10 +48,19 @@
         </div>
       </div>
 
-      <el-button class="mt-[2em]" type="primary" @click="exportToPDF('my-pdf-file.pdf', pdfSection)">
-        <el-icon><Download /></el-icon>
-        <span class="ml-[1em] text-[0.7em]">Download Receipt</span>
-      </el-button>
+      <div class="flex justify-between">
+        <NuxtLink to="/">
+          <el-button class="mt-[2em]" type="primary">
+            <el-icon><Back /></el-icon>
+            <span class="ml-[1em] text-[0.7em]">Back home</span>
+          </el-button>
+        </NuxtLink>
+
+        <el-button class="mt-[2em]" type="primary" @click="exportToPDF('my-pdf-file.pdf', pdfSection)">
+          <el-icon><Download /></el-icon>
+          <span class="ml-[1em] text-[0.7em]">Download Receipt</span>
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -60,7 +69,7 @@
 import { useStore } from "../store"
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
-import { Download } from '@element-plus/icons-vue'
+import { Download, Back } from '@element-plus/icons-vue'
 
 const pdfSection = ref<HTMLElement | null>(null)
 const store = useStore()
