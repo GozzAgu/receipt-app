@@ -1,7 +1,7 @@
 <template>
   <div class="py-[6em] px-[1em] ">
-    <p class="border p-[0.5em] shadow-lg animate-bounce my-[1em] text-center text-red-400 font-medium">
-      This application is in progress....!
+    <p class="border p-[0.5em] shadow-lg animate-bounce my-[1em] text-center text-orange-400 font-thin">
+      app in progress...
     </p>
 
     <div>

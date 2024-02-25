@@ -19,7 +19,7 @@
             <p>Below are your purchase details from <span>{{ rpt.name }}</span></p>
             <p>Be sure to keep this document safe</p>
           </div>
-          <div class="bg-white py-[1em] border rounded-lg text-[0.6em] mt-[2em] grid grid-cols-1 gap-y-[1em] px-[0.5em]">
+          <div class="font-thin bg-white py-[1em] border rounded-lg text-[0.6em] mt-[2em] grid grid-cols-1 gap-y-[1em] px-[0.5em]">
             <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
               <p>Customer Name </p>
               <p>{{ rpt.customerName }}</p>
