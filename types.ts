@@ -9,4 +9,5 @@ export interface RuleForm {
   productDescription: string
   productQuantity: number
   productPrice: number
+  newPrice: number
 }

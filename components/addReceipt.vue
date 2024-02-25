@@ -85,7 +85,8 @@ let companyDetails = reactive<RuleForm>({
   productName: '',
   productDescription: '',
   productQuantity: 0,
-  productPrice: 0
+  productPrice: 0,
+  newPrice: 0
 })
 
 const rules = reactive<FormRules<RuleForm>>({
@@ -136,7 +137,7 @@ const addR = async (formEl: FormInstance | undefined) => {
         let newCompanyDetails = { ...companyDetails, date: currentDate.value }
         if (newCompanyDetails.productQuantity > 1) {
           let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
-          newCompanyDetails.productPrice = newPrice
+          newCompanyDetails.newPrice = newPrice
         }
         const res = await store.addReceipt(newCompanyDetails)        
         router.push({path:`/receipt/${res}`})

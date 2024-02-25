@@ -39,11 +39,16 @@
               <p>Quantity </p>
               <p>{{ rpt.productQuantity }}</p>
             </div>
+            <hr>
+            <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
+              <p>Price per unit </p>
+              <p>{{ rpt.productPrice }}</p>
+            </div>
           </div>
 
           <div class="text-[0.7em] flex w-[full] justify-between bg-white rounded-lg mt-[2em]">
             <p class="">Total Price </p>
-            <p class="">₦{{ rpt.productPrice }}</p>
+            <p class="">₦{{ rpt.newPrice }}</p>
           </div>
         </div>
       </div>
