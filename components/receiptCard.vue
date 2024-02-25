@@ -20,7 +20,8 @@
           
           <p class="my-[0.5em] text-[1em]">{{ card.productName }}</p>
           <p class="my-[0.5em] text-[0.8em]">QTY: {{ card.productQuantity }}</p>
-          <p class="my-[0.5em] text-[0.8em]">PRICE: ₦{{ card.productPrice }}</p>
+          <p class="my-[0.5em] text-[0.8em]">PRICE/UNIT: ₦{{ card.productPrice }}</p>
+          <p class="my-[0.5em] text-[0.8em]">TOTAL: ₦{{ card.newPrice }}</p>
         </div>
 
         <div class="mt-[1em]">
