@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { RuleForm } from './types'
-import { collection, getDocs, addDoc, setDoc, doc, query, where, onSnapshot } from "firebase/firestore"
+import { collection, getDocs, addDoc, setDoc, doc, deleteDoc } from "firebase/firestore"
 
 
 export const useStore = defineStore('receipts', {
@@ -33,8 +33,9 @@ export const useStore = defineStore('receipts', {
       });
     },
 
-    deleteReceipt(index:string) {
-      console.log(index)
+    async deleteReceipt(index:string) {
+      const nuxtApp = useNuxtApp()
+      await deleteDoc(doc(nuxtApp.$firestore, "receipts", index));
     }
   },
 })

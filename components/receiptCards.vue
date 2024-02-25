@@ -5,7 +5,7 @@
     </p>
 
     <div>
-      <ReceiptCard v-if="store.receipts"/>
+      <ReceiptCard v-if="store.receipts.length >0"/>
   
       <el-empty v-else>
         <NuxtLink to="/addReceipts">

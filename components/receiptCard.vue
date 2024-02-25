@@ -59,8 +59,9 @@ const viewR = (index:string) => {
   router.push({path:`/receipt/${index}`})
 }
 
-const delR = (index:string) => {
-  store.deleteReceipt(index)
+const delR = (id:string) => {
+  store.deleteReceipt(id)
+  store.fetchReceipts()
 }
 
 onMounted(() => {

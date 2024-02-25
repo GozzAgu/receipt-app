@@ -5,9 +5,9 @@
         <img class="w-[2em]" src="/public/snapbill-logo.png" />
         <p class="font-bold text-lg text-sky-600">snapB!LL</p>
       </NuxtLink>
-      
+
       <NuxtLink to="/addReceipts">
-        <el-button plain type="primary" @click="exportToPDF('my-pdf-file.pdf', pdfSection)">
+        <el-button plain type="primary">
           <span>Generate Receipt</span>
         </el-button>
       </NuxtLink>
