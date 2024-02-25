@@ -7,19 +7,19 @@
             <img class="w-[1em] h-[1em]" src="/public/snapbill-logo.png" />
             <p class="font-bold text-[0.6em] text-sky-600">snapB!LL</p>
           </div>
-          <p class="text-xs">{{ rpt.date }}</p>
+          <p class="text-[0.5em]">{{ rpt.date }}</p>
         </div>
 
         <div class="py-[1em] px-[1em] text-sm">
           <!-- <div class="flex justify-between"> -->
             <el-divider content-position="left"><span class="text-lg">Transaction Receipt</span></el-divider>
           <!-- </div> -->
-          <div class="text-xs">
+          <div class="text-[0.6em]">
             <p>Dear {{ rpt.customerName }},</p>
             <p>Below are your purchase details from <span>{{ rpt.name }}</span></p>
             <p>Be sure to keep this document safe</p>
           </div>
-          <div class="bg-white py-[1em] border rounded-lg text-xs mt-[2em] grid grid-cols-1 gap-y-[1em] px-[0.5em]">
+          <div class="bg-white py-[1em] border rounded-lg text-[0.6em] mt-[2em] grid grid-cols-1 gap-y-[1em] px-[0.5em]">
             <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
               <p>Customer Name </p>
               <p>{{ rpt.customerName }}</p>
@@ -41,8 +41,8 @@
             </div>
           </div>
 
-          <div class="flex w-[full] justify-between bg-white rounded-lg mt-[2em]">
-            <p class="text-sm">Total Price </p>
+          <div class="text-[0.7em] flex w-[full] justify-between bg-white rounded-lg mt-[2em]">
+            <p class="">Total Price </p>
             <p class="">₦{{ rpt.productPrice }}</p>
           </div>
         </div>
