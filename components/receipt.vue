@@ -31,12 +31,12 @@
             </div>
             <hr>
             <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
-              <p>Product Description </p>
+              <p>Description </p>
               <p>{{ rpt.productDescription }}</p>
             </div>
             <hr>
             <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
-              <p>Product Quantity </p>
+              <p>Quantity </p>
               <p>{{ rpt.productQuantity }}</p>
             </div>
           </div>
@@ -78,23 +78,22 @@ onMounted(async () => {
 
 const exportToPDF = async (filename: string, element: HTMLElement | null) => {
   if (!element) {
-    console.error('HTML element is not defined');
     return;
   }
 
   try {
-    const canvas = await html2canvas(element, { scale: 2 }); // Scale may need adjustment based on your layout
-    const imgData = canvas.toDataURL('image/png');
+    const canvas = await html2canvas(element, { scale: 2 })
+    const imgData = canvas.toDataURL('image/png')
 
-    const pdf = new jsPDF();
-    const imgProps = pdf.getImageProperties(imgData);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    const pdf = new jsPDF()
+    const imgProps = pdf.getImageProperties(imgData)
+    const pdfWidth = pdf.internal.pageSize.getWidth()
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width
 
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save(filename);
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
+    pdf.save(filename)
   } catch (error) {
-    console.error('Error exporting to PDF:', error);
+    console.error('Error exporting to PDF:', error)
   }
-};
+}
 </script>
