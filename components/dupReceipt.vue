@@ -36,7 +36,7 @@
           <el-input disabled v-model="duplicate.name" placeholder="" />
         </el-form-item>
         <el-form-item label="Company address" prop="address">
-          <el-input v-model="duplicate.address" placeholder="" />
+          <el-input disabled v-model="duplicate.address" placeholder="" />
         </el-form-item>
         <el-form-item label="Product name" prop="productName">
           <el-input v-model="duplicate.productName" placeholder="" />
@@ -108,7 +108,6 @@ const rules = reactive<FormRules<RuleForm>>({
 
 onMounted(() => {
   store.fetchReceipts()
-  console.log(duplicate)
 })
 
 const dups = computed(() => {
