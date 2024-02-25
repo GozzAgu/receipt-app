@@ -47,8 +47,10 @@
         </div>
       </el-form>
 
-      <el-button class="mt-[2em]" type="primary" @click="addR(ruleFormRef)"> Generate Receipt </el-button>
-
+      <el-button class="mt-[2em]" type="primary" @click="addR(ruleFormRef)">
+        <el-icon><Tickets /></el-icon>
+        <span class="ml-[1em] text-[0.7em]">Generate Receipt</span>
+      </el-button>
     </div>
   </div>
 </template>
@@ -58,6 +60,7 @@ import { useStore } from "../store"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { RuleForm } from '../types'
+import { Tickets } from '@element-plus/icons-vue'
 
 const store = useStore()
 const router = useRouter()

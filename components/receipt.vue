@@ -48,16 +48,19 @@
         </div>
       </div>
 
-      <el-button @click="exportToPDF('my-pdf-file.pdf', pdfSection)" class="mt-[3em]" type="primary"> Download Receipt </el-button>
-
+      <el-button class="mt-[2em]" type="primary" @click="exportToPDF('my-pdf-file.pdf', pdfSection)">
+        <el-icon><Download /></el-icon>
+        <span class="ml-[1em] text-[0.7em]">Download Receipt</span>
+      </el-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useStore } from "../store"
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
+import { Download } from '@element-plus/icons-vue'
 
 const pdfSection = ref<HTMLElement | null>(null)
 const store = useStore()
