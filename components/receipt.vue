@@ -1,7 +1,7 @@
 <template>
-  <div class="px-[1.5em] py-[3em] bg-blue-50 h-[55em]">
+  <div class="px-[1.5em] py-[3em] bg-blue-50 h-[50em]">
     <div>
-      <div class="border mt-[4em] px-[1em] py-[2em] bg-white rounded-lg shadow-lg">
+      <div class="border mt-[4em] px-[1em] py-[2em] bg-white rounded-lg shadow-lg" ref="pdfSection">
         <div class="flex justify-between pt-[1em] px-[1em]">
           <div class="flex gap-x-[0.5em]">
             <img class="w-[1em] h-[1em]" src="/public/snapbill-logo.png" />
@@ -11,9 +11,9 @@
         </div>
 
         <div class="py-[1em] px-[1em] text-sm">
-          <div class="flex justify-between">
+          <!-- <div class="flex justify-between"> -->
             <el-divider content-position="left"><span class="text-lg">Transaction Receipt</span></el-divider>
-          </div>
+          <!-- </div> -->
           <div class="text-xs">
             <p>Dear {{ rpt.customerName }},</p>
             <p>Below are your purchase details from <span>{{ rpt.name }}</span></p>
@@ -48,15 +48,18 @@
         </div>
       </div>
 
-      <el-button class="mt-[3em]" type="primary"> Download Receipt </el-button>
+      <el-button @click="exportToPDF('my-pdf-file.pdf', pdfSection)" class="mt-[3em]" type="primary"> Download Receipt </el-button>
 
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useStore } from "../store"
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
+const pdfSection = ref<HTMLElement | null>(null)
 const store = useStore()
 const route = useRoute()
 
@@ -70,6 +73,28 @@ const rpt = computed(() => {
 
 onMounted(async () => {
   store.fetchReceipts()
+  console.log()
 })
- 
+
+const exportToPDF = async (filename: string, element: HTMLElement | null) => {
+  if (!element) {
+    console.error('HTML element is not defined');
+    return;
+  }
+
+  try {
+    const canvas = await html2canvas(element, { scale: 2 }); // Scale may need adjustment based on your layout
+    const imgData = canvas.toDataURL('image/png');
+
+    const pdf = new jsPDF();
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save(filename);
+  } catch (error) {
+    console.error('Error exporting to PDF:', error);
+  }
+};
 </script>
