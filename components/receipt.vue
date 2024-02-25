@@ -14,7 +14,7 @@
           <!-- <div class="flex justify-between"> -->
             <el-divider content-position="left"><span class="text-lg">Transaction Receipt</span></el-divider>
           <!-- </div> -->
-          <div class="text-[0.6em]">
+          <div class="text-[0.6em] font-thin">
             <p>Dear {{ rpt.customerName }},</p>
             <p>Below are your purchase details from <span>{{ rpt.name }}</span></p>
             <p>Be sure to keep this document safe</p>
@@ -46,7 +46,7 @@
             </div>
           </div>
 
-          <div class="text-[0.7em] flex w-[full] justify-between bg-white rounded-lg mt-[2em]">
+          <div class="font-thin text-[0.7em] flex w-[full] justify-between bg-white rounded-lg mt-[2em]">
             <p class="">Total Price </p>
             <p class="">₦{{ rpt.newPrice }}</p>
           </div>
