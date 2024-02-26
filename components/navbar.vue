@@ -6,11 +6,18 @@
         <p class="font-bold text-lg text-sky-600">snapB!LL</p>
       </NuxtLink>
 
-      <NuxtLink to="/addReceipts">
-        <el-button plain type="primary">
-          <span>Generate Receipt</span>
-        </el-button>
-      </NuxtLink>
+      <div class="flex gap-x-[0.3em]">
+        <NuxtLink to="/addReceipts">
+          <el-button plain type="primary">
+            <span>Receipt</span>
+          </el-button>
+        </NuxtLink>
+        <NuxtLink to="/addInvoice">
+          <el-button plain type="primary">
+            <span>Invoice</span>
+          </el-button>
+        </NuxtLink>
+      </div>
     </div>
   </div>
 </template>

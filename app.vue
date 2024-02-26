@@ -13,9 +13,9 @@ useHead({
 		class: 'font-albert'
 	},
 	link: [
-		{ rel: 'icon', href: '' }
+		{ rel: 'icon', href: '/snapbill-logo.png' }
 	],
-	title: 'Builder',
+	title: 'snapbill',
 });
 </script>
 

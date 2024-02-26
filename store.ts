@@ -5,7 +5,7 @@ import { collection, getDocs, addDoc, setDoc, doc, deleteDoc } from "firebase/fi
 
 export const useStore = defineStore('receipts', {
   state: () => ({
-    receipts: [] as RuleForm[]
+    receipts: [] as RuleForm[],
   }),
 
   
@@ -36,6 +36,6 @@ export const useStore = defineStore('receipts', {
     async deleteReceipt(index:string) {
       const nuxtApp = useNuxtApp()
       await deleteDoc(doc(nuxtApp.$firestore, "receipts", index));
-    }
+    },
   },
 })
