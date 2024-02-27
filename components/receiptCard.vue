@@ -7,7 +7,7 @@
 
   <div v-loading="loading" class="grid grid-cols-2 gap-x-[1em] gap-y-[1.5em] mt-[2em]">
     <div v-for="card in searchR">
-      <div class="bg-slate-50 border shadow-lg rounded-lg text-xs p-[1em]">
+      <div class="bg-gradient-to-l from-blue-50 to-slate-50 border shadow-lg rounded-lg text-xs p-[1em]">
         <div class="text-gray-400">
           <div class="pb-[0.5em] flex justify-between text-base font-medium border-b border-slate-300 text-gray-500">
             <p class="text-[1em]">
