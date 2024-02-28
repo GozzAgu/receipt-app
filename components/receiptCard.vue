@@ -5,7 +5,7 @@
     :prefix-icon="Search"
   />
 
-  <div v-loading="loading" class="grid grid-cols-2 gap-x-[1em] gap-y-[1.5em] mt-[2em]">
+  <div v-loading="loading" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-[1em] gap-y-[1.5em] mt-[2em]">
     <div v-for="card in searchR">
       <div class="bg-gradient-to-l from-blue-50 to-slate-50 border shadow-lg rounded-lg text-xs p-[1em]">
         <div class="text-gray-400">
@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../store"
+import { useStore } from "../store/receipts"
 import { Search, Tickets, Remove, CopyDocument } from '@element-plus/icons-vue'
 
 const search = ref('')

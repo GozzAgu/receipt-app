@@ -12,3 +12,8 @@ export interface RuleForm {
   newPrice: number
   date: string
 }
+
+export interface userAuth {
+  email: string,
+  password: string
+}

@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { useStore } from "../store"
+import { useStore } from "../store/receipts"
 
 const store = useStore()
 

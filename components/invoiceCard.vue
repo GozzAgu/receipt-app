@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../store"
+import { useStore } from "../store/invoices"
 import { Search, Tickets, Remove, CopyDocument } from '@element-plus/icons-vue'
 
 const search = ref('')
@@ -50,13 +50,13 @@ const store = useStore()
 const loading = ref(true)
 
 const isShown = () => {
-  if(store.receipts) {
+  if(store.invoices) {
     loading.value = false
   }
 }
 
 const searchR = computed(() => {
-  return store.receipts.filter(r => {
+  return store.invoices.filter(r => {
     return r.productName.toLowerCase().includes(search.value.toLowerCase());
   });
 })
@@ -66,8 +66,8 @@ const viewR = (index:string) => {
 }
 
 const delR = (id:string) => {
-  store.deleteReceipt(id)
-  store.fetchReceipts()
+  store.deleteInvoice(id)
+  store.fetchInvoices()
 }
 
 const dupR = (id:string) => {

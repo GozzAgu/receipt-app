@@ -12,11 +12,11 @@
 
         <div class="py-[1em] px-[1em] text-sm">
           <!-- <div class="flex justify-between"> -->
-            <el-divider content-position="left"><span class="text-lg">Transaction Receipt</span></el-divider>
+            <el-divider content-position="left"><span class="text-lg">Invoice</span></el-divider>
           <!-- </div> -->
           <div class="text-[0.6em] font-thin">
             <p>Dear {{ rpt.customerName }},</p>
-            <p>Below are your purchase details from <span>{{ rpt.name }}</span></p>
+            <p>Below is my invoice for <span>{{ rpt.name }}</span></p>
             <p>Be sure to keep this document safe</p>
           </div>
           <div class="font-thin bg-white py-[1em] border rounded-lg text-[0.6em] mt-[2em] grid grid-cols-1 gap-y-[1em] px-[0.5em]">
@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../store"
+import { useStore } from "../store/invoices"
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 import { Download, Back } from '@element-plus/icons-vue'
@@ -92,12 +92,12 @@ const r = computed(() => {
 })
 
 const rpt = computed(() => {
-  return store.receipts.find(re => re.id == r.value) || {}
+  return store.invoices.find(re => re.id == r.value) || {}
 })
 
 onMounted(async () => {
   isShown()
-  store.fetchReceipts()
+  store.fetchInvoices()
 })
 
 const exportToPDF = async (filename: string, element: HTMLElement | null) => {

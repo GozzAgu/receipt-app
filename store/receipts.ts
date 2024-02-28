@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { RuleForm } from './types'
+import type { RuleForm } from '../types'
 import { collection, getDocs, addDoc, setDoc, doc, deleteDoc } from "firebase/firestore"
 
 

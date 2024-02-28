@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../store"
+import { useStore } from "../store/receipts"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { RuleForm } from '../types'

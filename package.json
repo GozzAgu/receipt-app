@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.11.4",
-    "@sidebase/nuxt-pdf": "^0.2.0-alpha.0"
+    "@sidebase/nuxt-pdf": "^0.2.0-alpha.0",
+    "nuxt-particles": "^0.1.5"
   }
 }

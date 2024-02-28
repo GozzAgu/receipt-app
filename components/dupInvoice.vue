@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../store"
+import { useStore } from "../store/invoices"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { RuleForm } from '../types'
@@ -107,7 +107,7 @@ const rules = reactive<FormRules<RuleForm>>({
 })
 
 onMounted(() => {
-  store.fetchReceipts()
+  store.fetchInvoices()
 })
 
 const dups = computed(() => {
@@ -115,7 +115,7 @@ const dups = computed(() => {
 })
 
 const duplicate = computed(() => {
-  return store.receipts.find(dup => dup.id == dups.value) || {}
+  return store.invoices.find(dup => dup.id == dups.value) || {}
 })
 
 const currentDate = computed(() => {
@@ -134,7 +134,7 @@ const addR = async (formEl: FormInstance | undefined) => {
           let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
           newCompanyDetails.newPrice = newPrice
         }
-        const res = await store.addReceipt(newCompanyDetails)        
+        const res = await store.addInvoice(newCompanyDetails)        
         router.push({path:`/receipt/${res}`})
         newCompanyDetails = {} as RuleForm
         loading.value = false

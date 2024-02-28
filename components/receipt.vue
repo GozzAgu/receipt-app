@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../store"
+import { useStore } from "../store/receipts"
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 import { Download, Back } from '@element-plus/icons-vue'
