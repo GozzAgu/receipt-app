@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      FB_API_KEY : process.env.FB_API_KEY,
+      FB_API_KEY : process.env.FIREBASE_KEY,
     }
   }
 })
