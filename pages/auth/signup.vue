@@ -4,7 +4,7 @@
     :model="ruleForm"
     :rules="rules"
     label-width="120px"
-    class="demo-ruleForm md:w-full p-8 md:py-[2em] md:px-[4em] md:shadow-md mt-[3em] bg-white"
+    class="demo-ruleForm md:w-full px-[3em] md:p-[2em] md:py-[2em] md:px-[4em] md:shadow-md mt-[3em] bg-white"
     status-icon
     :label-position="labelPosition"
     style="max-width: 500px"
@@ -12,7 +12,7 @@
     <img class="lg:hidden w-[3em] m-auto mb-8" src="/snapbill-logo.png"/>
     
     <div>
-      <h2 class="text-center lg:text-left text-gray-500 text-[2.5em] mb-[0.5em]">Sign Up</h2>
+      <h2 class="text-center lg:text-left text-gray-500 text-[1.5em] md:text-[2.5em] mb-[0.5em]">Sign Up</h2>
       <p class="text-sm text-gray-500 mb-[1em]">Get started, Please enter your credentials to get signed into your account.</p>
     </div>
     
