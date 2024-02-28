@@ -6,10 +6,39 @@
   >  
   </NuxtParticles>
 
-  <div>
-    Welcome, Kindly sign in
-    <NuxtLink class="border-2" to="/auth/signin">Sign In</NuxtLink>
-    <NuxtLink class="border-2" to="/auth/signup">Sign Up</NuxtLink>
+  <div class="flex items-center h-screen">
+    <div class="">  
+      <div class="flex justify-center items-center">
+        <div class="bg-white rounded-b-[5em]">
+          <img class="w-[5em]" src="/snapbill-logo.png" />
+        </div>
+      </div>
+    
+      <div class="flex justify-center md:mt-[3em] bg-white">
+        <p class="lg:w-[50%] text-center text-sm md:text-xl text-slate-500 font-semibold px-4 mt-4">
+          Welcome to Snapbill, our Receipt and Inventory App!
+          From managing receipts to tracking inventory, we've got you covered. 
+          Say goodbye to manual paperwork and hello to efficiency!
+          Thank you for choosing our app!
+        </p>
+      </div>
+        
+      <div class="bg-white flex justify-center mt-[3em]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <NuxtLink to="/auth/signin">
+            <el-button class="flex m-auto w-full" type="primary">
+              Sign In
+            </el-button>
+          </NuxtLink>
+
+          <NuxtLink to="/auth/signup">
+            <el-button class="flex m-auto w-full" type="primary">
+              Sign Up
+            </el-button>
+          </NuxtLink>
+        </div>  
+      </div>
+    </div>
   </div>
 </template>
 
@@ -38,7 +67,7 @@ const options = {
       enable: true
     },
     number: {
-      value: 100
+      value: 50
     }
   }
 }
