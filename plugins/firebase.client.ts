@@ -6,7 +6,7 @@ export default defineNuxtPlugin(nuxtApp => {
   const config = useRuntimeConfig()
 
   const firebaseConfig = {
-    apiKey: config.public.FB_API_KEY,
+    apiKey: 'AIzaSyDblBZeFWLlnqEujW05cwGGnx8F9VI9w4E',
     authDomain: "snapbill-f82ec.firebaseapp.com",
     projectId: "snapbill-f82ec",
     storageBucket: "snapbill-f82ec.appspot.com",
