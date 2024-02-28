@@ -12,9 +12,14 @@ export const useStore = defineStore('receipts', {
   actions: {
     async addReceipt(newCompanyDetails:RuleForm) {
       const nuxtApp = useNuxtApp()
+      const receiptOf = nuxtApp.$auth.currentUser?.uid
       const docRef = await addDoc(collection(nuxtApp.$firestore, "receipts"), {
-        newCompanyDetails
+        ...newCompanyDetails,
+        receiptOf
       });
+
+      console.log(receiptOf)
+
       newCompanyDetails.id = docRef.id
       const newDocRef = await setDoc(doc(nuxtApp.$firestore, "receipts", docRef.id), {
         ...newCompanyDetails,
