@@ -122,6 +122,19 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       try {
         const response = await createUserWithEmailAndPassword(nuxtApp.$auth, ruleForm.email, ruleForm.password) 
         if(response) {
+          try {
+            await updateProfile(nuxtApp.$auth.currentUser!, {
+                displayName: ruleForm.email
+            });
+            
+            console.log(response.user.uid);
+            
+            console.log(nuxtApp.$auth.currentUser?.displayName);
+            console.log(response);
+        } catch (error) {
+            // Handle errors here
+            console.error(error);
+        }
           setDisplayName()
           ElNotification({
             title: 'Success',

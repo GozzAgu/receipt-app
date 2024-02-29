@@ -39,7 +39,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules, FormProps } from 'element-plus'
-import { signInWithEmailAndPassword, type Auth } from '@firebase/auth';
+import { signInWithEmailAndPassword, type Auth, updateProfile } from '@firebase/auth';
 
 definePageMeta({
   layout:'auth'
@@ -83,6 +83,19 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       try {
         const response = await signInWithEmailAndPassword(nuxtApp.$auth, ruleForm.email, ruleForm.password) 
         if(response) {
+          try {
+            await updateProfile(nuxtApp.$auth.currentUser!, {
+                displayName: ruleForm.email
+            });
+            
+            console.log(response.user.uid);
+            
+            console.log(nuxtApp.$auth.currentUser?.displayName);
+            console.log(response);
+        } catch (error) {
+            // Handle errors here
+            console.error(error);
+        }
           ElNotification({
             title: 'Success',
             message: 'Sign in successful',
