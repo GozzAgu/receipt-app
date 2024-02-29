@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[1em] py-[5em] bg-blue-50">
+  <div class="px-[1em] md:px-[5em] lg:px-[15em] py-[5em] bg-blue-50">
     <NuxtLink to="/">
       <el-button class="mb-[1em]" type="primary">
         <el-icon><Back /></el-icon>

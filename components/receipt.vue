@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[1.5em] py-[3em] bg-blue-50 h-[50em]">
+  <div class="px-[1.5em] md:px-[5em] lg:px-[25em] py-[3em] bg-blue-50 h-[50em]">
     <div>
       <div v-loading="loading" class="border mt-[4em] px-[1em] py-[2em] bg-white rounded-lg shadow-lg" ref="pdfSection">
         <div class="flex justify-between pt-[1em] px-[1em]">
