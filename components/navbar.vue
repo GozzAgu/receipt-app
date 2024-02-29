@@ -12,13 +12,14 @@
             <span>Receipt</span>
           </el-button>
         </NuxtLink>
-        <NuxtLink to="/addInvoice">
+        <!-- <NuxtLink to="/addInvoice">
           <el-button plain type="primary">
             <span>Invoice</span>
           </el-button>
-        </NuxtLink>
-        <el-button @click="logout" plain type="primary">
-          <span>Sign Out</span>
+        </NuxtLink> -->
+        <el-button @click="logout" type="primary">
+          <el-icon><SwitchButton /></el-icon>
+          <!-- <span>Sign Out</span> -->
         </el-button>
       </div>
     </div>
@@ -27,6 +28,7 @@
 
 <script setup>
 import { onAuthStateChanged, signOut } from '@firebase/auth';
+import { SwitchButton } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const isLoggedIn = ref(false)
