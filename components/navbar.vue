@@ -10,7 +10,7 @@
         <el-icon class="mt-[0.5em]"><Bell /></el-icon>
         <NuxtLink class="mx-[0.5em]" to="/addReceipts">
           <el-button plain type="primary">
-            <span>Receipt</span>
+            <el-icon><Tickets /></el-icon>
           </el-button>
         </NuxtLink>
         <!-- <NuxtLink to="/addInvoice">
@@ -29,7 +29,7 @@
 
 <script setup>
 import {  signOut } from '@firebase/auth';
-import { SwitchButton, Bell } from '@element-plus/icons-vue'
+import { SwitchButton, Bell, Tickets } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const emit = defineEmits(['signing-out'])

@@ -17,5 +17,8 @@ export default defineNuxtConfig({
     public: {
       FB_API_KEY : process.env.FIREBASE_KEY,
     }
+  },
+  router: {
+    middleware: 'auth'
   }
 })
