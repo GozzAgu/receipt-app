@@ -76,5 +76,6 @@ const dupR = (id:string) => {
 
 onMounted(() => {
   isShown()
+  store.fetchReceipts()
 })
 </script>

@@ -1,6 +1,5 @@
 <template>
   <div class="py-[6em] px-[1em] ">
-
     <div class="loader"></div>
     <p class="p-[0.5em] my-[1em] text-center text-red-300 font-thin">
       app in progress...
@@ -20,11 +19,21 @@
 
 <script setup>
 import { useStore } from "../store/receipts"
+import { onAuthStateChanged } from '@firebase/auth'
 
 const store = useStore()
+const nuxtApp = useNuxtApp()
 
 onMounted(() => {
-  store.fetchReceipts()
+  onAuthStateChanged(nuxtApp.$auth, (user) => {
+      if(user) {
+        // isLoggedIn.value = true;
+        // displayName.value = nuxtApp.$auth.currentUser.email;
+      } else {
+        // isLoggedIn.value = false;
+      }
+      store.fetchReceipts();
+    });
 })
 </script>
 

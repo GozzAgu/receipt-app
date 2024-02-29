@@ -7,48 +7,47 @@
             <img class="w-[1em] h-[1em]" src="/public/snapbill-logo.png" />
             <p class="font-bold text-[0.6em] text-sky-600">snapB!LL</p>
           </div>
-          <p class="text-[0.5em]">{{ rpt.date }}</p>
+          <p class="text-[0.5em]">{{ rpt?.date }}</p>
         </div>
 
         <div class="py-[1em] px-[1em] text-sm">
-          <!-- <div class="flex justify-between"> -->
-            <el-divider content-position="left"><span class="text-lg">Invoice</span></el-divider>
-          <!-- </div> -->
+          <el-divider content-position="left"><span class="text-lg">Invoice</span></el-divider>
+
           <div class="text-[0.6em] font-thin">
-            <p>Dear {{ rpt.customerName }},</p>
-            <p>Below is my invoice for <span>{{ rpt.name }}</span></p>
+            <p>Dear {{ rpt?.customerName }},</p>
+            <p>Below is my invoice for <span>{{ rpt?.name }}</span></p>
             <p>Be sure to keep this document safe</p>
           </div>
           <div class="font-thin bg-white py-[1em] border rounded-lg text-[0.6em] mt-[2em] grid grid-cols-1 gap-y-[1em] px-[0.5em]">
             <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
               <p>Customer Name </p>
-              <p>{{ rpt.customerName }}</p>
+              <p>{{ rpt?.customerName }}</p>
             </div>
             <hr>
             <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
               <p>Product Name </p>
-              <p>{{ rpt.productName }}</p>
+              <p>{{ rpt?.productName }}</p>
             </div>
             <hr>
             <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
               <p>Description </p>
-              <p>{{ rpt.productDescription }}</p>
+              <p>{{ rpt?.productDescription }}</p>
             </div>
             <hr>
             <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
               <p>Quantity </p>
-              <p>{{ rpt.productQuantity }}</p>
+              <p>{{ rpt?.productQuantity }}</p>
             </div>
             <hr>
             <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
               <p>Price per unit </p>
-              <p>{{ rpt.productPrice }}</p>
+              <p>{{ rpt?.productPrice }}</p>
             </div>
           </div>
 
           <div class="font-thin text-[0.7em] flex w-[full] justify-between bg-white rounded-lg mt-[2em]">
             <p class="">Total Price </p>
-            <p class="">₦{{ rpt.newPrice }}</p>
+            <p class="">₦{{ rpt?.newPrice }}</p>
           </div>
         </div>
       </div>
@@ -92,7 +91,7 @@ const r = computed(() => {
 })
 
 const rpt = computed(() => {
-  return store.invoices.find(re => re.id == r.value) || {}
+  return store.invoices.find(re => re.id == r.value)
 })
 
 onMounted(async () => {
@@ -108,7 +107,6 @@ const exportToPDF = async (filename: string, element: HTMLElement | null) => {
   try {
     const canvas = await html2canvas(element, { scale: 2 })
     const imgData = canvas.toDataURL('image/png')
-
     const pdf = new jsPDF()
     const imgProps = pdf.getImageProperties(imgData)
     const pdfWidth = pdf.internal.pageSize.getWidth()

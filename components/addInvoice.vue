@@ -91,7 +91,8 @@ let companyDetails = reactive<RuleForm>({
   productQuantity: 0,
   productPrice: 0,
   newPrice: 0,
-  date: ''
+  date: '',
+  receiptOf: ''
 })
 
 const rules = reactive<FormRules<RuleForm>>({

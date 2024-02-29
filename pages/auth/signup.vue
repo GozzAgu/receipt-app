@@ -13,7 +13,9 @@
     
     <div>
       <h2 class="text-center lg:text-left text-gray-500 text-[1.5em] md:text-[2.5em] mb-[0.5em]">Sign Up</h2>
-      <p class="text-sm text-gray-500 mb-[1em]">Get started, Please enter your credentials to get signed into your account.</p>
+      <p class="text-sm text-gray-500 mb-[1em]">
+        Get started, Please enter your credentials to get signed into your account.
+      </p>
     </div>
     
     <el-form-item label="Email" prop="email">
@@ -72,13 +74,13 @@ const ruleForm = reactive<RuleForm>({
 })
 
 const matchPassword = (rule: any, value: any, callback: any) => {
-    if (value === '') {
-        callback(new Error('Confirm Password is required'));
-    }else if (value !== ruleForm.password) {
-        callback(new Error('Password does not match'));
-    } else {
-        callback();
-    }
+  if (value === '') {
+      callback(new Error('Confirm Password is required'));
+  }else if (value !== ruleForm.password) {
+      callback(new Error('Password does not match'));
+  } else {
+      callback();
+  }
 }
 
 const rules = reactive<FormRules<RuleForm>>({

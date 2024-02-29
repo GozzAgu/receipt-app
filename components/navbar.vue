@@ -17,11 +17,39 @@
             <span>Invoice</span>
           </el-button>
         </NuxtLink>
+        <el-button @click="logout" plain type="primary">
+          <span>Sign Out</span>
+        </el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { onAuthStateChanged, signOut } from '@firebase/auth';
 
+const router = useRouter()
+const isLoggedIn = ref(false)
+const nuxtApp = useNuxtApp()
+const emit = defineEmits(['signing-out'])
+
+onMounted(() => {
+  onAuthStateChanged(nuxtApp.$auth, (user) => {
+    if(user) {
+      isLoggedIn.value = true;
+    } else {
+      isLoggedIn.value = false;
+    }
+    console.log(user);
+  })
+});
+
+const logout = () => {
+  const nuxtApp = useNuxtApp()
+  setTimeout(function(){
+    signOut(nuxtApp.$auth);
+      router.push('/auth/signin');
+  }, 3000);
+  emit('signing-out');
+}
 </script>
