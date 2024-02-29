@@ -1,4 +1,5 @@
 <template>
+  <SignoutLoader v-if="isLoading" />
   <NuxtParticles
     id="tsparticles"
     :options="options"
@@ -53,6 +54,8 @@ import type { Container } from 'tsparticles-engine'
 definePageMeta({
   layout:'auth'
 });
+
+const isLoading = ref(false)
 
 const options = {
   fullScreen: {
@@ -120,7 +123,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate(async(valid, fields) => {
     if (valid) {
-      loading.value = true
+      isLoading.value = true
       try {
         const response = await signInWithEmailAndPassword(nuxtApp.$auth, ruleForm.email, ruleForm.password) 
         if(response) {
@@ -154,7 +157,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         console.log(error)
       }
       finally {
-        loading.value = false
+        isLoading.value = false
         ruleForm.email = '',
         ruleForm.password = ''
       }
