@@ -7,7 +7,8 @@
       </NuxtLink>
 
       <div class="flex gap-x-[0.3em]">
-        <NuxtLink to="/addReceipts">
+        <el-icon class="mt-[0.5em]"><Bell /></el-icon>
+        <NuxtLink class="mx-[0.5em]" to="/addReceipts">
           <el-button plain type="primary">
             <span>Receipt</span>
           </el-button>
@@ -27,24 +28,11 @@
 </template>
 
 <script setup>
-import { onAuthStateChanged, signOut } from '@firebase/auth';
-import { SwitchButton } from '@element-plus/icons-vue'
+import {  signOut } from '@firebase/auth';
+import { SwitchButton, Bell } from '@element-plus/icons-vue'
 
 const router = useRouter()
-const isLoggedIn = ref(false)
-const nuxtApp = useNuxtApp()
 const emit = defineEmits(['signing-out'])
-
-onMounted(() => {
-  onAuthStateChanged(nuxtApp.$auth, (user) => {
-    if(user) {
-      isLoggedIn.value = true;
-    } else {
-      isLoggedIn.value = false;
-    }
-    console.log(user);
-  })
-});
 
 const logout = () => {
   const nuxtApp = useNuxtApp()

@@ -1,4 +1,11 @@
 <template>
+  <NuxtParticles
+    id="tsparticles"
+    :options="options"
+    @load="onLoad"
+  >  
+  </NuxtParticles>
+
   <el-form
     ref="ruleFormRef"
     :model="ruleForm"
@@ -40,10 +47,44 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules, FormProps } from 'element-plus'
 import { signInWithEmailAndPassword, type Auth, updateProfile } from '@firebase/auth';
+import type { Container } from 'tsparticles-engine'
+
 
 definePageMeta({
   layout:'auth'
 });
+
+const options = {
+  fullScreen: {
+    enable: true,
+    zIndex: -1
+  },
+  background: {
+    color: {
+      value: '#fff'
+    }
+  },
+  particles: {
+    color: {
+      value: "#dce8f7"
+    },
+    links: {
+      color: "#e9eff7",
+      enable: true
+    },
+    move: {
+      enable: true
+    },
+    number: {
+      value: 100
+    }
+  }
+}
+const onLoad = (container: Container) => {
+  // Do something with the container
+  container.pause()
+  setTimeout(() => container.play(), 500)
+}
 
 const nuxtApp = useNuxtApp()
 const router = useRouter()
