@@ -11,21 +11,21 @@
         <el-table-column prop="productName" label="Product" width="200" />
         <el-table-column prop="productDescription" label="Description" width="350" />
         <el-table-column prop="date" label="Date" width="150" />
-        <el-table-column fixed="right" width="150">
+        <el-table-column fixed="right" width="110">
           <template #default="scope">
             <el-button 
               size="small" 
               type="primary"
               @click="handleEdit(scope.$index, scope.row)"
             >
-              Edit
+              <el-icon><EditPen /></el-icon>
             </el-button>
             <el-button
               size="small"
               type="danger"
               @click="delR(scope.$index)"
             >
-              Delete
+              <el-icon><Delete /></el-icon>
             </el-button>
           </template>
         </el-table-column>
@@ -43,6 +43,7 @@
 <script setup>
 import { useStore } from "../store/receipts"
 import { onAuthStateChanged } from '@firebase/auth'
+import { Delete, EditPen } from '@element-plus/icons-vue'
 
 const store = useStore()
 const nuxtApp = useNuxtApp()
