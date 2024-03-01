@@ -7,10 +7,10 @@
 
     <div class="mt-[2em]">
       <el-table :border="parentBorder" v-if="store.receipts.length >0" :data="store.receipts" style="width: 100%;" max-height="250">
-        <el-table-column fixed prop="customerName" label="Customer" />
+        <el-table-column fixed prop="customerName" width="200" label="Customer" />
         <el-table-column prop="productName" label="Product" width="200" />
         <el-table-column prop="productDescription" label="Description" width="350" />
-        <el-table-column prop="date" label="Date" width="150" />
+        <el-table-column prop="date" label="Date" />
         <el-table-column fixed="right" width="110">
           <template #default="scope">
             <el-button 
