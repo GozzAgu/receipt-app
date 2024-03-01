@@ -68,6 +68,10 @@ onMounted(() => {
 </script>
 
 <style>
+.el-table tr {
+  @apply text-[0.7em] md:text-[0.9em] font-thin
+}
+
 .loader {
   width: 28px;
   height: 28px;
