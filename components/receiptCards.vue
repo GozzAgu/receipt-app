@@ -1,12 +1,35 @@
 <template>
-  <div class="py-[6em] px-[1em] ">
-    <div class="loader"></div>
+  <div class="py-[6em] px-[1em] md:px-[5em] lg:px-[15em]">
+    <!-- <div class="loader"></div>
     <p class="p-[0.5em] my-[1em] text-center text-red-300 font-thin">
       app in progress...
-    </p>
+    </p> -->
 
-    <div>
-      <ReceiptCard v-if="store.receipts.length >0"/>
+    <div class="mt-[2em]">
+      <el-table :border="parentBorder" v-if="store.receipts.length >0" :data="store.receipts" style="width: 100%;" max-height="250">
+        <el-table-column fixed prop="customerName" label="Customer" />
+        <el-table-column prop="productName" label="Product" width="200" />
+        <el-table-column prop="productDescription" label="Description" width="350" />
+        <el-table-column prop="date" label="Date" width="150" />
+        <el-table-column fixed="right" width="150">
+          <template #default="scope">
+            <el-button 
+              size="small" 
+              type="primary"
+              @click="handleEdit(scope.$index, scope.row)"
+            >
+              Edit
+            </el-button>
+            <el-button
+              size="small"
+              type="danger"
+              @click="delR(scope.$index)"
+            >
+              Delete
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
   
       <el-empty v-else>
         <NuxtLink to="/addReceipts">
@@ -23,6 +46,12 @@ import { onAuthStateChanged } from '@firebase/auth'
 
 const store = useStore()
 const nuxtApp = useNuxtApp()
+const parentBorder = ref(true)
+
+const delR = (id) => {
+  deletedReceipt = store.receipts.splice(id, 1)
+  store.deleteReceipt(deletedReceipt.id)
+}
 
 onMounted(() => {
   onAuthStateChanged(nuxtApp.$auth, (user) => {

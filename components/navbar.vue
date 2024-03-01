@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow-md fixed top-0 bg-white w-[100%]">
+  <div class="shadow-md shadow-slate-100 drop-shadow-sm fixed top-0 bg-white w-[100%]">
     <div class="flex justify-between py-[1em] px-[1em] md:px-[5em] lg:px-[15em]">
       <NuxtLink class="flex gap-x-[0.5em]" to="/dashboard">
         <img class="w-[2em]" src="/public/snapbill-logo.png" />
