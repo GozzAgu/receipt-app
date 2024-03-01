@@ -69,7 +69,7 @@ onMounted(() => {
 
 <style>
 .el-table tr {
-  @apply text-[0.7em] md:text-[0.9em] font-thin
+  @apply text-[0.75em] md:text-[0.9em] font-thin
 }
 
 .loader {
