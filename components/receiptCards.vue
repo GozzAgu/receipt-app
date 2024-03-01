@@ -1,9 +1,9 @@
 <template>
   <div class="py-[6em] px-[1em] md:px-[5em] lg:px-[15em]">
-    <!-- <div class="loader"></div>
+    <div class="loader"></div>
     <p class="p-[0.5em] my-[1em] text-center text-red-300 font-thin">
       app in progress...
-    </p> -->
+    </p>
 
     <div class="mt-[2em]">
       <el-table :border="parentBorder" v-if="store.receipts.length >0" :data="store.receipts" style="width: 100%;" max-height="250">
