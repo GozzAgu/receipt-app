@@ -41,9 +41,12 @@
         Sign Up
       </el-button>
     </el-form-item>
-    <div class="">
+    <div class="flex justify-between">
       <NuxtLink to="/auth/signin">
-        <p class="hover:underline text-sm text-gray-500 mt-[3em]">Already have an account?</p>
+        <p class="hover:underline text-xs text-gray-500 mt-[3em]">Already have an account?</p>
+      </NuxtLink>
+      <NuxtLink to="/auth/forgot">
+        <p class="hover:underline text-xs text-gray-500 mt-[3em]">Forgot password?</p>
       </NuxtLink>
     </div>
   </el-form>
