@@ -6,11 +6,25 @@
     </p>
 
     <div class="mt-[2em]">
-      <el-table :border="parentBorder" v-if="store.receipts.length >0" :data="store.receipts" style="width: 100%; max-height: 100%;">
-        <el-table-column fixed prop="customerName" label="Customer" />
+      <el-table :default-sort="{ prop: 'date', order: 'descending' }" :border="parentBorder" v-if="store.receipts.length >0" :data="store.receipts" style="width: 100%; max-height: 100%;">
+        <el-table-column fixed prop="customerName" label="Customer">
+          <template #default="scope">
+            <el-button
+              plain
+              size="small"
+              type="primary"
+              @click="viewR(scope.row)"
+            >
+              <el-icon><Tickets /></el-icon>
+            </el-button>
+            <span class="ml-[1em]">
+              {{ scope.row.customerName }}
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column prop="productName" label="Product" width="200" />
         <el-table-column prop="productDescription" label="Description" width="350" />
-        <el-table-column prop="date" label="Date" width="100"/>
+        <el-table-column prop="date" sortable label="Date" width="100"/>
         <el-table-column fixed="right" width="110">
           <template #default="scope">
             <el-button
@@ -43,7 +57,7 @@
 <script setup>
 import { useStore } from "../store/receipts"
 import { onAuthStateChanged } from '@firebase/auth'
-import { Delete, CopyDocument } from '@element-plus/icons-vue'
+import { Delete, CopyDocument, Tickets } from '@element-plus/icons-vue'
 
 const store = useStore()
 const router = useRouter()
@@ -57,6 +71,10 @@ const delR = (id) => {
 
 const dupR = (id) => {
   router.push({path:`/dupReceipt/${id.id}`})
+}
+
+const viewR = (id) => {
+  router.push({path:`/receipt/${id.id}`})
 }
 
 onMounted(() => {
@@ -74,7 +92,7 @@ onMounted(() => {
 
 <style >
 .el-table tr {
-  @apply text-[0.75em] md:text-[0.9em] font-thin
+  @apply text-[0.75em] md:text-[0.9em]
 }
 
 .loader {

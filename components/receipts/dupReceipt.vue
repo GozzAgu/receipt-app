@@ -3,7 +3,7 @@
     <NuxtLink to="/">
       <el-button class="mb-[1em]" type="primary">
         <el-icon><Back /></el-icon>
-        <span class="ml-[1em] text-[0.7em]">Back home</span>
+        <span class="ml-[1em] text-[0.7em] md:text-base">Back home</span>
       </el-button>
     </NuxtLink>
     
@@ -56,7 +56,7 @@
 
       <el-button class="mt-[2em]" type="primary" @click="addR(ruleFormRef)">
         <el-icon><Tickets /></el-icon>
-        <span class="ml-[1em] text-[0.7em]">Generate Receipt</span>
+        <span class="ml-[1em] text-[0.7em] md:text-base">Generate Receipt</span>
       </el-button>
     </div>
   </div>
