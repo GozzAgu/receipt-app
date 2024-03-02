@@ -5,7 +5,7 @@
       app in progress...
     </p>
 
-    <div class="mt-[2em]">
+    <div v-loading="loading" class="mt-[2em]">
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
         :border="parentBorder" v-if="store.receipts.length >0" 
@@ -14,7 +14,7 @@
       >
         <el-table-column fixed  width="120" prop="customerName" label="Customer">
           <template #default="scope">
-            <span @click="viewR(scope.row)" class="ml-[1em]">
+            <span @click="viewR(scope.row)">
               {{ scope.row.customerName }}
             </span>
           </template>
@@ -60,6 +60,7 @@ const store = useStore()
 const router = useRouter()
 const nuxtApp = useNuxtApp()
 const parentBorder = ref(true)
+const loading = ref(true)
 
 const delR = (id) => {
   store.deleteReceipt(id.id);
@@ -83,6 +84,7 @@ onMounted(() => {
         // isLoggedIn.value = false;
       }
       store.fetchReceipts();
+      loading.value = false
     });
 })
 </script>
