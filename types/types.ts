@@ -18,3 +18,7 @@ export interface userAuth {
   email: string,
   password: string
 }
+
+export interface ForgotPassword {
+  email: string,
+}
