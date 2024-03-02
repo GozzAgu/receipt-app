@@ -5,8 +5,25 @@
       app in progress...
     </p>
 
+    <el-dialog
+      draggable
+      title="Confirm Action"
+      v-model="showPasswordModal"
+      :width="mobile ? '60%' : '60%'"
+    >
+      <span>Please enter your password to confirm:</span>
+      <el-input v-model="password" type="password" placeholder="Password"></el-input>
+
+      <span v-if="incorrectPassword" class="text-red-500">Incorrect password. Please try again.</span>
+
+      <div class="mt-4" style="text-align: right;">
+        <el-button @click="handleCancel">Cancel</el-button>
+        <el-button type="primary" @click="handleConfirm">Confirm</el-button>
+      </div>
+    </el-dialog>
+
     <div class="mt-[2em]">
-      <el-table :border="parentBorder" v-if="store.receipts.length >0" :data="store.receipts" style="width: 100%;" max-height="250">
+      <el-table :border="parentBorder" v-if="store.receipts.length >0" :data="store.receipts" style="width: 100%; max-height: 100%;">
         <el-table-column fixed prop="customerName" label="Customer" />
         <el-table-column prop="productName" label="Product" width="200" />
         <el-table-column prop="productDescription" label="Description" width="350" />
@@ -16,14 +33,14 @@
             <el-button
               size="small"
               type="primary"
-              @click="dupR(scope)"
+              @click="dupR(scope.row)"
             >
               <el-icon><CopyDocument /></el-icon>
             </el-button>
             <el-button
               size="small"
               type="danger"
-              @click="delR(scope)"
+              @click="delR(scope.row)"
             >
               <el-icon><Delete /></el-icon>
             </el-button>
@@ -50,12 +67,36 @@ const router = useRouter()
 const nuxtApp = useNuxtApp()
 const parentBorder = ref(true)
 
+const showPasswordModal = ref(false);
+const password = ref('');
+const incorrectPassword = ref(false);
+
+const mobile = computed(() => {
+  return window.innerWidth <= 600
+})
+
 const delR = (id) => {
-  store.deleteReceipt(id.row.id)
-}
+  showPasswordModal.value = true;
+  console.log(id.id)
+};
+
+const handleCancel = () => {
+  showPasswordModal.value = false;
+  password.value = '';
+  incorrectPassword.value = false;
+};
+
+const handleConfirm = (id) => {
+  if (password.value === 'password') {
+    store.deleteReceipt(id.id);
+    showPasswordModal.value = false;
+  } else {
+    incorrectPassword.value = true;
+  }
+};
 
 const dupR = (id) => {
-  router.push({path:`/dupReceipt/${id.row.id}`})
+  router.push({path:`/dupReceipt/${id.id}`})
 }
 
 onMounted(() => {
@@ -71,7 +112,7 @@ onMounted(() => {
 })
 </script>
 
-<style>
+<style >
 .el-table tr {
   @apply text-[0.75em] md:text-[0.9em] font-thin
 }
