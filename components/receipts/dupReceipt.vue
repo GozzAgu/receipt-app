@@ -24,32 +24,32 @@
         :label-position="labelPosition"
       >
         <el-form-item label="Customer name" prop="customerName">
-          <el-input v-model="duplicate?.customerName" placeholder="" />
+          <el-input v-model="duplicate.customerName" placeholder="" />
         </el-form-item>
         <el-form-item label="Customer address" prop="customerAddress">
-          <el-input v-model="duplicate?.customerAddress" placeholder="" />
+          <el-input v-model="duplicate.customerAddress" placeholder="" />
         </el-form-item>
         <el-form-item label="Customer number" prop="customerNumber">
-          <el-input v-model="duplicate?.customerNumber" placeholder="" />
+          <el-input v-model="duplicate.customerNumber" placeholder="" />
         </el-form-item>
         <el-form-item label="Company name" prop="name">
-          <el-input disabled v-model="duplicate?.name" placeholder="" />
+          <el-input disabled v-model="duplicate.name" placeholder="" />
         </el-form-item>
         <el-form-item label="Company address" prop="address">
-          <el-input disabled v-model="duplicate?.address" placeholder="" />
+          <el-input disabled v-model="duplicate.address" placeholder="" />
         </el-form-item>
         <el-form-item label="Product name" prop="productName">
-          <el-input v-model="duplicate?.productName" placeholder="" />
+          <el-input v-model="duplicate.productName" placeholder="" />
         </el-form-item>
         <el-form-item label="Product description" prop="productDescription">
-          <el-input v-model="duplicate?.productDescription" placeholder="" type="textarea"/>
+          <el-input v-model="duplicate.productDescription" placeholder="" type="textarea"/>
         </el-form-item>
         <div class="flex gap-x-[1em]">
           <el-form-item label="Product quantity" prop="productQuantity">
-            <el-input v-model="duplicate?.productQuantity" placeholder="" />
+            <el-input v-model="duplicate.productQuantity" placeholder="" />
           </el-form-item>
           <el-form-item label="Product price" prop="productPrice">
-            <el-input v-model="duplicate?.productPrice" placeholder="" />
+            <el-input v-model="duplicate.productPrice" placeholder="" />
           </el-form-item>
         </div>
       </el-form>
@@ -146,9 +146,4 @@ const addR = async (formEl: FormInstance | undefined) => {
     }
   });
 };
-
 </script>
-
-<style scoped>
-
-</style>
