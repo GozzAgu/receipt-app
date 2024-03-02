@@ -5,23 +5,6 @@
       app in progress...
     </p>
 
-    <el-dialog
-      draggable
-      title="Confirm Action"
-      v-model="showPasswordModal"
-      :width="mobile ? '60%' : '60%'"
-    >
-      <span>Please enter your password to confirm:</span>
-      <el-input v-model="password" type="password" placeholder="Password"></el-input>
-
-      <span v-if="incorrectPassword" class="text-red-500">Incorrect password. Please try again.</span>
-
-      <div class="mt-4" style="text-align: right;">
-        <el-button @click="handleCancel">Cancel</el-button>
-        <el-button type="primary" @click="handleConfirm">Confirm</el-button>
-      </div>
-    </el-dialog>
-
     <div class="mt-[2em]">
       <el-table :border="parentBorder" v-if="store.receipts.length >0" :data="store.receipts" style="width: 100%; max-height: 100%;">
         <el-table-column fixed prop="customerName" label="Customer" />
@@ -67,32 +50,9 @@ const router = useRouter()
 const nuxtApp = useNuxtApp()
 const parentBorder = ref(true)
 
-const showPasswordModal = ref(false);
-const password = ref('');
-const incorrectPassword = ref(false);
-
-const mobile = computed(() => {
-  return window.innerWidth <= 600
-})
-
 const delR = (id) => {
-  showPasswordModal.value = true;
+  store.deleteReceipt(id.id);
   console.log(id.id)
-};
-
-const handleCancel = () => {
-  showPasswordModal.value = false;
-  password.value = '';
-  incorrectPassword.value = false;
-};
-
-const handleConfirm = (id) => {
-  if (password.value === 'password') {
-    store.deleteReceipt(id.id);
-    showPasswordModal.value = false;
-  } else {
-    incorrectPassword.value = true;
-  }
 };
 
 const dupR = (id) => {
