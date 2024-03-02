@@ -11,19 +11,12 @@
         <el-table-column prop="productName" label="Product" width="200" />
         <el-table-column prop="productDescription" label="Description" width="350" />
         <el-table-column prop="date" label="Date" width="100"/>
-        <el-table-column fixed="right" width="110">
+        <el-table-column fixed="right" width="61">
           <template #default="scope">
-            <el-button 
-              size="small" 
-              type="primary"
-              @click="handleEdit(scope.$index, scope.row)"
-            >
-              <el-icon><EditPen /></el-icon>
-            </el-button>
             <el-button
               size="small"
               type="danger"
-              @click="delR(scope.$index)"
+              @click="delR(scope)"
             >
               <el-icon><Delete /></el-icon>
             </el-button>
@@ -43,15 +36,14 @@
 <script setup>
 import { useStore } from "../store/receipts"
 import { onAuthStateChanged } from '@firebase/auth'
-import { Delete, EditPen } from '@element-plus/icons-vue'
+import { Delete } from '@element-plus/icons-vue'
 
 const store = useStore()
 const nuxtApp = useNuxtApp()
 const parentBorder = ref(true)
 
 const delR = (id) => {
-  deletedReceipt = store.receipts.splice(id, 1)
-  store.deleteReceipt(deletedReceipt.id)
+  store.deleteReceipt(id.row.id)
 }
 
 onMounted(() => {

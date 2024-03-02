@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <Invoice />
+    <InvoicesInvoice />
   </div>
 </template>
 

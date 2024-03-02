@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar class="z-10" />
-    <DupReceipt />
+    <InvoicesDupReceipt />
   </div>
 </template>
 

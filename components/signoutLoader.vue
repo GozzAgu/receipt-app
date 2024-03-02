@@ -51,7 +51,7 @@
 <style scoped>
 .overlay{
   position: fixed;
-  background-color:rgba(18, 20, 29, 0.2);
+  background-color:rgba(42, 46, 63, 0.001);
   left: 0;
   width: 100%;
   height: 100vh;

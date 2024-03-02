@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../store/receipts"
+import { useStore } from "@/store/receipts"
 import { Search, Tickets, Remove, CopyDocument } from '@element-plus/icons-vue'
 
 const search = ref('')

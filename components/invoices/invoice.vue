@@ -70,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../store/invoices"
+import { useStore } from "@/store/invoices"
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 import { Download, Back } from '@element-plus/icons-vue'

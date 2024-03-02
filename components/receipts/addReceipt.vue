@@ -1,6 +1,6 @@
 <template>
-  <div class="px-[1em] py-[5em] bg-blue-50">
-    <NuxtLink to="/">
+  <div class="px-[1em] md:px-[5em] lg:px-[15em] py-[5em] bg-blue-50">
+    <NuxtLink to="/dashboard">
       <el-button class="mb-[1em]" type="primary">
         <el-icon><Back /></el-icon>
         <span class="ml-[1em] text-[0.7em]">Back home</span>
@@ -16,7 +16,7 @@
 
       <el-form
         ref="ruleFormRef"
-        :model="duplicate"
+        :model="companyDetails"
         status-icon
         :rules="rules"
         label-width="120px"
@@ -24,32 +24,32 @@
         :label-position="labelPosition"
       >
         <el-form-item label="Customer name" prop="customerName">
-          <el-input v-model="duplicate.customerName" placeholder="" />
+          <el-input v-model="companyDetails.customerName" placeholder="" />
         </el-form-item>
         <el-form-item label="Customer address" prop="customerAddress">
-          <el-input v-model="duplicate.customerAddress" placeholder="" />
+          <el-input v-model="companyDetails.customerAddress" placeholder="" />
         </el-form-item>
         <el-form-item label="Customer number" prop="customerNumber">
-          <el-input v-model="duplicate.customerNumber" placeholder="" />
+          <el-input v-model="companyDetails.customerNumber" placeholder="" />
         </el-form-item>
         <el-form-item label="Company name" prop="name">
-          <el-input disabled v-model="duplicate.name" placeholder="" />
+          <el-input v-model="companyDetails.name" placeholder="" />
         </el-form-item>
         <el-form-item label="Company address" prop="address">
-          <el-input disabled v-model="duplicate.address" placeholder="" />
+          <el-input v-model="companyDetails.address" placeholder="" />
         </el-form-item>
         <el-form-item label="Product name" prop="productName">
-          <el-input v-model="duplicate.productName" placeholder="" />
+          <el-input v-model="companyDetails.productName" placeholder="" />
         </el-form-item>
         <el-form-item label="Product description" prop="productDescription">
-          <el-input v-model="duplicate.productDescription" placeholder="" type="textarea"/>
+          <el-input v-model="companyDetails.productDescription" placeholder="" type="textarea"/>
         </el-form-item>
         <div class="flex gap-x-[1em]">
           <el-form-item label="Product quantity" prop="productQuantity">
-            <el-input v-model="duplicate.productQuantity" placeholder="" />
+            <el-input v-model="companyDetails.productQuantity" placeholder="" />
           </el-form-item>
           <el-form-item label="Product price" prop="productPrice">
-            <el-input v-model="duplicate.productPrice" placeholder="" />
+            <el-input v-model="companyDetails.productPrice" placeholder="" />
           </el-form-item>
         </div>
       </el-form>
@@ -63,18 +63,33 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../store/invoices"
+import { useStore } from "@/store/receipts"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
-import type { RuleForm } from '../types'
+import type { RuleForm } from '@/types/types'
 import { Tickets, Back } from '@element-plus/icons-vue'
 
 const store = useStore()
 const router = useRouter()
-const route = useRoute()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
+
+let companyDetails = reactive<RuleForm>({
+  id: '',
+  customerName: '',
+  customerAddress: '',
+  customerNumber: '',
+  name: '',
+  address: '',
+  productName: '',
+  productDescription: '',
+  productQuantity: 0,
+  productPrice: 0,
+  newPrice: 0,
+  date: '',
+  receiptOf: ''
+})
 
 const rules = reactive<FormRules<RuleForm>>({
   customerName: [
@@ -107,15 +122,7 @@ const rules = reactive<FormRules<RuleForm>>({
 })
 
 onMounted(() => {
-  store.fetchInvoices()
-})
-
-const dups = computed(() => {
-  return route.params.id
-})
-
-const duplicate = computed(() => {
-  return store.invoices.find(dup => dup.id == dups.value) || {}
+  store.fetchReceipts()
 })
 
 const currentDate = computed(() => {
@@ -129,14 +136,14 @@ const addR = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true
       try {
-        let newCompanyDetails = { ...duplicate.value, date: currentDate.value }
+        let newCompanyDetails = { ...companyDetails, date: currentDate.value }
         if (newCompanyDetails.productQuantity > 1) {
           let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
           newCompanyDetails.newPrice = newPrice
         }
-        const res = await store.addInvoice(newCompanyDetails)        
+        const res = await store.addReceipt(newCompanyDetails)        
         router.push({path:`/receipt/${res}`})
-        newCompanyDetails = {} as RuleForm
+        companyDetails = {} as RuleForm
         loading.value = false
       } catch (e) {
         console.log(e)
