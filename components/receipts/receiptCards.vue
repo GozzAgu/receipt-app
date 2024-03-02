@@ -11,8 +11,15 @@
         <el-table-column prop="productName" label="Product" width="200" />
         <el-table-column prop="productDescription" label="Description" width="350" />
         <el-table-column prop="date" label="Date" width="100"/>
-        <el-table-column fixed="right" width="61">
+        <el-table-column fixed="right" width="110">
           <template #default="scope">
+            <el-button
+              size="small"
+              type="primary"
+              @click="dupR(scope)"
+            >
+              <el-icon><CopyDocument /></el-icon>
+            </el-button>
             <el-button
               size="small"
               type="danger"
@@ -36,14 +43,19 @@
 <script setup>
 import { useStore } from "../store/receipts"
 import { onAuthStateChanged } from '@firebase/auth'
-import { Delete } from '@element-plus/icons-vue'
+import { Delete, CopyDocument } from '@element-plus/icons-vue'
 
 const store = useStore()
+const router = useRouter()
 const nuxtApp = useNuxtApp()
 const parentBorder = ref(true)
 
 const delR = (id) => {
   store.deleteReceipt(id.row.id)
+}
+
+const dupR = (id) => {
+  router.push({path:`/dupReceipt/${id.row.id}`})
 }
 
 onMounted(() => {
