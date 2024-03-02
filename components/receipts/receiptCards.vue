@@ -6,25 +6,22 @@
     </p>
 
     <div class="mt-[2em]">
-      <el-table :default-sort="{ prop: 'date', order: 'descending' }" :border="parentBorder" v-if="store.receipts.length >0" :data="store.receipts" style="width: 100%; max-height: 100%;">
-        <el-table-column fixed prop="customerName" label="Customer">
+      <el-table 
+        :default-sort="{ prop: 'date', order: 'descending' }" 
+        :border="parentBorder" v-if="store.receipts.length >0" 
+        :data="store.receipts" 
+        style="width: 100%; max-height: 100%;"
+      >
+        <el-table-column fixed  width="120" prop="customerName" label="Customer">
           <template #default="scope">
-            <el-button
-              plain
-              size="small"
-              type="primary"
-              @click="viewR(scope.row)"
-            >
-              <el-icon><Tickets /></el-icon>
-            </el-button>
-            <span class="ml-[1em]">
+            <span @click="viewR(scope.row)" class="ml-[1em]">
               {{ scope.row.customerName }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="productName" label="Product" width="200" />
-        <el-table-column prop="productDescription" label="Description" width="350" />
-        <el-table-column prop="date" sortable label="Date" width="100"/>
+        <el-table-column @click="viewR(scope.row)" prop="productName" label="Product" width="200" />
+        <el-table-column @click="viewR(scope.row)" prop="productDescription" label="Description" width="350" />
+        <el-table-column @click="viewR(scope.row)" prop="date" sortable label="Date" width="100"/>
         <el-table-column fixed="right" width="110">
           <template #default="scope">
             <el-button
@@ -57,7 +54,7 @@
 <script setup>
 import { useStore } from "../store/receipts"
 import { onAuthStateChanged } from '@firebase/auth'
-import { Delete, CopyDocument, Tickets } from '@element-plus/icons-vue'
+import { Delete, CopyDocument } from '@element-plus/icons-vue'
 
 const store = useStore()
 const router = useRouter()
