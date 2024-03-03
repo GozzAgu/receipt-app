@@ -30,10 +30,10 @@
       <el-input v-model="ruleForm.email" />
     </el-form-item>
     <el-form-item label="Password" prop="password">
-      <el-input v-model="ruleForm.password" />
+      <el-input type="password" v-model="ruleForm.password" />
     </el-form-item>
     <el-form-item label="Confirm Password" prop="email">
-      <el-input v-model="ruleForm.confirmPassword" />
+      <el-input type="password" v-model="ruleForm.confirmPassword" />
     </el-form-item>
     <el-form-item class="mt-[2em]">
       <el-button class="flex m-auto w-full" type="primary" @click="submitForm(ruleFormRef)">
