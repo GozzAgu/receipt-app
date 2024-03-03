@@ -176,6 +176,27 @@ onMounted(() => {
 </script>
 
 <style scoped>
+::v-deep(.el-table__header th) {
+  color: #4b5563;
+  font-weight: semibold;
+  font-size: 1em
+}
+
+::v-deep(.el-table__header-wrapper) {
+  border-bottom: 1px solid #d1d5db;
+}
+
+::v-deep(.el-table__row) {
+  font-size: 1em;
+}
+
+@media screen and (max-width: 768px) {
+  ::v-deep(.el-table__row) {
+    font-size: 0.8em;
+    font-weight: 300;
+  }
+}
+
 .el-table tr {
   @apply text-[0.75em] md:text-[0.9em]
 }
