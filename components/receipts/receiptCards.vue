@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[6em] px-[1em] md:px-[5em] lg:px-[15em] relative">
+  <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[15em] relative">
     <div class="grid grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div v-loading="loading" class="mt-[2em] z-0">
+    <div v-loading="loading" class="mt-[1em] z-0">
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
         :border="parentBorder" 
