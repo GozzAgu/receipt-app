@@ -1,9 +1,29 @@
 <template>
   <div class="py-[6em] px-[1em] md:px-[5em] lg:px-[15em]">
-    <div class="loader"></div>
+    <!-- <div class="loader"></div>
     <p class="p-[0.5em] my-[1em] text-center text-red-300 font-thin">
       app in progress...
-    </p>
+    </p> -->
+
+    <el-dialog
+      title="Confirmation"
+      v-model="dialogVisible"
+      :width="dialogWidth"
+      center>
+      <span>Please enter password to delete this receipt</span>
+      <el-input
+        class="mt-[1em]"
+        v-model="password"
+        type="password"
+        placeholder="Enter your password"
+        clearable>
+      </el-input>
+      <span v-if="incorrectPassword" class="text-red-500">Incorrect password. Please try again.</span>
+      <span slot="footer" class="dialog-footer justify-between flex mt-[1em]">
+        <el-button @click="handleCancel">Cancel</el-button>
+        <el-button type="primary" @click="validatePassword">Confirm</el-button>
+      </span>
+    </el-dialog>
 
     <div v-loading="loading" class="mt-[2em]">
       <el-table 
@@ -12,16 +32,16 @@
         :data="store.receipts" 
         style="width: 100%; max-height: 100%;"
       >
-        <el-table-column fixed  width="120" prop="customerName" label="Customer">
+        <el-table-column fixed  width="130" prop="customerName" label="Customer">
           <template #default="scope">
             <span @click="viewR(scope.row)">
               {{ scope.row.customerName }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column @click="viewR(scope.row)" prop="productName" label="Product" width="200" />
-        <el-table-column @click="viewR(scope.row)" prop="productDescription" label="Description" width="350" />
-        <el-table-column @click="viewR(scope.row)" prop="date" sortable label="Date" width="100"/>
+        <el-table-column @click="viewR(scope.row)" prop="productName" label="Product" width="250" />
+        <el-table-column @click="viewR(scope.row)" prop="productDescription" width="420" label="Description" />
+        <el-table-column @click="viewR(scope.row)" prop="date" sortable label="Date" width="150"/>
         <el-table-column fixed="right" width="110">
           <template #default="scope">
             <el-button
@@ -61,10 +81,42 @@ const router = useRouter()
 const nuxtApp = useNuxtApp()
 const parentBorder = ref(true)
 const loading = ref(true)
+const dialogVisible = ref(false)
+const password = ref('')
+const incorrectPassword = ref(false);
+let deleteId = ref(null)
+
+const dialogWidth = computed(() => {
+  if (window.innerWidth <= 768) {
+    return '90vw'
+  } else {
+    return '70vw'
+  }
+});
 
 const delR = (id) => {
-  store.deleteReceipt(id.id);
-  console.log(id.id)
+  deleteId = id.id;
+  dialogVisible.value = true;
+}
+
+const handleCancel = () => {
+  dialogVisible.value = false;
+  password.value = '';
+  incorrectPassword.value = false;
+};
+
+const handleDelete = () => {
+  store.deleteReceipt(deleteId);
+  dialogVisible.value = false;
+}
+
+const validatePassword = () => {
+  const userPassword = 'password';
+  if (password.value === userPassword) {
+    handleDelete();
+  } else {
+    incorrectPassword.value = true
+  }
 };
 
 const dupR = (id) => {
@@ -78,10 +130,9 @@ const viewR = (id) => {
 onMounted(() => {
   onAuthStateChanged(nuxtApp.$auth, (user) => {
       if(user) {
-        // isLoggedIn.value = true;
-        // displayName.value = nuxtApp.$auth.currentUser.email;
+
       } else {
-        // isLoggedIn.value = false;
+        
       }
       store.fetchReceipts();
       loading.value = false
