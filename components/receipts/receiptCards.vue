@@ -8,8 +8,8 @@
     <el-dialog
       title="Confirmation"
       v-model="dialogVisible"
-      :width="dialogWidth"
-      center>
+      center
+    >
       <span>Please enter password to delete this receipt</span>
       <el-input
         class="mt-[1em]"
@@ -21,7 +21,7 @@
       <span v-if="incorrectPassword" class="text-red-500">Incorrect password. Please try again.</span>
       <span slot="footer" class="dialog-footer justify-between flex mt-[1em]">
         <el-button @click="handleCancel">Cancel</el-button>
-        <el-button type="primary" @click="validatePassword">Confirm</el-button>
+        <el-button type="primary" @click="validatePassword">Go</el-button>
       </span>
     </el-dialog>
 
@@ -86,14 +86,6 @@ const password = ref('')
 const incorrectPassword = ref(false);
 let deleteId = ref(null)
 
-const dialogWidth = computed(() => {
-  if (window.innerWidth <= 768) {
-    return '90vw'
-  } else {
-    return '70vw'
-  }
-});
-
 const delR = (id) => {
   deleteId = id.id;
   dialogVisible.value = true;
@@ -132,7 +124,7 @@ onMounted(() => {
       if(user) {
 
       } else {
-        
+
       }
       store.fetchReceipts();
       loading.value = false
