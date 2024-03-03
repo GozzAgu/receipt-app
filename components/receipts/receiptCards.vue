@@ -1,31 +1,33 @@
 <template>
-  <div class="py-[6em] px-[1em] md:px-[5em] lg:px-[15em]">
+  <div class="py-[6em] px-[1em] md:px-[5em] lg:px-[15em] relative">
     <!-- <div class="loader"></div>
     <p class="p-[0.5em] my-[1em] text-center text-red-300 font-thin">
       app in progress...
     </p> -->
+    <h1 class="font-semibold text-xl text-gray-500">Receipts</h1>
 
-    <el-dialog
-      title="Confirmation"
-      v-model="dialogVisible"
-      center
-    >
-      <span>Please enter password to delete this receipt</span>
-      <el-input
-        class="mt-[1em]"
-        v-model="password"
-        type="password"
-        placeholder="Enter your password"
-        clearable>
-      </el-input>
-      <span v-if="incorrectPassword" class="text-red-500">Incorrect password. Please try again.</span>
-      <span slot="footer" class="dialog-footer justify-between flex mt-[1em]">
-        <el-button @click="handleCancel">Cancel</el-button>
-        <el-button type="primary" @click="validatePassword">Go</el-button>
-      </span>
-    </el-dialog>
+    <div v-if="dialogVisible" class="fixed inset-0 flex items-center justify-center z-50 px-[1em]">
+      <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
+      <div class="m-auto dialog shadow-lg rounded-xl p-[2em] z-50 bg-white">
+        <span class="text-sm text-gray-500">Please enter password to delete this receipt</span>
+        <el-input
+          class="mt-[1em]"
+          v-model="password"
+          type="password"
+          placeholder="Enter your password"
+          clearable>
+        </el-input>
+        <div class="h-[1em]">
+          <p class="text-red-500 text-xs mt-[0.3em]">{{ passwordError }}</p>
+        </div>
+        <span slot="footer" class="dialog-footer justify-between flex mt-[0.5em]">
+          <el-button @click="handleCancel">Cancel</el-button>
+          <el-button type="primary" @click="validatePassword">Go</el-button>
+        </span>
+      </div>
+    </div>
 
-    <div v-loading="loading" class="mt-[2em]">
+    <div v-loading="loading" class="mt-[2em] z-0">
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
         :border="parentBorder" v-if="store.receipts.length >0" 
@@ -85,6 +87,12 @@ const dialogVisible = ref(false)
 const password = ref('')
 const incorrectPassword = ref(false);
 let deleteId = ref(null)
+
+const passwordError = computed(() => {
+  if(incorrectPassword.value == true){
+    return 'Incorrect Password!'
+  }
+})
 
 const delR = (id) => {
   deleteId = id.id;
