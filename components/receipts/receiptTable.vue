@@ -155,6 +155,12 @@ const viewR = (id) => {
   router.push({path:`/receipt/${id.id}`})
 }
 
+const paginatedReceipts = computed(() => {
+  const start = (currentPage.value - 1) * 10
+  const end = start + 10
+  return searchR.value.slice(start, end)
+});
+
 onMounted(() => {
   onAuthStateChanged(nuxtApp.$auth, (user) => {
       if(user) {
@@ -166,12 +172,6 @@ onMounted(() => {
       loading.value = false
     });
 })
-
-const paginatedReceipts = computed(() => {
-  const start = (currentPage.value - 1) * 10
-  const end = start + 10
-  return searchR.value.slice(start, end)
-});
 
 </script>
 
