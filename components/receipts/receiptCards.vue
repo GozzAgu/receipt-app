@@ -33,7 +33,7 @@
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
         :border="parentBorder" v-if="store.receipts.length >0" 
-        :data="store.receipts" 
+        :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
       >
         <el-table-column fixed  width="130" prop="customerName" label="Customer">
@@ -77,8 +77,8 @@
         <vue-awesome-paginate
           v-model="currentPage"
           :total-items="store.receipts.length"
-          :items-per-page="5"
-          :max-pages-shown="3"
+          :items-per-page="10"
+          :max-pages-shown="5"
         />
       </div>
     </div>
@@ -151,6 +151,13 @@ onMounted(() => {
       loading.value = false
     });
 })
+
+const paginatedReceipts = computed(() => {
+  const currentPageStart = (currentPage.value - 1) * 10
+  const nextPageStart = start + 10
+  return store.receipts.slice(currentPageStart, nextPageStart)
+});
+
 </script>
 
 <style scoped>
