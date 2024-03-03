@@ -18,3 +18,9 @@ export interface userAuth {
   email: string,
   password: string
 }
+
+export interface ReceiptPasswordReset {
+  oldPassword: string,
+  newPassword: string,
+  confirmNewPassword: string
+}

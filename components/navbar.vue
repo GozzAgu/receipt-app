@@ -29,8 +29,10 @@
                 Profile
               </el-dropdown-item>
               <el-dropdown-item>
-                <Icon class="mr-[0.5em]" name="material-symbols:settings-photo-camera" color="" size="15" /> 
-                Settings
+                <NuxtLink to="/settings">
+                  <Icon class="mr-[0.5em]" name="material-symbols:settings-photo-camera" color="" size="15" /> 
+                  Settings
+                </NuxtLink>
               </el-dropdown-item>
               <el-dropdown-item @click="logout">
                 <Icon class="mr-[0.5em] text-red-400" name="fa6-solid:power-off" size="15" /> 
@@ -46,7 +48,6 @@
 
 <script setup>
 import {  signOut } from '@firebase/auth';
-import { SwitchButton, Bell, Tickets } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const emit = defineEmits(['signing-out'])
