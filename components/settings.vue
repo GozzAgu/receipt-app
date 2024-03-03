@@ -16,7 +16,7 @@
 
       <el-form
         ref="ruleFormRef"
-        :model="companyDetails"
+        :model="receipt"
         status-icon
         :rules="rules"
         label-width="120px"
