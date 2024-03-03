@@ -15,9 +15,30 @@
             <Icon name="mdi:receipt-text-plus" color="" size="20" />
           </el-button>
         </NuxtLink>
-        <el-button @click="logout" type="primary">
-          <Icon name="ph:power-duotone" color="" size="20" />
-        </el-button>
+
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link">
+            <el-button type="primary">
+              <Icon name="ooui:user-avatar" color="" size="20" />
+            </el-button>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>
+                <Icon class="mr-[0.5em]" name="ooui:user-avatar" color="" size="15" /> 
+                Profile
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <Icon class="mr-[0.5em]" name="material-symbols:settings-photo-camera" color="" size="15" /> 
+                Settings
+              </el-dropdown-item>
+              <el-dropdown-item @click="logout">
+                <Icon class="mr-[0.5em] text-red-400" name="fa6-solid:power-off" size="15" /> 
+                <span class="text-red-400">Logout</span>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </div>
   </div>
