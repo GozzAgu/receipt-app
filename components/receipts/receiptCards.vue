@@ -2,7 +2,7 @@
   <div class="py-[6em] px-[1em] md:px-[5em] lg:px-[15em] relative">
     <h1 class="font-semibold text-xl text-gray-500">
       <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
-      <span class="">Receipts</span>
+      <span class=""> Receipts</span>
     </h1>
 
     <div v-if="dialogVisible" class="fixed inset-0 flex items-center justify-center z-50 px-[1em]">
