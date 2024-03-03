@@ -22,7 +22,7 @@
         </div>
         <span slot="footer" class="dialog-footer justify-between flex mt-[0.5em]">
           <el-button @click="handleCancel">Cancel</el-button>
-          <el-button type="primary" @click="validatePassword">Go</el-button>
+          <el-button type="primary" @click="validatePassword">Confirm</el-button>
         </span>
       </div>
     </div>
