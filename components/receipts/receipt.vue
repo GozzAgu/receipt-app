@@ -4,7 +4,7 @@
       <div v-loading="loading" class="border mt-[4em] px-[1em] py-[2em] bg-white rounded-lg shadow-lg" ref="pdfSection">
         <div class="flex justify-between pt-[1em] px-[1em]">
           <div class="flex gap-x-[0.5em]">
-            <img class="w-[1em] h-[1em]" src="/public/snapbill-logo.png" />
+            <img class="w-[1em] h-[1em]" src="/snapbill-logo.png" />
             <p class="font-bold text-[0.6em] text-sky-600">snapB!LL</p>
           </div>
           <p class="text-[0.5em]">{{ rpt?.date }}</p>

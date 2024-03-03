@@ -6,7 +6,7 @@
     </h1>
 
     <div v-if="dialogVisible" class="fixed inset-0 flex items-center justify-center z-50 px-[1em]">
-      <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
+      <div @click="handleCancel" class="absolute inset-0 bg-gray-900 opacity-50"></div>
       <div class="m-auto dialog shadow-lg rounded-xl p-[2em] z-50 bg-white">
         <span class="text-sm text-gray-500 flex gap-x-[0.5em]">
           <span class="">Please enter password to delete this receipt</span>
@@ -65,12 +65,22 @@
           </template>
         </el-table-column>
       </el-table>
+      
   
       <el-empty v-else>
         <NuxtLink to="/addReceipts">
           <el-button type="primary">Generate Receipt</el-button>
         </NuxtLink>
       </el-empty>
+
+      <div class="flex justify-end">
+        <vue-awesome-paginate
+          v-model="currentPage"
+          :total-items="store.receipts.length"
+          :items-per-page="5"
+          :max-pages-shown="3"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -89,6 +99,7 @@ const dialogVisible = ref(false)
 const password = ref('')
 const incorrectPassword = ref(false);
 let deleteId = ref(null)
+const currentPage = ref(1)
 
 const passwordError = computed(() => {
   if(incorrectPassword.value == true){
@@ -145,5 +156,36 @@ onMounted(() => {
 <style scoped>
 .el-table tr {
   @apply text-[0.75em] md:text-[0.9em]
+}
+
+.pagination-container {
+  display: flex;
+  gap: 1em;
+  margin-top: 2em;
+  font-size: 0.7em;
+}
+
+::v-deep(.paginate-buttons){
+  border: 1px solid #E2E8F0;
+  padding: 0.5rem;
+  height: 3em;
+  width: 3em;
+  border-radius: 0.5em;
+}
+
+::v-deep(.paginate-buttons:hover){
+  background-color: #0055ffc2; /* Assuming e-primary is a blue color */
+  color: white;
+  border: none;
+  border-radius: 0.5em;
+  transition: background-color 300ms;
+}
+
+::v-deep(.active-page){
+  background-color: #0055ffc2; /* Assuming e-primary is a blue color */
+  color: white;
+  height: 3.3em;
+  width: 3.3em;
+  border-radius: 0.5em;
 }
 </style>
