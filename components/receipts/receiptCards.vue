@@ -73,7 +73,7 @@
         </NuxtLink>
       </el-empty>
 
-      <div class="flex justify-end">
+      <div class="fixed bottom-3 right-[1em]">
         <vue-awesome-paginate
           v-model="currentPage"
           :total-items="store.receipts.length"
@@ -153,9 +153,9 @@ onMounted(() => {
 })
 
 const paginatedReceipts = computed(() => {
-  const currentPageStart = (currentPage.value - 1) * 10
-  const nextPageStart = start + 10
-  return store.receipts.slice(currentPageStart, nextPageStart)
+  const start = (currentPage.value - 1) * 10
+  const end = start + 10
+  return store.receipts.slice(start, end)
 });
 
 </script>
