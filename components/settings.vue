@@ -12,35 +12,62 @@
     </p>
 
     <div v-loading="loading" class=" bg-white px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
-      <el-divider content-position="left"><span class="text-lg text-blue-400">Receipt password reset</span></el-divider>
+      <el-divider content-position="left"><span class="text-lg text-blue-400">Receipt delete password</span></el-divider>
 
       <el-form
         ref="ruleFormRef"
-        :model="receipt"
+        :model="passwordG"
         status-icon
-        :rules="rules"
+        :rules="passwordRules"
         label-width="120px"
         class="demo-ruleForm"
         :label-position="labelPosition"
       >
         <div class="md:grid grid-cols-3 gap-[1em]">
 
-          <el-form-item label="Old password" prop="customerName">
-            <el-input v-model="receipt.oldPassword" placeholder="" />
+          <el-form-item label="New password" prop="newPassword">
+            <el-input v-model="passwordG.newPassword" placeholder="" />
           </el-form-item>
-          <el-form-item label="New password" prop="customerAddress">
-            <el-input v-model="receipt.newPassword" placeholder="" />
-          </el-form-item>
-          <el-form-item label="Confirm new password" prop="customerAddress">
-            <el-input v-model="receipt.confirmNewPassword" placeholder="" />
+          <el-form-item label="Confirm password" prop="newPassword">
+            <el-input v-model="passwordG.confirmNewPassword" placeholder="" />
           </el-form-item>
         </div>
+        <el-button class="mt-[2em]" type="primary" @click="addR(ruleFormRef)">
+          <el-icon><Tickets /></el-icon>
+          <span class="ml-[1em] text-[0.7em] md:text-base">Submit</span>
+        </el-button>
       </el-form>
 
-      <el-button class="mt-[2em]" type="primary" @click="addR(ruleFormRef)">
-        <el-icon><Tickets /></el-icon>
-        <span class="ml-[1em] text-[0.7em] md:text-base">Submit</span>
-      </el-button>
+      <el-divider content-position="right"><span class="text-lg text-blue-400">Receipt password reset</span></el-divider>
+
+      <el-form
+        ref="ruleFormRef"
+        :model="passwordReset"
+        status-icon
+        :rules="resetPasswordRules"
+        label-width="120px"
+        class="demo-ruleForm"
+        :label-position="labelPosition"
+      >
+        <div class="md:grid grid-cols-3 gap-[1em]">
+
+          <el-form-item label="Old password" prop="oldPassword">
+            <el-input v-model="passwordReset.oldPassword" placeholder="" />
+          </el-form-item>
+          <el-form-item label="New password" prop="newPassword">
+            <el-input v-model="passwordReset.newPassword" placeholder="" />
+          </el-form-item>
+          <el-form-item label="Confirm new password" prop="confirmNewPassword">
+            <el-input v-model="passwordReset.confirmNewPassword" placeholder="" />
+          </el-form-item>
+        </div>
+        <div class="flex justify-end">
+          <el-button class="mt-[2em]" type="primary" @click="addR(ruleFormRef)">
+            <el-icon><Tickets /></el-icon>
+            <span class="ml-[1em] text-[0.7em] md:text-base">Submit</span>
+          </el-button>
+        </div>
+      </el-form>      
     </div>
   </div>
 </template>
@@ -49,7 +76,7 @@
 import { useStore } from "@/store/receipts"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
-import type { ReceiptPasswordReset } from '@/types/types'
+import type { ReceiptPasswordReset, ReceiptPassword } from '@/types/types'
 import { Tickets, Back } from '@element-plus/icons-vue'
 
 const store = useStore()
@@ -58,13 +85,27 @@ const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
 
-let receipt = reactive<ReceiptPasswordReset>({
+let passwordG = reactive<ReceiptPassword>({
+  newPassword: '',
+  confirmNewPassword: '',
+})
+
+let passwordReset = reactive<ReceiptPasswordReset>({
   oldPassword: '',
   newPassword: '',
   confirmNewPassword: '',
 })
 
-const rules = reactive<FormRules<ReceiptPasswordReset>>({
+const passwordRules = reactive<FormRules<ReceiptPassword>>({
+  newPassword: [
+    { required: true, message: 'Please input a password', trigger: 'blur' },
+  ],
+  confirmNewPassword: [
+    { required: true, message: 'Please input a password', trigger: 'blur' },
+  ],
+})
+
+const resetPasswordRules = reactive<FormRules<ReceiptPasswordReset>>({
   oldPassword: [
     { required: true, message: 'Please input a password', trigger: 'blur' },
   ],

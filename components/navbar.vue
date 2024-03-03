@@ -7,7 +7,7 @@
       </NuxtLink>
 
       <div class="flex gap-x-[0.7em]">
-        <NuxtLink class="" to="/addReceipts">
+        <NuxtLink class="" to="">
           <Icon name="ri:notification-2-fill" color="gray" size="20" />
         </NuxtLink>
         <NuxtLink class="" to="/addReceipts"> 
@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import {  signOut } from '@firebase/auth';
+import { signOut } from '@firebase/auth';
 
 const router = useRouter()
 const emit = defineEmits(['signing-out'])
