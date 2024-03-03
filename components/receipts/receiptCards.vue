@@ -1,9 +1,16 @@
 <template>
   <div class="py-[6em] px-[1em] md:px-[5em] lg:px-[15em] relative">
-    <h1 class="font-semibold text-xl text-gray-500">
-      <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
-      <span class=""> Receipts</span>
-    </h1>
+    <div class="grid grid-cols-2">
+      <h1 class="font-semibold text-xl text-gray-500">
+        <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
+        <span class=""> Receipts</span>
+      </h1>
+      <el-input
+        v-model="search"
+        placeholder="Search for a product receipt"
+        :prefix-icon="Search"
+      />
+    </div>
 
     <div v-if="dialogVisible" class="fixed inset-0 flex items-center justify-center z-50 px-[1em]">
       <div @click="handleCancel" class="absolute inset-0 bg-gray-900 opacity-50"></div>
@@ -29,10 +36,11 @@
       </div>
     </div>
 
-    <div v-loading="loading" class="mt-[1em] z-0">
+    <div v-loading="loading" class="mt-[2em] z-0">
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
-        :border="parentBorder" v-if="store.receipts.length >0" 
+        :border="parentBorder" 
+        v-if="store.receipts.length > 0" 
         :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
       >
@@ -88,7 +96,7 @@
 <script setup>
 import { useStore } from "../store/receipts"
 import { onAuthStateChanged } from '@firebase/auth'
-import { Delete, CopyDocument } from '@element-plus/icons-vue'
+import { Delete, CopyDocument, Search } from '@element-plus/icons-vue'
 
 const store = useStore()
 const router = useRouter()
@@ -100,11 +108,18 @@ const password = ref('')
 const incorrectPassword = ref(false);
 let deleteId = ref(null)
 const currentPage = ref(1)
+const search = ref('')
 
 const passwordError = computed(() => {
   if(incorrectPassword.value == true){
     return 'Incorrect Password!'
   }
+})
+
+const searchR = computed(() => {
+  return store.receipts.filter(r => {
+    return r.productName.toLowerCase().includes(search.value.toLowerCase());
+  });
 })
 
 const delR = (id) => {
@@ -155,7 +170,7 @@ onMounted(() => {
 const paginatedReceipts = computed(() => {
   const start = (currentPage.value - 1) * 10
   const end = start + 10
-  return store.receipts.slice(start, end)
+  return searchR.value.slice(start, end)
 });
 
 </script>
