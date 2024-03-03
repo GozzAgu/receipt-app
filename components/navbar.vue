@@ -10,17 +10,13 @@
         <NuxtLink class="" to="/addReceipts">
           <Icon name="ri:notification-2-fill" color="gray" size="20" />
         </NuxtLink>
-        <NuxtLink class="" to="/addReceipts">
-          <Icon name="mdi:receipt-text-plus" color="gray" size="20" />
-        </NuxtLink>
-        <!-- <NuxtLink to="/addInvoice">
+        <NuxtLink class="" to="/addReceipts"> 
           <el-button plain type="primary">
-            <span>Invoice</span>
+            <Icon name="mdi:receipt-text-plus" color="" size="20" />
           </el-button>
-        </NuxtLink> -->
+        </NuxtLink>
         <el-button @click="logout" type="primary">
-          <el-icon><SwitchButton /></el-icon>
-          <!-- <span>Sign Out</span> -->
+          <Icon name="ph:power-duotone" color="" size="20" />
         </el-button>
       </div>
     </div>
