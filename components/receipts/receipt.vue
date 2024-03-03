@@ -61,7 +61,7 @@
         </NuxtLink>
 
         <el-button class="mt-[2em]" type="success" @click="exportToPDF('my-pdf-file.pdf', pdfSection)">
-          <el-icon><Download /></el-icon>
+          <Icon name="line-md:download-loop" color="white" size="20" />
           <span class="ml-[1em] text-[0.7em] md:text-base">Download Receipt</span>
         </el-button>
       </div>

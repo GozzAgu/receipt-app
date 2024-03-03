@@ -6,7 +6,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@element-plus/nuxt',
     '@sidebase/nuxt-pdf',
-    "nuxt-particles"
+    "nuxt-particles",
+    "nuxt-icon"
   ],
   tailwindcss: {
     exposeConfig: true,

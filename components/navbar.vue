@@ -6,12 +6,12 @@
         <p class="font-bold text-lg text-sky-600">snapB!LL</p>
       </NuxtLink>
 
-      <div class="flex gap-x-[0.3em]">
-        <el-icon class="mt-[0.5em]"><Bell /></el-icon>
-        <NuxtLink class="mx-[0.5em]" to="/addReceipts">
-          <el-button plain type="primary">
-            <el-icon><Tickets /></el-icon>
-          </el-button>
+      <div class="flex gap-x-[0.7em]">
+        <NuxtLink class="" to="/addReceipts">
+          <Icon name="ri:notification-2-fill" color="gray" size="20" />
+        </NuxtLink>
+        <NuxtLink class="" to="/addReceipts">
+          <Icon name="mdi:receipt-text-plus" color="gray" size="20" />
         </NuxtLink>
         <!-- <NuxtLink to="/addInvoice">
           <el-button plain type="primary">

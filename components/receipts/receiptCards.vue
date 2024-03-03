@@ -4,12 +4,18 @@
     <p class="p-[0.5em] my-[1em] text-center text-red-300 font-thin">
       app in progress...
     </p> -->
-    <h1 class="font-semibold text-xl text-gray-500">Receipts</h1>
+    <h1 class="font-semibold text-xl text-gray-500">
+      <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
+      <span class="">Receipts</span>
+    </h1>
 
     <div v-if="dialogVisible" class="fixed inset-0 flex items-center justify-center z-50 px-[1em]">
       <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
       <div class="m-auto dialog shadow-lg rounded-xl p-[2em] z-50 bg-white">
-        <span class="text-sm text-gray-500">Please enter password to delete this receipt</span>
+        <span class="text-sm text-gray-500 flex gap-x-[0.5em]">
+          <span class="">Please enter password to delete this receipt</span>
+          <Icon name="uis:padlock" size="20" color="gray" />
+        </span>
         <el-input
           class="mt-[1em]"
           v-model="password"
@@ -27,7 +33,7 @@
       </div>
     </div>
 
-    <div v-loading="loading" class="mt-[2em] z-0">
+    <div v-loading="loading" class="mt-[1em] z-0">
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
         :border="parentBorder" v-if="store.receipts.length >0" 
