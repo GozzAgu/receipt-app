@@ -17,7 +17,7 @@
           <el-form-item label="New password" prop="newPassword">
             <el-input v-model="passwordG.newPassword" placeholder="" />
           </el-form-item>
-          <el-form-item label="Confirm password" prop="newPassword">
+          <el-form-item label="Confirm password" prop="confirmNewPassword">
             <el-input v-model="passwordG.confirmNewPassword" placeholder="" />
           </el-form-item>
         </div>

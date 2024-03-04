@@ -5,7 +5,9 @@
       class="demo-tabs"
       @tab-click="handleClick"
     >
-      <el-tab-pane label="Profile" name="first">Profile</el-tab-pane>
+      <el-tab-pane label="Profile" name="first">
+        <EditProfile />
+      </el-tab-pane>
       <el-tab-pane label="Password & security" name="second">
         <Settings />
       </el-tab-pane>

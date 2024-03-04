@@ -22,6 +22,12 @@ export interface userAuth {
   password: string
 }
 
+export interface User {
+  email: string,
+  name: string,
+  phone: string
+}
+
 export interface ReceiptPasswordReset {
   oldPassword: string,
   newPassword: string,
