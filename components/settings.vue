@@ -1,17 +1,6 @@
 <template>
-  <div class="px-[1em] md:px-[5em] lg:px-[15em] py-[5em] bg-blue-50">
-    <NuxtLink to="/dashboard">
-      <el-button class="mb-[1em]" type="primary">
-        <el-icon><Back /></el-icon>
-        <span class="ml-[1em] text-[0.7em] md:text-base">Back home</span>
-      </el-button>
-    </NuxtLink>
-    
-    <p class="text-gray-50 bg-blue-400 p-[1em] rounded-t-lg text-sm">
-      Provide your previous password and current password.
-    </p>
-
-    <div v-loading="loading" class=" bg-white px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
+  <div class="">    
+    <div v-loading="loading" class=" bg-white py-[0.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <el-divider content-position="left"><span class="text-lg text-blue-400">Receipt delete password</span></el-divider>
 
       <el-form

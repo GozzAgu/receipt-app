@@ -25,14 +25,10 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>
-                <Icon class="mr-[0.5em]" name="ooui:user-avatar" color="" size="15" /> 
-                Profile
-              </el-dropdown-item>
-              <el-dropdown-item>
-                <NuxtLink to="/settings">
-                  <Icon class="mr-[0.5em]" name="material-symbols:settings-photo-camera" color="" size="15" /> 
-                  Settings
-                </NuxtLink>
+                <NuxtLink to="/profile">
+                  <Icon class="mr-[0.5em]" name="ooui:user-avatar" color="" size="15" /> 
+                  Profile
+                </NuxtLink> 
               </el-dropdown-item>
               <el-dropdown-item @click="logout">
                 <Icon class="mr-[0.5em] text-red-400" name="fa6-solid:power-off" size="15" /> 
