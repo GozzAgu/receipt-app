@@ -79,21 +79,21 @@
         </el-table-column>
         <el-table-column prop="productDescription" width="400" label="DESCRIPTION" />
         <el-table-column prop="date" sortable label="DATE" width="150"/>
-        <el-table-column fixed="right" width="110">
+        <el-table-column fixed="right" width="120">
           <template #default="scope">
             <el-button
               size="small"
               type="primary"
               @click="dupR(scope.row.id)"
             >
-              <Icon name="ic:twotone-file-copy" color="white" size="13" />
+              <Icon name="ic:twotone-file-copy" color="white" size="12" />
             </el-button>
             <el-button
               size="small"
               type="danger"
               @click="delR(scope.row.id)"
             >
-              <Icon name="ic:twotone-delete" color="white" size="13" />
+              <Icon name="ic:twotone-delete" color="white" size="12" />
             </el-button>
           </template>
         </el-table-column>
