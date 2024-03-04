@@ -43,8 +43,10 @@
         v-if="store.receipts.length > 0" 
         :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
+        @selection-change="handleSelectionChange"
       >
-        <el-table-column fixed  width="130" prop="customerName" label="CUSTOMER">
+        <el-table-column fixed type="selection" width="40" />
+        <el-table-column fixed width="130" prop="customerName" label="CUSTOMER">
           <template #default="scope">
             <span @click="viewR(scope.row)">
               {{ scope.row.customerName }}
@@ -75,14 +77,14 @@
               type="primary"
               @click="dupR(scope.row)"
             >
-              <el-icon><CopyDocument /></el-icon>
+              <Icon name="ic:twotone-file-copy" color="white" size="13" />
             </el-button>
             <el-button
               size="small"
               type="danger"
               @click="delR(scope.row)"
             >
-              <el-icon><Delete /></el-icon>
+              <Icon name="ic:twotone-delete" color="white" size="13" />
             </el-button>
           </template>
         </el-table-column>
@@ -107,10 +109,10 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useStore } from "../store/receipts"
 import { onAuthStateChanged } from '@firebase/auth'
-import { Delete, CopyDocument, Search } from '@element-plus/icons-vue'
+import { Search } from '@element-plus/icons-vue'
 
 const store = useStore()
 const router = useRouter()
@@ -123,12 +125,6 @@ const incorrectPassword = ref(false);
 let deleteId = ref(null)
 const currentPage = ref(1)
 const search = ref('')
-
-const passwordError = computed(() => {
-  if(incorrectPassword.value == true){
-    return 'Incorrect Password!'
-  }
-})
 
 const searchR = computed(() => {
   return store.receipts.filter(r => {
