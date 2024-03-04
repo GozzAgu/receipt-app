@@ -79,7 +79,7 @@
         </el-table-column>
         <el-table-column prop="productDescription" width="400" label="DESCRIPTION" />
         <el-table-column prop="date" sortable label="DATE" width="150"/>
-        <el-table-column fixed="right" width="115">
+        <el-table-column fixed="right" width="110">
           <template #default="scope">
             <el-button
               size="small"
