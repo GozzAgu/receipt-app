@@ -54,7 +54,7 @@
         :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
       >
-        <el-table-column fixed type="selection" width="50" />
+        <el-table-column fixed type="selection" width="40" />
         <el-table-column width="130" prop="customerName" label="CUSTOMER">
           <template #default="scope">
             <span @click="viewR(scope.row.id)">
@@ -79,7 +79,7 @@
         </el-table-column>
         <el-table-column prop="productDescription" width="400" label="DESCRIPTION" />
         <el-table-column prop="date" sortable label="DATE" width="150"/>
-        <el-table-column fixed="right" width="120">
+        <el-table-column fixed="right" width="115">
           <template #default="scope">
             <el-button
               size="small"
