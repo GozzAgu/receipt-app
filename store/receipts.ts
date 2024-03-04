@@ -42,7 +42,7 @@ export const useStore = defineStore('receipts', {
       })
     },
 
-    async deleteReceipt(index:string) {
+    async deleteReceipt(index:any) {
       const nuxtApp = useNuxtApp()
       await deleteDoc(doc(nuxtApp.$firestore, "receipts", index));
     },

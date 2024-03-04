@@ -5,11 +5,21 @@
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
         <span class=""> Receipts</span>
       </h1>
-      <el-input
-        v-model="search"
-        placeholder="Search for a product receipt"
-        :prefix-icon="Search"
-      />
+      <div class="flex gap-x-[1em]">
+        <el-input
+          v-model="search"
+          placeholder="Search for a product receipt"
+          :prefix-icon="Search"
+        />
+        <NuxtLink class="" to="/addReceipts"> 
+          <el-button
+            type="primary"
+            plain
+          >
+            <Icon name="mdi:receipt-text-plus" size="20" />
+          </el-button>
+        </NuxtLink> 
+      </div>
     </div>
 
     <div v-if="dialogVisible" class="fixed inset-0 flex items-center justify-center z-50 px-[1em]">
@@ -43,18 +53,17 @@
         v-if="store.receipts.length > 0" 
         :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
-        @selection-change="handleSelectionChange"
       >
-        <el-table-column fixed type="selection" width="40" />
-        <el-table-column fixed width="130" prop="customerName" label="CUSTOMER">
+        <el-table-column fixed type="selection" width="50" />
+        <el-table-column width="130" prop="customerName" label="CUSTOMER">
           <template #default="scope">
-            <span @click="viewR(scope.row)">
+            <span @click="viewR(scope.row.id)">
               {{ scope.row.customerName }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column @click="viewR(scope.row)" prop="productName" label="PRODUCT" width="200" />
-        <el-table-column @click="viewR(scope.row)" prop="paidVia" width="100" label="PAID VIA" >
+        <el-table-column prop="productName" label="PRODUCT" width="200" />
+        <el-table-column prop="paidVia" width="100" label="PAID VIA" >
           <template #default="{ row }">
             <div 
               :class="
@@ -68,21 +77,21 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column @click="viewR(scope.row)" prop="productDescription" width="400" label="DESCRIPTION" />
-        <el-table-column @click="viewR(scope.row)" prop="date" sortable label="DATE" width="150"/>
+        <el-table-column prop="productDescription" width="400" label="DESCRIPTION" />
+        <el-table-column prop="date" sortable label="DATE" width="150"/>
         <el-table-column fixed="right" width="110">
           <template #default="scope">
             <el-button
               size="small"
               type="primary"
-              @click="dupR(scope.row)"
+              @click="dupR(scope.row.id)"
             >
               <Icon name="ic:twotone-file-copy" color="white" size="13" />
             </el-button>
             <el-button
               size="small"
               type="danger"
-              @click="delR(scope.row)"
+              @click="delR(scope.row.id)"
             >
               <Icon name="ic:twotone-delete" color="white" size="13" />
             </el-button>
@@ -110,7 +119,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "../store/receipts"
+import { useStore } from "@/store/receipts"
 import { onAuthStateChanged } from '@firebase/auth'
 import { Search } from '@element-plus/icons-vue'
 
@@ -122,9 +131,15 @@ const loading = ref(true)
 const dialogVisible = ref(false)
 const password = ref('')
 const incorrectPassword = ref(false);
-let deleteId = ref(null)
+let deleteId = ref('')
 const currentPage = ref(1)
 const search = ref('')
+
+const passwordError = computed(() => {
+  if(incorrectPassword.value == true){
+    return 'Incorrect Password!'
+  }
+})
 
 const searchR = computed(() => {
   return store.receipts.filter(r => {
@@ -132,8 +147,8 @@ const searchR = computed(() => {
   });
 })
 
-const delR = (id) => {
-  deleteId = id.id;
+const delR = (id:any) => {
+  deleteId = id;
   dialogVisible.value = true;
 }
 
@@ -157,12 +172,12 @@ const validatePassword = () => {
   }
 };
 
-const dupR = (id) => {
-  router.push({path:`/dupReceipt/${id.id}`})
+const dupR = (id:any) => {
+  router.push({path:`/dupReceipt/${id}`})
 }
 
-const viewR = (id) => {
-  router.push({path:`/receipt/${id.id}`})
+const viewR = (id:any) => {
+  router.push({path:`/receipt/${id}`})
 }
 
 const paginatedReceipts = computed(() => {

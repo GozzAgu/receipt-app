@@ -1,9 +1,9 @@
 <template>
   <div class="px-[1em] md:px-[5em] lg:px-[15em] py-[5em] bg-blue-50">
-    <NuxtLink to="/dashboard">
+    <NuxtLink to="/addReceipts">
       <el-button class="mb-[1em]" type="primary">
         <el-icon><Back /></el-icon>
-        <span class="ml-[1em] text-[0.7em] md:text-base">Back home</span>
+        <span class="ml-[1em] text-[0.7em] md:text-base">Back</span>
       </el-button>
     </NuxtLink>
     

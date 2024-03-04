@@ -10,9 +10,9 @@
         <NuxtLink class="" to="">
           <Icon name="ri:notification-2-fill" color="gray" size="20" />
         </NuxtLink>
-        <NuxtLink class="" to="/addReceipts"> 
+        <NuxtLink class="" to="/receiptTable"> 
           <el-button plain type="primary">
-            <Icon name="mdi:receipt-text-plus" color="" size="20" />
+            <Icon name="material-symbols:receipt-long-outline" color="" size="20" />
           </el-button>
         </NuxtLink>
 

@@ -2,7 +2,7 @@
   <LoadersSignoutLoader v-if="isSigningout" />
   <Navbar @signing-out="isSigningout=true" class="z-10" />
   <div>
-    <DashboardDashboard />
+    <ReceiptsReceiptTable />
   </div>
 </template>
 
