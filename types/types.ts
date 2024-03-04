@@ -12,6 +12,8 @@ export interface RuleForm {
   newPrice: number
   date: string
   receiptOf: string
+  imei: string
+  paidVia: string
 }
 
 export interface userAuth {

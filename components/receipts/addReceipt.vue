@@ -46,6 +46,11 @@
           <el-form-item label="Product description" prop="productDescription">
             <el-input v-model="companyDetails.productDescription" placeholder="" type="textarea"/>
           </el-form-item>
+          <el-form-item label="Payment Mode">
+            <el-select v-model="companyDetails.paidVia" placeholder="select" style="width: 240px">
+              <el-option v-for="item in paymentMethods" :key="item.value" :label="item.label" :value="item.value" />
+            </el-select>
+          </el-form-item> 
         </div>
         <div class="flex gap-x-[1em]">
           <el-form-item label="Product quantity" prop="productQuantity">
@@ -91,8 +96,29 @@ let companyDetails = reactive<RuleForm>({
   productPrice: 0,
   newPrice: 0,
   date: '',
-  receiptOf: ''
+  receiptOf: '',
+  imei: '',
+  paidVia: ''
 })
+
+const paymentMethods = [
+  {
+    value: 'Cash',
+    label: 'Cash',
+  },
+  {
+    value: 'Pos',
+    label: 'Pos',
+  },
+  {
+    value: 'Transfer',
+    label: 'Transfer',
+  },
+  {
+    value: 'Usdt',
+    label: 'Usdt',
+  },
+]
 
 const rules = reactive<FormRules<RuleForm>>({
   customerName: [
@@ -122,6 +148,9 @@ const rules = reactive<FormRules<RuleForm>>({
   productPrice: [
     { required: true, message: 'Please input Product price', trigger: 'blur' },
   ],
+  paidVia: [
+    { required: true, message: 'Please select a payment method', trigger: 'blur' },
+  ]
 })
 
 onMounted(() => {

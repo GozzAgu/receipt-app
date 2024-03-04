@@ -44,16 +44,30 @@
         :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
       >
-        <el-table-column fixed  width="130" prop="customerName" label="Customer">
+        <el-table-column fixed  width="130" prop="customerName" label="CUSTOMER">
           <template #default="scope">
             <span @click="viewR(scope.row)">
               {{ scope.row.customerName }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column @click="viewR(scope.row)" prop="productName" label="Product" width="250" />
-        <el-table-column @click="viewR(scope.row)" prop="productDescription" width="420" label="Description" />
-        <el-table-column @click="viewR(scope.row)" prop="date" sortable label="Date" width="150"/>
+        <el-table-column @click="viewR(scope.row)" prop="productName" label="PRODUCT" width="200" />
+        <el-table-column @click="viewR(scope.row)" prop="paidVia" width="100" label="PAID VIA" >
+          <template #default="{ row }">
+            <div 
+              :class="
+                { 'text-orange-500': row.paidVia === 'Usdt', 
+                  'text-gray-500': row.paidVia === 'Cash',
+                  'text-green-500': row.paidVia === 'Pos',
+                  'text-blue-500': row.paidVia === 'Transfer'
+                }"
+            >
+              {{ row.paidVia }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column @click="viewR(scope.row)" prop="productDescription" width="400" label="DESCRIPTION" />
+        <el-table-column @click="viewR(scope.row)" prop="date" sortable label="DATE" width="150"/>
         <el-table-column fixed="right" width="110">
           <template #default="scope">
             <el-button
