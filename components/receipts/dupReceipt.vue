@@ -128,6 +128,9 @@ const rules = reactive<FormRules<RuleForm>>({
   productPrice: [
     { required: true, message: 'Please input Product price', trigger: 'blur' },
   ],
+  swapFrom: [
+    { required: true, message: 'Please input Product price', trigger: 'blur' },
+  ],
 })
 
 const paymentMethods = [
