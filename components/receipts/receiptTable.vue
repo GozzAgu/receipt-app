@@ -223,7 +223,7 @@ onMounted(() => {
       } else {
 
       }
-      store.fetchReceipts();
+      // store.fetchReceipts();
       loading.value = false
     });
 })

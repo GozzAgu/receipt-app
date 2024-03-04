@@ -14,6 +14,7 @@ export interface RuleForm {
   receiptOf: string
   imei: string
   paidVia: string
+  swapFrom: string
 }
 
 export interface userAuth {

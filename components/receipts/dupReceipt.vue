@@ -50,6 +50,22 @@
               <el-option v-for="item in paymentMethods" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item> 
+          <el-form-item label="Swap deal?">
+            <el-switch
+              v-model="swap"
+              class="mt-2"
+              style="margin-left: 24px"
+              inline-prompt
+              :active-icon="Check"
+              :inactive-icon="Close"
+            />
+          </el-form-item>  
+          <el-form-item v-if="swap == true" label="Swap from" prop="swapFrom">
+            <el-input v-model="duplicate.swapFrom" placeholder="" />
+          </el-form-item> 
+          <el-form-item v-if="swap == true" label="Swap to" prop="productName">
+            <el-input disabled v-model="duplicate.productName" placeholder="" />
+          </el-form-item> 
         </div>
         <div class="flex gap-x-[1em]">
           <el-form-item label="Product quantity" prop="productQuantity">
@@ -74,8 +90,9 @@ import { useStore } from "@/store/receipts"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { RuleForm } from '@/types/types'
-import { Tickets, Back } from '@element-plus/icons-vue'
+import { Tickets, Back, Check, Close } from '@element-plus/icons-vue'
 
+const swap = ref(false)
 const store = useStore()
 const router = useRouter()
 const route = useRoute()
