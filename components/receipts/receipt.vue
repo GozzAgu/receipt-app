@@ -53,7 +53,7 @@
       </div>
 
       <div class="flex justify-between">
-        <NuxtLink to="/addReceipts">
+        <NuxtLink to="/receiptTable">
           <el-button class="mt-[2em]" type="primary">
             <el-icon><Back /></el-icon>
             <span class="ml-[1em] text-[0.7em] md:text-base">Back</span>
