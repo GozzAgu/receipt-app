@@ -11,14 +11,21 @@
           placeholder="Search for a product receipt"
           :prefix-icon="Search"
         />
-        <NuxtLink class="" to="/addReceipts"> 
-          <el-button
-            type="primary"
-            plain
-          >
-            <Icon name="mdi:receipt-text-plus" size="20" />
-          </el-button>
-        </NuxtLink> 
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          content="Create receipt"
+          placement="bottom"
+        >
+          <NuxtLink class="" to="/addReceipts"> 
+            <el-button
+              type="primary"
+              plain
+            >
+              <Icon name="mdi:receipt-text-plus" size="20" />
+            </el-button>
+          </NuxtLink> 
+        </el-tooltip>
       </div>
     </div>
 
@@ -81,20 +88,35 @@
         <el-table-column prop="date" sortable label="DATE" width="150"/>
         <el-table-column fixed="right" width="110">
           <template #default="scope">
-            <el-button
-              size="small"
-              type="primary"
-              @click="dupR(scope.row.id)"
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              content="Duplicate"
+              placement="left"
             >
-              <Icon name="ic:twotone-file-copy" color="white" size="12" />
-            </el-button>
-            <el-button
-              size="small"
-              type="danger"
-              @click="delR(scope.row.id)"
+              <el-button
+                size="small"
+                type="primary"
+                @click="dupR(scope.row.id)"
+              >
+                <Icon name="ic:twotone-file-copy" color="white" size="12" />
+              </el-button>
+            </el-tooltip>
+
+            <el-tooltip
+              class="box-item"
+              effect="dark"
+              content="Delete"
+              placement="right"
             >
-              <Icon name="ic:twotone-delete" color="white" size="12" />
-            </el-button>
+              <el-button
+                size="small"
+                type="danger"
+                @click="delR(scope.row.id)"
+              >
+                <Icon name="ic:twotone-delete" color="white" size="12" />
+              </el-button>
+            </el-tooltip>  
           </template>
         </el-table-column>
       </el-table>
@@ -135,6 +157,13 @@ let deleteId = ref('')
 const currentPage = ref(1)
 const search = ref('')
 
+const deleteSuccess = () => {
+  ElMessage({
+    message: 'Receipt deleted successfully',
+    type: 'success',
+  })
+}
+
 const passwordError = computed(() => {
   if(incorrectPassword.value == true){
     return 'Incorrect Password!'
@@ -160,6 +189,7 @@ const handleCancel = () => {
 
 const handleDelete = () => {
   store.deleteReceipt(deleteId);
+  deleteSuccess();
   dialogVisible.value = false;
 }
 
