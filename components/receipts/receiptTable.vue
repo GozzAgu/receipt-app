@@ -258,7 +258,7 @@ onMounted(() => {
 
 .pagination-container {
   display: flex;
-  gap: 1em;
+  gap: 0.5em;
   margin-top: 2em;
   font-size: 0.7em;
 }
