@@ -164,9 +164,9 @@ const setDisplayName = async() => {
   }
 }
 
-const setUserAccountType = async (userId: string, accountType: AccountType) => {
+const setUserAccountType = async (userId: string, ruleForm: RuleForm) => {
   const userDocRef = doc(nuxtApp.$firestore, 'users', userId)
-  await setDoc(userDocRef, { accountType }, { merge: true })
+  await setDoc(userDocRef, { ruleForm }, { merge: true })
 };
 
 const submitForm = async (formEl: FormInstance | undefined) => {
@@ -179,7 +179,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         if(response) {
           try {
             setDisplayName()
-            await setUserAccountType(response.user.uid, ruleForm.accountType)
+            await setUserAccountType(response.user.uid, ruleForm)
         } catch (error) {
             console.error(error);
         }

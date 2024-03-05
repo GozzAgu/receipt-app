@@ -40,7 +40,9 @@ export interface ReceiptPasswordReset {
   confirmNewPassword: string
 }
 
-export interface ReceiptPassword {
-  newPassword: string,
-  confirmNewPassword: string
+export interface Manager {
+  adminId: string,
+  email: string,
+  password: string,
+  accountType: AccountType.Manager
 }

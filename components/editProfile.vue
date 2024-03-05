@@ -25,8 +25,8 @@
           </el-form-item>
         </div>
         <el-button class="mt-[2em]" type="primary" @click="addR(ruleFormRef)">
-          <el-icon><Tickets /></el-icon>
-          <span class="ml-[1em] text-[0.7em] md:text-base">Submit</span>
+          <Icon name="tabler:user-plus" color="white" size="15" />
+          <span class="ml-[0.2em] text-[0.7em] md:text-base">Update</span>
         </el-button>
       </el-form>
     </div>

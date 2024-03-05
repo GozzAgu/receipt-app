@@ -8,8 +8,8 @@
       <el-tab-pane label="Profile" name="first">
         <EditProfile />
       </el-tab-pane>
-      <el-tab-pane label="Password & security" name="second">
-        <Settings />
+      <el-tab-pane label="Managers" name="second">
+        <AddManager />
       </el-tab-pane>
       <el-tab-pane label="Payment plans" name="third">Payment plans</el-tab-pane>
     </el-tabs>
