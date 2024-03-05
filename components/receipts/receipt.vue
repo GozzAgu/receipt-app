@@ -7,7 +7,7 @@
             <img class="w-6 h-6 mr-2" src="/snapbill-logo.png" alt="SnapBill Logo" />
             <p class="font-bold text-sm text-blue-800">snapB!LL</p>
           </div>
-          <p class="text-sm">{{ rpt?.date }}</p>
+          <p class="text-xs">{{ rpt?.date }}</p>
         </div>
 
         <div class="p-4 text-sm">
