@@ -1,3 +1,8 @@
+export enum AccountType {
+  Admin = 'admin',
+  Manager = 'manager'
+}
+
 export interface RuleForm {
   id: string,
   customerName: string
@@ -17,10 +22,11 @@ export interface RuleForm {
   swapFrom: string
 }
 
-export interface userAuth {
-  email: string,
-  password: string
-}
+// export interface userAuth {
+//   email: string,
+//   password: string
+//   accountType: AccountType.Admin | AccountType.Manager
+// }
 
 export interface User {
   email: string,

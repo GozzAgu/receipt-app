@@ -57,6 +57,8 @@ import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules, FormProps } from 'element-plus'
 import { updateProfile, createUserWithEmailAndPassword, type Auth } from '@firebase/auth';
 import type { Container } from 'tsparticles-engine'
+import { AccountType } from '~/types/types';
+import { doc, setDoc } from "firebase/firestore"; 
 
 definePageMeta({
   layout:'auth'
@@ -107,7 +109,7 @@ interface RuleForm {
   email: string,
   password: string,
   confirmPassword: string,
-  type: string[]
+  accountType: AccountType
 }
 
 const ruleFormRef = ref<FormInstance>()
@@ -116,7 +118,7 @@ const ruleForm = reactive<RuleForm>({
   email: '',
   password: '',
   confirmPassword: '',
-  type: [],
+  accountType: AccountType.Admin,
 })
 
 const matchPassword = (rule: any, value: any, callback: any) => {
@@ -162,6 +164,11 @@ const setDisplayName = async() => {
   }
 }
 
+const setUserAccountType = async (userId: string, accountType: AccountType) => {
+  const userDocRef = doc(nuxtApp.$firestore, 'users', userId)
+  await setDoc(userDocRef, { accountType }, { merge: true })
+};
+
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate(async(valid, fields) => {
@@ -171,19 +178,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         const response = await createUserWithEmailAndPassword(nuxtApp.$auth, ruleForm.email, ruleForm.password) 
         if(response) {
           try {
-            await updateProfile(nuxtApp.$auth.currentUser!, {
-                displayName: ruleForm.email
-            });
-            
-            console.log(response.user.uid);
-            
-            console.log(nuxtApp.$auth.currentUser?.displayName);
-            console.log(response);
+            setDisplayName()
+            await setUserAccountType(response.user.uid, ruleForm.accountType)
         } catch (error) {
-            // Handle errors here
             console.error(error);
         }
-          setDisplayName()
           ElNotification({
             title: 'Success',
             message: 'Account created successfully',
