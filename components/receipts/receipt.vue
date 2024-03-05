@@ -2,15 +2,15 @@
   <div class="print:m-auto px-4 md:px-20 py-12 bg-blue-50 min-h-screen">
     <div class="max-w-3xl mx-auto">
       <div ref="pdfSection" v-loading="loading" class="border rounded-lg shadow-lg bg-white mt-[4em]">
-        <div class="flex justify-between items-center px-4 py-3 bg-blue-100 rounded-t-lg">
+        <div class="flex justify-between items-center px-4 py-2 bg-blue-100 rounded-t-lg">
           <div class="flex items-center">
-            <img class="w-6 h-6 mr-2" src="/snapbill-logo.png" alt="SnapBill Logo" />
-            <p class="font-bold text-sm text-blue-800">snapB!LL</p>
+            <img class="w-4 h-4 mr-1" src="/snapbill-logo.png" alt="SnapBill Logo" />
+            <p class="font-bold text-xs text-blue-800">snapB!LL</p>
           </div>
           <p class="text-xs">{{ rpt?.date }}</p>
         </div>
 
-        <div class="p-4 text-sm">
+        <div class="px-4 pb-4 text-sm">
           <el-divider content-position="left"><span class="text-lg">Transaction Receipt</span></el-divider>
 
           <div class="font-light mt-4 text-xs md:text-base">
@@ -52,7 +52,7 @@
             </div>
           </div>
 
-          <div class="text-xs md:text-base flex justify-between items-center bg-gray-100 rounded-lg p-4 mt-4">
+          <div class="text-xs md:text-base flex justify-between items-center bg-gray-100 rounded-lg p-4 mt-2">
             <p class="font-semibold">Total Price</p>
             <p class="font-bold">₦{{ rpt?.newPrice }}</p>
           </div>
