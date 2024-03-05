@@ -19,7 +19,7 @@
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
             <el-button type="primary">
-              <Icon name="ooui:user-avatar" color="" size="20" />
+              <Icon name="solar:user-circle-bold-duotone" color="" size="25" />
             </el-button>
           </span>
           <template #dropdown>
