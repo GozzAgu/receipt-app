@@ -1,5 +1,5 @@
 <template>
-  <LoadersSignoutLoader v-if="isLoading" />
+  <LoadersSignoutLoader v-if="loading" />
   <NuxtParticles
     id="tsparticles"
     :options="options"
@@ -52,14 +52,13 @@ import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules, FormProps } from 'element-plus'
 import { signInWithEmailAndPassword, type Auth, updateProfile } from '@firebase/auth';
 import type { Container } from 'tsparticles-engine'
-
+import { AccountType } from '~/types/types';
 
 definePageMeta({
   layout:'auth'
 });
 
-const isLoading = ref(false)
-
+// const isLoading = ref(false)
 const options = {
   fullScreen: {
     enable: true,
@@ -99,16 +98,20 @@ const loading = ref(false)
 const labelPosition = ref<FormProps['labelPosition']>('top')
 
 interface RuleForm {
+  name: string,
   email: string,
   password: string,
-  type: string[]
+  confirmPassword: string,
+  accountType: AccountType
 }
 
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive<RuleForm>({
+  name: '',
   email: '',
   password: '',
-  type: [],
+  confirmPassword: '',
+  accountType: AccountType.Admin,
 })
 
 const rules = reactive<FormRules<RuleForm>>({
@@ -126,16 +129,17 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate(async(valid, fields) => {
     if (valid) {
-      isLoading.value = true
+      loading.value = true
       try {
-        const response = await signInWithEmailAndPassword(nuxtApp.$auth, ruleForm.email, ruleForm.password) 
+        const response = await signInWithEmailAndPassword(nuxtApp.$auth, ruleForm.email, ruleForm.password)
+
         if(response) {
           try {
             await updateProfile(nuxtApp.$auth.currentUser!, {
-                displayName: ruleForm.email
+              displayName: ruleForm.email
             });
             
-            console.log(response.user.uid);
+            console.log(response);
             
             console.log(nuxtApp.$auth.currentUser?.displayName);
             console.log(response);
@@ -148,7 +152,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             message: 'Sign in successful',
             type: 'success',
           })
-          router.push('/dashboard')
+          if(ruleForm.accountType === AccountType.Manager) {
+            router.push('/')
+          }else {
+            router.push('/dashboard')
+          }
         }
       }
       catch(error) {
@@ -160,7 +168,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         console.log(error)
       }
       finally {
-        isLoading.value = false
+        loading.value = false
         ruleForm.email = '',
         ruleForm.password = ''
       }

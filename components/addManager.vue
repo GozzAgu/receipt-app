@@ -32,11 +32,11 @@
 <script setup lang="ts">
 import { useStore } from "@/store/receipts"
 import { ref, reactive } from 'vue'
-import type { FormProps, FormInstance, FormRules } from 'element-plus'
-import type { Manager } from '@/types/types'
+import { type FormProps, type FormInstance, type FormRules, ElEmpty } from 'element-plus'
+import type { Manager, Admin } from '@/types/types'
 import { createUserWithEmailAndPassword, type Auth } from '@firebase/auth';
 import { AccountType } from "@/types/types";
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc, addDoc, collection } from "firebase/firestore"; 
 
 const store = useStore()
 const router = useRouter()
@@ -50,7 +50,6 @@ let manager = reactive<Manager>({
   email: '',
   password: '',
   accountType: AccountType.Manager,
-
 })
 
 const passwordRules = reactive<FormRules<Manager>>({
@@ -66,7 +65,7 @@ onMounted(() => {
   store.fetchReceipts()
 })
 
-const setUserAccountType = async (userId: string, manager: Manager) => {
+const setUserAccountType = async (userId: string | undefined, manager: Manager) => {
   const userDocRef = doc(nuxtApp.$firestore, 'users', userId)
   await setDoc(userDocRef, { manager }, { merge: true })
 };
@@ -78,9 +77,11 @@ const addM = async (formEl: FormInstance | undefined) => {
       loading.value = true
       try {
         manager.adminId = nuxtApp.$auth.currentUser?.uid
-        const response = await createUserWithEmailAndPassword(nuxtApp.$auth, manager.email, manager.password)
+        const response = await addDoc(collection(nuxtApp.$firestore, "receipts"), {
+          manager
+        });
         if(response) {
-          await setUserAccountType(response.user.uid, manager)
+          await setUserAccountType(manager.adminId, manager)
         }
       } catch (e) {
         console.log(e)

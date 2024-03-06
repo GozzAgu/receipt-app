@@ -41,8 +41,15 @@ export interface ReceiptPasswordReset {
 }
 
 export interface Manager {
-  adminId: string,
+  adminId: string | undefined,
   email: string,
   password: string,
   accountType: AccountType.Manager
+}
+
+export interface Admin {
+  adminId: string | undefined,
+  email: string,
+  password: string,
+  accountType: AccountType.Admin
 }

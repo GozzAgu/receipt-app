@@ -65,7 +65,6 @@ definePageMeta({
 });
 
 const isLoading = ref(false)
-
 const options = {
   fullScreen: {
     enable: true,
@@ -175,7 +174,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       isLoading.value = true
       try {
-        const response = await createUserWithEmailAndPassword(nuxtApp.$auth, ruleForm.email, ruleForm.password) 
+        const response = await createUserWithEmailAndPassword(nuxtApp.$auth, ruleForm.email, ruleForm.password)
         if(response) {
           try {
             setDisplayName()
@@ -188,8 +187,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             message: 'Account created successfully',
             type: 'success',
           })
-          router.push('/dashboard')
-        } 
+          if(ruleForm.accountType === AccountType.Manager) {
+            router.push('/')
+          }else {
+            router.push('/dashboard')
+          }
+        }
       }
       catch(error) {
         ElNotification({
