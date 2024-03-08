@@ -9,7 +9,7 @@
 
   <el-form
     ref="ruleFormRef"
-    :model="ruleForm"
+    :model="admin"
     :rules="rules"
     label-width="120px"
     class="demo-ruleForm md:w-full px-[3em] md:p-[2em] md:py-[2em] md:px-[4em] md:shadow-md mt-[3em] bg-white"
@@ -27,13 +27,13 @@
     </div>
     
     <el-form-item label="Email" prop="email">
-      <el-input v-model="ruleForm.email" />
+      <el-input v-model="admin.email" />
     </el-form-item>
     <el-form-item label="Password" prop="password">
-      <el-input type="password" v-model="ruleForm.password" />
+      <el-input type="password" v-model="admin.password" />
     </el-form-item>
     <el-form-item label="Confirm Password" prop="email">
-      <el-input type="password" v-model="ruleForm.confirmPassword" />
+      <el-input type="password" v-model="admin.confirmPassword" />
     </el-form-item>
     <el-form-item class="mt-[2em]">
       <el-button class="flex m-auto w-full" type="primary" @click="submitForm(ruleFormRef)">
@@ -55,10 +55,11 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules, FormProps } from 'element-plus'
-import { updateProfile, createUserWithEmailAndPassword, type Auth } from '@firebase/auth';
+import { updateProfile } from '@firebase/auth';
 import type { Container } from 'tsparticles-engine'
 import { AccountType } from '~/types/types';
 import { doc, setDoc } from "firebase/firestore"; 
+import { useStore } from '~/store/users';
 
 definePageMeta({
   layout:'auth'
@@ -100,6 +101,7 @@ const onLoad = (container: Container) => {
 const router = useRouter()
 const loading = ref(false)
 const nuxtApp = useNuxtApp()
+const store = useStore()
 
 const labelPosition = ref<FormProps['labelPosition']>('top')
 
@@ -112,7 +114,7 @@ interface RuleForm {
 }
 
 const ruleFormRef = ref<FormInstance>()
-const ruleForm = reactive<RuleForm>({
+const admin = reactive<RuleForm>({
   name: '',
   email: '',
   password: '',
@@ -123,7 +125,7 @@ const ruleForm = reactive<RuleForm>({
 const matchPassword = (rule: any, value: any, callback: any) => {
   if (value === '') {
       callback(new Error('Confirm Password is required'));
-  }else if (value !== ruleForm.password) {
+  }else if (value !== admin.password) {
       callback(new Error('Password does not match'));
   } else {
       callback();
@@ -154,7 +156,7 @@ const setDisplayName = async() => {
   const user = nuxtApp.$auth.currentUser;
   try {
     await updateProfile(nuxtApp.$auth.currentUser!, {
-      displayName: ruleForm.name,
+      displayName: admin.name,
     });
 
     console.log('User profile updated:', user);
@@ -163,9 +165,9 @@ const setDisplayName = async() => {
   }
 }
 
-const setUserAccountType = async (userId: string, ruleForm: RuleForm) => {
+const setUserAccountType = async (userId: string, admin: RuleForm) => {
   const userDocRef = doc(nuxtApp.$firestore, 'users', userId)
-  await setDoc(userDocRef, { ruleForm }, { merge: true })
+  await setDoc(userDocRef, { ...admin }, { merge: true })
 };
 
 const submitForm = async (formEl: FormInstance | undefined) => {
@@ -174,20 +176,20 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       isLoading.value = true
       try {
-        const response = await createUserWithEmailAndPassword(nuxtApp.$auth, ruleForm.email, ruleForm.password)
+        const response = await store.signupAdmin(admin.email, admin.password)
         if(response) {
           try {
             setDisplayName()
-            await setUserAccountType(response.user.uid, ruleForm)
+            await setUserAccountType(response.user.uid, admin)
         } catch (error) {
-            console.error(error);
+            console.error(error)
         }
           ElNotification({
             title: 'Success',
             message: 'Account created successfully',
             type: 'success',
           })
-          if(ruleForm.accountType === AccountType.Manager) {
+          if(admin.accountType === AccountType.Manager) {
             router.push('/')
           }else {
             router.push('/dashboard')
@@ -204,8 +206,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       } 
       finally {
         isLoading.value = false
-        ruleForm.email = '',  
-        ruleForm.password = ''
+        admin.email = '',  
+        admin.password = ''
       }
     } else {
       console.log('error submit!', fields)

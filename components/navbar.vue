@@ -43,17 +43,27 @@
 </template>
 
 <script setup>
-import { signOut } from '@firebase/auth';
+import { signOut, onAuthStateChanged } from '@firebase/auth';
 
 const router = useRouter()
 const emit = defineEmits(['signing-out'])
+const nuxtApp = useNuxtApp()
 
 const logout = () => {
-  const nuxtApp = useNuxtApp()
   setTimeout(function(){
     signOut(nuxtApp.$auth);
       router.push('/auth/signin');
   }, 3000);
   emit('signing-out');
 }
+
+onMounted(() => {
+  onAuthStateChanged(nuxtApp.$auth, (user) => {
+    if (user) {
+      console.log(user)
+    } else {
+
+    }
+  });
+})
 </script>

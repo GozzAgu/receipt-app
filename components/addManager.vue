@@ -30,22 +30,22 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store/receipts"
 import { ref, reactive } from 'vue'
-import { type FormProps, type FormInstance, type FormRules, ElEmpty } from 'element-plus'
-import type { Manager, Admin } from '@/types/types'
-import { createUserWithEmailAndPassword, type Auth } from '@firebase/auth';
+import { type FormProps, type FormInstance, type FormRules} from 'element-plus'
+import type { Manager } from '@/types/types'
+import { setDoc, doc } from "firebase/firestore"
 import { AccountType } from "@/types/types";
-import { doc, setDoc, addDoc, collection } from "firebase/firestore"; 
+import { useStore } from '~/store/users';
+import { createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword, type Auth } from '@firebase/auth';
 
-const store = useStore()
-const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
 const nuxtApp = useNuxtApp()
+const store = useStore()
 
 let manager = reactive<Manager>({
+  id: '',
   adminId: '',
   email: '',
   password: '',
@@ -61,13 +61,9 @@ const passwordRules = reactive<FormRules<Manager>>({
   ],
 })
 
-onMounted(() => {
-  store.fetchReceipts()
-})
-
-const setUserAccountType = async (userId: string | undefined, manager: Manager) => {
-  const userDocRef = doc(nuxtApp.$firestore, 'users', userId)
-  await setDoc(userDocRef, { manager }, { merge: true })
+const setUserAccountType = async (adminId: string, manager: Manager) => {
+  const userDocRef = doc(nuxtApp.$firestore, 'users', adminId)
+  await setDoc(userDocRef, { ...manager }, { merge: true })
 };
 
 const addM = async (formEl: FormInstance | undefined) => {
@@ -77,11 +73,11 @@ const addM = async (formEl: FormInstance | undefined) => {
       loading.value = true
       try {
         manager.adminId = nuxtApp.$auth.currentUser?.uid
-        const response = await addDoc(collection(nuxtApp.$firestore, "receipts"), {
-          manager
-        });
-        if(response) {
-          await setUserAccountType(manager.adminId, manager)
+        const response = await createUserWithEmailAndPassword(nuxtApp.$auth, manager.email, manager.password)
+        await setUserAccountType(response.user.uid, manager)
+        if(response)  {
+          await signOut(nuxtApp.$auth);
+          await signInWithEmailAndPassword(nuxtApp.$auth, store.currentUser!.email!, store.currentUser!.password)
         }
       } catch (e) {
         console.log(e)
@@ -91,11 +87,21 @@ const addM = async (formEl: FormInstance | undefined) => {
         manager.email = '',  
         manager.password = ''
       }
+      ElNotification({
+        title: 'Success',
+        message: 'Manager created successfully',
+        type: 'success',
+      })
     } else {
       console.log('error submit!', fields);
     }
   });
 };
+
+onMounted(() => {
+  store.loadCurrentUserFromStorage()
+  console.log(store.currentUser)
+})
 
 </script>
 

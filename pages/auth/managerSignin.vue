@@ -1,4 +1,7 @@
 <template>
+  
+</template>
+<!-- <template>
   <LoadersSignoutLoader v-if="loading" />
   <NuxtParticles
     id="tsparticles"
@@ -9,8 +12,8 @@
 
   <el-form
     ref="ruleFormRef"
-    :model="admin"
-    :rules="rules"
+    :model="manager"
+    :rules="passwordRules"
     label-width="120px"
     class="demo-ruleForm md:w-full px-[3em] md:p-[2em] md:py-[2em] md:px-[4em] md:shadow-md mt-[3em] bg-white"
     status-icon
@@ -21,14 +24,14 @@
     
     <div>
       <h2 class="text-center lg:text-left text-gray-500 text-[1.5em] md:text-[2.5em] mb-[0.5em]">Sign In</h2>
-      <p class="text-sm text-gray-500 mb-[1em]">Welcome back, Please enter your credentials to get signed into your account.</p>
+      <p class="text-sm text-gray-500 mb-[1em]">Welcome back, Please enter your credentials to get signed in as a manager.</p>
     </div>
     
-    <el-form-item label="Email" prop="email">
-      <el-input v-model="admin.email" />
+    <el-form-item label="Username" prop="username">
+      <el-input v-model="manager.username" />
     </el-form-item>
     <el-form-item label="Password" prop="password">
-      <el-input type="password" v-model="admin.password" />
+      <el-input type="password" v-model="manager.password" />
     </el-form-item>
     <el-form-item class="mt-[2em]">
       <el-button class="flex m-auto w-full" type="primary" @click="submitForm(ruleFormRef)">
@@ -50,10 +53,9 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules, FormProps } from 'element-plus'
-import { updateProfile } from '@firebase/auth';
 import type { Container } from 'tsparticles-engine'
-import { AccountType } from '~/types/types';
-import { useStore } from '~/store/users';
+import { AccountType, type Manager, type ManagerAuth } from '~/types/types';
+import { useStore } from '@/store/users'
 
 definePageMeta({
   layout:'auth'
@@ -87,87 +89,80 @@ const options = {
   }
 }
 const onLoad = (container: Container) => {
-  // Do something with the container
   container.pause()
   setTimeout(() => container.play(), 500)
 }
 
+const store = useStore()
 const nuxtApp = useNuxtApp()
 const router = useRouter()
 const loading = ref(false)
-const store = useStore()
 
 const labelPosition = ref<FormProps['labelPosition']>('top')
 
-interface RuleForm {
-  name: string,
-  email: string,
-  password: string,
-  confirmPassword: string,
-  accountType: AccountType
-}
-
 const ruleFormRef = ref<FormInstance>()
-const admin = reactive<RuleForm>({
-  name: '',
-  email: '',
+const manager = reactive<ManagerAuth>({
+  username: '',
   password: '',
-  confirmPassword: '',
-  accountType: AccountType.Admin,
 })
 
-const rules = reactive<FormRules<RuleForm>>({
-  email: [
-    { required: true, message: 'Email required', trigger: 'blur' },
-    { min: 3, max: 30, message: 'Length should be up to 3', trigger: 'blur' },
+const passwordRules = reactive<FormRules<Manager>>({
+  username: [
+    { required: true, message: 'Please input a username', trigger: 'blur' },
   ],
   password: [
-    { required: true, message: 'Password required', trigger: 'blur' },
-    { min: 6, max: 30, message: 'Password cannot be less than 6', trigger: 'blur' },
+    { required: true, message: 'Please input a password', trigger: 'blur' },
   ],
 })
 
 const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  await formEl.validate(async(valid, fields) => {
-    if (valid) {
-      loading.value = true
-      try {
-        const response = await store.signin(admin.email, admin.password)
-        try {
-          await updateProfile(nuxtApp.$auth.currentUser!, {
-            displayName: admin.email
-          });
-        } catch (error) {
-          console.error(error);
+  if (!formEl) return;
+
+  const valid = await formEl.validate();
+  if (!valid) {
+    console.log('Form validation failed');
+    return;
+  }
+
+  loading.value = true;
+
+  try {
+    if (manager.username && manager.password) {
+      let managerExists = store.users.filter(m => m.manager.username === manager.username);
+      console.log(managerExists, store.users)
+
+      if (managerExists) {
+        const managerWithPassword = store.users.find(m => m.manager.username === manager.username && m.manager.password === manager.password)
+        if (managerWithPassword) {
+          router.push('/users')
+          console.log('Correct password');
+        } else {
+          console.log('Incorrect password');
         }
-        ElNotification({
-          title: 'Success',
-          message: 'Sign in successful',
-          type: 'success',
-        })
-        if(admin.accountType === AccountType.Manager) {
-          router.push('/')
-        }else {
-          router.push('/dashboard')
-        }
-      }
-      catch(error) {
+      } else {
+        console.log('Manager does not exist');
         ElNotification({
           title: 'Error',
-          message: 'Incorrect details',
+          message: 'Manager does not exist',
           type: 'error',
-        })
-        console.log(error)
+        });
       }
-      finally {
-        loading.value = false
-        admin.email = '',
-        admin.password = ''
-      }
-    } else {
-      console.log('error submit!', fields)
     }
-  })
-}
-</script>
+  } catch (error) {
+    console.error('Error:', error);
+    ElNotification({
+      title: 'Error',
+      message: 'An error occurred while processing your request',
+      type: 'error',
+    });
+  } finally {
+    loading.value = false;
+    manager.username = '';
+    manager.password = '';
+  }
+};
+
+onMounted(() => {
+  store.fetchManagers()
+})
+</script> -->

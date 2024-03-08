@@ -22,12 +22,6 @@ export interface RuleForm {
   swapFrom: string
 }
 
-// export interface userAuth {
-//   email: string,
-//   password: string
-//   accountType: AccountType.Admin | AccountType.Manager
-// }
-
 export interface User {
   email: string,
   name: string,
@@ -41,15 +35,23 @@ export interface ReceiptPasswordReset {
 }
 
 export interface Manager {
+  id: string,
   adminId: string | undefined,
   email: string,
   password: string,
   accountType: AccountType.Manager
 }
 
+export interface ManagerAuth {
+  username: string,
+  password: string
+}
+
 export interface Admin {
   adminId: string | undefined,
+  name: string,
   email: string,
   password: string,
+  
   accountType: AccountType.Admin
 }
