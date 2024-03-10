@@ -18,12 +18,17 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import type { TabsPaneContext } from 'element-plus'
+import { useAuthStore } from '~/store/users'
 
 const activeName = ref('first')
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   console.log(tab, event)
 }
+
+onMounted(() => {
+
+})
 </script>
 <style>
 .demo-tabs > .el-tabs__content {

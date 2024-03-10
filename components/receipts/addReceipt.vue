@@ -90,7 +90,7 @@
 import { useStore } from "@/store/receipts"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
-import type { RuleForm } from '@/types/types'
+import type { Receipt } from '@/types/types'
 import { Tickets, Back, Check, Close } from '@element-plus/icons-vue'
 
 const swap = ref(false)
@@ -100,7 +100,7 @@ const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
 
-let companyDetails = reactive<RuleForm>({
+let companyDetails = reactive<Receipt>({
   id: '',
   customerName: '',
   customerAddress: '',
@@ -138,7 +138,7 @@ const paymentMethods = [
   },
 ]
 
-const rules = reactive<FormRules<RuleForm>>({
+const rules = reactive<FormRules<Receipt>>({
   customerName: [
     { required: true, message: 'Please input Customer name', trigger: 'blur' },
   ],
@@ -168,6 +168,9 @@ const rules = reactive<FormRules<RuleForm>>({
   ],
   paidVia: [
     { required: true, message: 'Please select a payment method', trigger: 'blur' },
+  ],
+  swapFrom: [
+    { required: true, message: 'Please input what you swapped from', trigger: 'blur' },
   ]
 })
 
@@ -193,7 +196,7 @@ const addR = async (formEl: FormInstance | undefined) => {
         }
         const res = await store.addReceipt(newCompanyDetails)        
         router.push({path:`/receipt/${res}`})
-        companyDetails = {} as RuleForm
+        companyDetails = {} as Receipt
         loading.value = false
       } catch (e) {
         console.log(e)

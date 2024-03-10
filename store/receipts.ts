@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia'
-import type { RuleForm } from '../types/types'
+import type { Receipt } from '../types/types'
 import { collection, addDoc, setDoc, doc, deleteDoc, onSnapshot } from "firebase/firestore"
 
 
 export const useStore = defineStore('receipts', {
   state: () => ({
-    receipts: [] as RuleForm[],
+    receipts: [] as Receipt[],
   }),
 
   
   actions: {
-    async addReceipt(newCompanyDetails:RuleForm) {
+    async addReceipt(newCompanyDetails:Receipt) {
       const nuxtApp = useNuxtApp()
       const receiptOf = nuxtApp.$auth.currentUser?.uid
       const docRef = await addDoc(collection(nuxtApp.$firestore, "receipts"), {
@@ -34,9 +34,9 @@ export const useStore = defineStore('receipts', {
         this.receipts = [];
         ReceiptsSnapshot.forEach((doc) => {
           if (doc.data().receiptOf === nuxtApp.$auth.currentUser?.uid) {
-            let receiptData = doc.data() as RuleForm;
+            let receiptData = doc.data() as Receipt;
             receiptData.id = doc.id;
-            this.receipts.unshift({...receiptData, id:receiptData.id} as RuleForm);
+            this.receipts.unshift({...receiptData, id:receiptData.id} as Receipt);
           }
         });
       })

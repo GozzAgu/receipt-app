@@ -53,7 +53,7 @@ import type { FormInstance, FormRules, FormProps } from 'element-plus'
 import { updateProfile } from '@firebase/auth';
 import type { Container } from 'tsparticles-engine'
 import { AccountType } from '~/types/types';
-import { useStore } from '~/store/users';
+import { useAuthStore } from '~/store/users';
 
 definePageMeta({
   layout:'auth'
@@ -95,7 +95,7 @@ const onLoad = (container: Container) => {
 const nuxtApp = useNuxtApp()
 const router = useRouter()
 const loading = ref(false)
-const store = useStore()
+const store = useAuthStore()
 
 const labelPosition = ref<FormProps['labelPosition']>('top')
 
@@ -133,23 +133,24 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true
       try {
-        const response = await store.signin(admin.email, admin.password)
-        try {
-          await updateProfile(nuxtApp.$auth.currentUser!, {
-            displayName: admin.email
-          });
-        } catch (error) {
-          console.error(error);
-        }
-        ElNotification({
-          title: 'Success',
-          message: 'Sign in successful',
-          type: 'success',
-        })
-        if(admin.accountType === AccountType.Manager) {
-          router.push('/')
+        const response = await store.signin(admin.email, admin.password, admin.accountType)
+        if(response) {
+          try {
+            await updateProfile(nuxtApp.$auth.currentUser!, {
+              displayName: admin.email
+            });
+          } catch (error) {
+            console.error(error);
+          }
+          ElNotification({
+            title: 'Success',
+            message: 'Sign in successful',
+            type: 'success',
+          })
+          router.push('/receiptTable')
         }else {
-          router.push('/dashboard')
+          router.push('/signinManager')
+          console.log('Not an admin')
         }
       }
       catch(error) {

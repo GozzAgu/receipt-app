@@ -35,14 +35,14 @@ import { type FormProps, type FormInstance, type FormRules} from 'element-plus'
 import type { Manager } from '@/types/types'
 import { setDoc, doc } from "firebase/firestore"
 import { AccountType } from "@/types/types";
-import { useStore } from '~/store/users';
+import { useAuthStore } from '~/store/users';
 import { createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword, type Auth } from '@firebase/auth';
 
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
 const nuxtApp = useNuxtApp()
-const store = useStore()
+const store = useAuthStore()
 
 let manager = reactive<Manager>({
   id: '',
@@ -61,10 +61,17 @@ const passwordRules = reactive<FormRules<Manager>>({
   ],
 })
 
+const success = () => {
+  ElMessage({
+    message: 'Manager created successfully',
+    type: 'success',
+  })
+}
+
 const setUserAccountType = async (adminId: string, manager: Manager) => {
   const userDocRef = doc(nuxtApp.$firestore, 'users', adminId)
   await setDoc(userDocRef, { ...manager }, { merge: true })
-};
+}
 
 const addM = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
@@ -87,11 +94,7 @@ const addM = async (formEl: FormInstance | undefined) => {
         manager.email = '',  
         manager.password = ''
       }
-      ElNotification({
-        title: 'Success',
-        message: 'Manager created successfully',
-        type: 'success',
-      })
+      success()
     } else {
       console.log('error submit!', fields);
     }

@@ -1,9 +1,9 @@
 <template>
   <div class="shadow-md shadow-slate-100 drop-shadow-sm fixed top-0 bg-white w-[100%]">
     <div class="flex justify-between py-[1em] px-[1em] md:px-[5em] lg:px-[15em]">
-      <NuxtLink class="flex gap-x-[0.5em]" to="/dashboard">
+      <NuxtLink class="flex gap-x-[0.5em]" to="/receiptTable">
         <img class="w-[2em]" src="/snapbill-logo.png" />
-        <p class="font-bold text-lg text-sky-600">snapB!LL</p>
+        <p class="font-bold text-base md:text-lg text-sky-600">snapB!LL</p>
       </NuxtLink>
 
       <div class="flex gap-x-[0.7em]">
@@ -30,6 +30,12 @@
                   Profile
                 </NuxtLink> 
               </el-dropdown-item>
+              <el-dropdown-item>
+                <NuxtLink to="/users">
+                  <Icon class="mr-[0.5em]" name="fa6-solid:users" color="" size="20" />
+                  Users
+                </NuxtLink> 
+              </el-dropdown-item>
               <el-dropdown-item @click="logout">
                 <Icon class="mr-[0.5em] text-red-400" name="fa6-solid:power-off" size="15" /> 
                 <span class="text-red-400">Logout</span>
@@ -43,27 +49,27 @@
 </template>
 
 <script setup>
-import { signOut, onAuthStateChanged } from '@firebase/auth';
+import { signOut, onAuthStateChanged } from '@firebase/auth'
+import { useAuthStore } from '~/store/users'
 
 const router = useRouter()
 const emit = defineEmits(['signing-out'])
 const nuxtApp = useNuxtApp()
+const authStore = useAuthStore()
+
+const isAdmin = computed(() => {
+  return authStore.currentUser?.accountType === 'admin'
+})
 
 const logout = () => {
   setTimeout(function(){
     signOut(nuxtApp.$auth);
       router.push('/auth/signin');
   }, 3000);
-  emit('signing-out');
+  emit('signing-out')
 }
 
 onMounted(() => {
-  onAuthStateChanged(nuxtApp.$auth, (user) => {
-    if (user) {
-      console.log(user)
-    } else {
-
-    }
-  });
+  
 })
 </script>

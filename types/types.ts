@@ -3,7 +3,7 @@ export enum AccountType {
   Manager = 'manager'
 }
 
-export interface RuleForm {
+export interface Receipt {
   id: string,
   customerName: string
   customerAddress: string
@@ -52,6 +52,11 @@ export interface Admin {
   name: string,
   email: string,
   password: string,
-  
   accountType: AccountType.Admin
+}
+
+export interface SigninUser {
+  email: string,
+  password: string,
+  accountType: AccountType
 }

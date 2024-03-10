@@ -36,7 +36,7 @@
               <p class="font-semibold">Description</p>
               <p>{{ rpt?.productDescription }}</p>
             </div>
-            <div class="grid grid-cols-3 gap-x-[0.2em]">
+            <div class="grid grid-cols-2 gap-[0.2em]">
               <div class="bg-gray-100 rounded-lg p-2">
                 <p class="font-semibold">Quantity</p>
                 <p>{{ rpt?.productQuantity }}</p>
@@ -48,6 +48,10 @@
               <div class="bg-gray-100 rounded-lg p-2">
                 <p class="font-semibold">Paid via</p>
                 <p>{{ rpt?.paidVia }}</p>
+              </div>
+              <div v-if="rpt?.swapFrom" class="bg-gray-100 rounded-lg p-2">
+                <p class="font-semibold">Swapped from</p>
+                <p>{{ rpt?.swapFrom }}</p>
               </div>
             </div>
           </div>

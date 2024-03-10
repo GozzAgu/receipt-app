@@ -1,5 +1,6 @@
 <template>
   <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[15em] relative">
+    <pre>{{ isAdmin }}</pre>
     <div class="grid grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
@@ -39,10 +40,9 @@
         <el-input
           class="mt-[1em]"
           v-model="password"
-          type="password"
           placeholder="Enter your password"
-          clearable>
-        </el-input>
+          clearable
+        />
         <div class="h-[1em]">
           <p class="text-red-500 text-xs mt-[0.3em]">{{ passwordError }}</p>
         </div>
@@ -70,6 +70,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="productName" label="PRODUCT" width="200" />
+        <el-table-column prop="swapFrom" label="SWAPPED FROM" width="200">
+          <template #default="{ row }">
+            <span v-if="row.swapFrom">{{ row.swapFrom }}</span>
+            <span v-else>None</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="paidVia" width="100" label="PAID VIA" >
           <template #default="{ row }">
             <div 
@@ -86,7 +92,7 @@
         </el-table-column>
         <el-table-column prop="productDescription" width="400" label="DESCRIPTION" />
         <el-table-column prop="date" sortable label="DATE" width="150"/>
-        <el-table-column fixed="right" width="110">
+        <el-table-column fixed="right" width="61">
           <template #default="scope">
             <el-tooltip
               class="box-item"
@@ -102,7 +108,10 @@
                 <Icon name="ic:twotone-file-copy" color="white" size="12" />
               </el-button>
             </el-tooltip>
-
+          </template>
+        </el-table-column>
+        <el-table-column v-if="isAdmin" fixed="right" width="61">
+          <template #default="scope">
             <el-tooltip
               class="box-item"
               effect="dark"
@@ -142,12 +151,12 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store/receipts"
-import { onAuthStateChanged } from '@firebase/auth'
 import { Search } from '@element-plus/icons-vue'
+import { useAuthStore } from "~/store/users"
 
 const store = useStore()
+const authStore = useAuthStore()
 const router = useRouter()
-const nuxtApp = useNuxtApp()
 const parentBorder = ref(true)
 const loading = ref(true)
 const dialogVisible = ref(false)
@@ -156,6 +165,7 @@ const incorrectPassword = ref(false);
 let deleteId = ref('')
 const currentPage = ref(1)
 const search = ref('')
+const nuxtApp = useNuxtApp()
 
 const deleteSuccess = () => {
   ElMessage({
@@ -163,6 +173,10 @@ const deleteSuccess = () => {
     type: 'success',
   })
 }
+
+const isAdmin = computed(() => {
+  return authStore.currentUser?.accountType === 'admin'
+})
 
 const passwordError = computed(() => {
   if(incorrectPassword.value == true){
@@ -217,15 +231,10 @@ const paginatedReceipts = computed(() => {
 });
 
 onMounted(() => {
-  onAuthStateChanged(nuxtApp.$auth, (user) => {
-      if(user) {
-
-      } else {
-
-      }
-      // store.fetchReceipts();
-      loading.value = false
-    });
+  authStore.loadCurrentUserFromStorage()
+  if(paginatedReceipts) {
+    loading.value = false
+  }
 })
 
 </script>

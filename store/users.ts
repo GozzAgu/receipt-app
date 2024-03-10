@@ -1,34 +1,34 @@
 import { defineStore } from 'pinia'
-import type { Manager, Admin } from '../types/types'
-import { collection, addDoc, setDoc, doc, onSnapshot } from "firebase/firestore"
+import { type Manager, type Admin } from '../types/types'
+import { collection, onSnapshot } from "firebase/firestore"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@firebase/auth';
-import type { User } from 'firebase/auth/cordova';
+import type { User } from 'firebase/auth/web-extension';
 
-export const useStore = defineStore('users', {
+export const useAuthStore = defineStore('users', {
   state: () => ({
     managers: [] as Manager[],
     admins: [] as Admin[],
-    currentUser: null as null | User & {password: string}
+    currentUser: null as null | User & { password: string, accountType: string }
   }),
 
   actions: {
-    async signupAdmin(email:string, password:string) {
+    async signupAdmin(email:string, password:string, accountType:string) {
       const nuxtApp = useNuxtApp()
       const response = await createUserWithEmailAndPassword(nuxtApp.$auth, email, password)
       const user = response.user
       if (user) {
-        this.currentUser = {...user, password: password }
+        this.currentUser = {...user, password: password, accountType: accountType }
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
       }
       return response
     },
 
-    async signin(email:string, password:string) {
+    async signin(email:string, password:string, accountType: string) {
       const nuxtApp = useNuxtApp()
       const response = await signInWithEmailAndPassword(nuxtApp.$auth, email, password)
       const user = response.user
       if (user) {
-        this.currentUser = {...user, password: password }
+        this.currentUser = {...user, password: password, accountType: accountType }
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
       }
       return response
@@ -41,21 +41,6 @@ export const useStore = defineStore('users', {
       }
     },
 
-    async addManager(manager:Manager) {
-      const nuxtApp = useNuxtApp()
-      manager.adminId = nuxtApp.$auth.currentUser?.uid
-      const response = await addDoc(collection(nuxtApp.$firestore, "users"), {
-        manager
-      });
-      manager.id = response.id
-      const newDocRef = await setDoc(doc(nuxtApp.$firestore, "users", response.id), {
-        ...manager,
-        id: response.id,
-      });
-      this.managers.push(manager)
-      return response.id
-    },
-
     fetchManagers() {
       const nuxtApp = useNuxtApp()
       const querySnapshot = collection(nuxtApp.$firestore, "users")
@@ -64,18 +49,11 @@ export const useStore = defineStore('users', {
         UsersSnapshot.forEach((doc) => {
           let userData = doc.data() as Manager;
           userData.id = doc.id;
-          console.log(userData.id)
-          this.managers.unshift(userData as Manager);
-          console.log(this.managers)
+          if (userData.accountType === "manager" && userData.adminId === this.currentUser?.uid) {
+            this.managers.unshift(userData as Manager)
+          }
         });
       })
     },
   },
-
-  // loadCurrentUserFromStorage() {
-  //   const storedUser = localStorage.getItem('currentUser')
-  //   if (storedUser) {
-  //     this.currentUser = JSON.parse(storedUser)
-  //   }
-  // },
 })

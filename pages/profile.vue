@@ -12,7 +12,4 @@ import { useStore } from "../store/receipts"
 const store = useStore()
 // const isSigningout = ref(false)
 
-onMounted(() => {
-  store.fetchReceipts();
-})
 </script>
