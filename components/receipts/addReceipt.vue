@@ -1,9 +1,9 @@
 <template>
   <div class="px-[1em] md:px-[5em] lg:px-[15em] py-[5em] bg-blue-50">
-    <NuxtLink to="/dashboard">
+    <NuxtLink to="/receiptTable">
       <el-button class="mb-[1em]" type="primary">
         <el-icon><Back /></el-icon>
-        <span class="ml-[1em] text-[0.7em] md:text-base">Back home</span>
+        <span class="ml-[1em] text-[0.7em] md:text-base">Back</span>
       </el-button>
     </NuxtLink>
     
@@ -46,6 +46,27 @@
           <el-form-item label="Product description" prop="productDescription">
             <el-input v-model="companyDetails.productDescription" placeholder="" type="textarea"/>
           </el-form-item>
+          <el-form-item label="Payment Mode">
+            <el-select v-model="companyDetails.paidVia" placeholder="select" style="width: 240px">
+              <el-option v-for="item in paymentMethods" :key="item.value" :label="item.label" :value="item.value" />
+            </el-select>
+          </el-form-item> 
+          <el-form-item label="Swap deal?">
+            <el-switch
+              v-model="swap"
+              class="mt-2"
+              style="margin-left: 24px"
+              inline-prompt
+              :active-icon="Check"
+              :inactive-icon="Close"
+            />
+          </el-form-item>  
+          <el-form-item v-if="swap == true" label="Swap from" prop="swapFrom">
+            <el-input v-model="companyDetails.swapFrom" placeholder="" />
+          </el-form-item> 
+          <el-form-item v-if="swap == true" label="Swap to" prop="productName">
+            <el-input disabled v-model="companyDetails.productName" placeholder="" />
+          </el-form-item> 
         </div>
         <div class="flex gap-x-[1em]">
           <el-form-item label="Product quantity" prop="productQuantity">
@@ -69,16 +90,17 @@
 import { useStore } from "@/store/receipts"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
-import type { RuleForm } from '@/types/types'
-import { Tickets, Back } from '@element-plus/icons-vue'
+import type { Receipt } from '@/types/types'
+import { Tickets, Back, Check, Close } from '@element-plus/icons-vue'
 
+const swap = ref(false)
 const store = useStore()
 const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
 
-let companyDetails = reactive<RuleForm>({
+let companyDetails = reactive<Receipt>({
   id: '',
   customerName: '',
   customerAddress: '',
@@ -91,10 +113,32 @@ let companyDetails = reactive<RuleForm>({
   productPrice: 0,
   newPrice: 0,
   date: '',
-  receiptOf: ''
+  receiptOf: '',
+  imei: '',
+  paidVia: '',
+  swapFrom: ''
 })
 
-const rules = reactive<FormRules<RuleForm>>({
+const paymentMethods = [
+  {
+    value: 'Cash',
+    label: 'Cash',
+  },
+  {
+    value: 'Pos',
+    label: 'Pos',
+  },
+  {
+    value: 'Transfer',
+    label: 'Transfer',
+  },
+  {
+    value: 'Usdt',
+    label: 'Usdt',
+  },
+]
+
+const rules = reactive<FormRules<Receipt>>({
   customerName: [
     { required: true, message: 'Please input Customer name', trigger: 'blur' },
   ],
@@ -122,6 +166,12 @@ const rules = reactive<FormRules<RuleForm>>({
   productPrice: [
     { required: true, message: 'Please input Product price', trigger: 'blur' },
   ],
+  paidVia: [
+    { required: true, message: 'Please select a payment method', trigger: 'blur' },
+  ],
+  swapFrom: [
+    { required: true, message: 'Please input what you swapped from', trigger: 'blur' },
+  ]
 })
 
 onMounted(() => {
@@ -146,7 +196,7 @@ const addR = async (formEl: FormInstance | undefined) => {
         }
         const res = await store.addReceipt(newCompanyDetails)        
         router.push({path:`/receipt/${res}`})
-        companyDetails = {} as RuleForm
+        companyDetails = {} as Receipt
         loading.value = false
       } catch (e) {
         console.log(e)

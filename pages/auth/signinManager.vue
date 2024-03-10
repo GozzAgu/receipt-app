@@ -1,5 +1,5 @@
 <template>
-  <LoadersSignoutLoader v-if="isLoading" />
+  <LoadersSignoutLoader v-if="loading" />
   <NuxtParticles
     id="tsparticles"
     :options="options"
@@ -9,7 +9,7 @@
 
   <el-form
     ref="ruleFormRef"
-    :model="admin"
+    :model="manager"
     :rules="rules"
     label-width="120px"
     class="demo-ruleForm md:w-full px-[3em] md:p-[2em] md:py-[2em] md:px-[4em] md:shadow-md mt-[3em] bg-white"
@@ -20,30 +20,25 @@
     <img class="lg:hidden w-[3em] m-auto mb-8" src="/snapbill-logo.png"/>
     
     <div>
-      <h2 class="text-center lg:text-left text-gray-500 text-[1.5em] md:text-[2.5em] mb-[0.5em]">Sign Up</h2>
-      <p class="text-sm text-gray-500 mb-[1em]">
-        Get started, Please enter your credentials to get signed into your account.
-      </p>
+      <h2 class="text-center lg:text-left text-gray-500 text-[1.5em] md:text-[2.5em] mb-[0.5em]">Sign In</h2>
+      <p class="text-sm text-gray-500 mb-[1em]">Welcome back, Please enter your credentials to get signed into your account.</p>
     </div>
     
     <el-form-item label="Email" prop="email">
-      <el-input v-model="admin.email" />
+      <el-input v-model="manager.email" />
     </el-form-item>
     <el-form-item label="Password" prop="password">
-      <el-input type="password" v-model="admin.password" />
-    </el-form-item>
-    <el-form-item label="Confirm Password" prop="email">
-      <el-input type="password" v-model="admin.confirmPassword" />
+      <el-input type="password" v-model="manager.password" />
     </el-form-item>
     <el-form-item class="mt-[2em]">
       <el-button class="flex m-auto w-full" type="primary" @click="submitForm(ruleFormRef)">
         <Icon v-if="loading" class="mr-2" name="svg-spinners:gooey-balls-1" />
-        Sign Up
+        Sign In
       </el-button>
     </el-form-item>
     <div class="flex justify-between">
-      <NuxtLink to="/auth/signin">
-        <p class="hover:underline text-xs text-gray-500 mt-[3em]">Already have an account?</p>
+      <NuxtLink to="/auth/signup">
+        <p class="hover:underline text-xs text-gray-500 mt-[3em]">Don't have an account?</p>
       </NuxtLink>
       <NuxtLink to="/auth/forgot">
         <p class="hover:underline text-xs text-gray-500 mt-[3em]">Forgot password?</p>
@@ -58,14 +53,13 @@ import type { FormInstance, FormRules, FormProps } from 'element-plus'
 import { updateProfile } from '@firebase/auth';
 import type { Container } from 'tsparticles-engine'
 import { AccountType } from '~/types/types';
-import { doc, setDoc } from "firebase/firestore"; 
 import { useAuthStore } from '~/store/users';
 
 definePageMeta({
   layout:'auth'
 });
 
-const isLoading = ref(false)
+// const isLoading = ref(false)
 const options = {
   fullScreen: {
     enable: true,
@@ -98,9 +92,9 @@ const onLoad = (container: Container) => {
   setTimeout(() => container.play(), 500)
 }
 
+const nuxtApp = useNuxtApp()
 const router = useRouter()
 const loading = ref(false)
-const nuxtApp = useNuxtApp()
 const store = useAuthStore()
 
 const labelPosition = ref<FormProps['labelPosition']>('top')
@@ -114,29 +108,15 @@ interface RuleForm {
 }
 
 const ruleFormRef = ref<FormInstance>()
-const admin = reactive<RuleForm>({
+const manager = reactive<RuleForm>({
   name: '',
   email: '',
   password: '',
   confirmPassword: '',
-  accountType: AccountType.Admin,
+  accountType: AccountType.Manager,
 })
 
-const matchPassword = (rule: any, value: any, callback: any) => {
-  if (value === '') {
-      callback(new Error('Confirm Password is required'));
-  }else if (value !== admin.password) {
-      callback(new Error('Password does not match'));
-  } else {
-      callback();
-  }
-}
-
 const rules = reactive<FormRules<RuleForm>>({
-  name: [
-    { required: true, message: 'Email required', trigger: 'blur' },
-    { min: 3, max: 30, message: 'Length should be up to 3', trigger: 'blur' },
-  ],
   email: [
     { required: true, message: 'Email required', trigger: 'blur' },
     { min: 3, max: 30, message: 'Length should be up to 3', trigger: 'blur' },
@@ -145,55 +125,31 @@ const rules = reactive<FormRules<RuleForm>>({
     { required: true, message: 'Password required', trigger: 'blur' },
     { min: 6, max: 30, message: 'Password cannot be less than 6', trigger: 'blur' },
   ],
-  confirmPassword: [
-    { validator: matchPassword,  trigger: 'change' },
-    { required: true, message: 'Password required', trigger: 'blur' },
-    { min: 6, max: 30, message: 'Password cannot be less than 6', trigger: 'blur' },
-  ],
 })
-
-const setDisplayName = async() => {
-  const user = nuxtApp.$auth.currentUser;
-  try {
-    await updateProfile(nuxtApp.$auth.currentUser!, {
-      displayName: admin.name,
-    });
-
-    console.log('User profile updated:', user);
-  } catch (error) {
-    console.error('Error updating display name:', error);
-  }
-}
-
-const setUserAccountType = async (userId: string, admin: RuleForm) => {
-  const userDocRef = doc(nuxtApp.$firestore, 'users', userId)
-  await setDoc(userDocRef, { ...admin }, { merge: true })
-};
 
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate(async(valid, fields) => {
     if (valid) {
-      isLoading.value = true
+      loading.value = true
       try {
-        const response = await store.signupAdmin(admin.email, admin.password, admin.accountType)
-        if(response) {
-          try {
-            setDisplayName()
-            await setUserAccountType(response.user.uid, admin)
+        const response = await store.signin(manager.email, manager.password, manager.accountType)
+        try {
+          await updateProfile(nuxtApp.$auth.currentUser!, {
+            displayName: manager.email
+          });
         } catch (error) {
-            console.error(error)
+          console.error(error);
         }
-          ElNotification({
-            title: 'Success',
-            message: 'Account created successfully',
-            type: 'success',
-          })
-          if(admin.accountType === AccountType.Manager) {
-            router.push('/')
-          }else {
-            router.push('/receiptTable')
-          }
+        ElNotification({
+          title: 'Success',
+          message: 'Sign in successful',
+          type: 'success',
+        })
+        if(manager.accountType === AccountType.Manager) {
+          router.push('/')
+        }else {
+          router.push('/receiptTable')
         }
       }
       catch(error) {
@@ -203,11 +159,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           type: 'error',
         })
         console.log(error)
-      } 
+      }
       finally {
-        isLoading.value = false
-        admin.email = '',  
-        admin.password = ''
+        loading.value = false
+        manager.email = '',
+        manager.password = ''
       }
     } else {
       console.log('error submit!', fields)

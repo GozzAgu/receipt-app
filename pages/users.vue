@@ -1,8 +1,8 @@
 <template>
-  <SignoutLoader v-if="isSigningout" />
+  <LoadersSignoutLoader v-if="isSigningout" />
   <Navbar @signing-out="isSigningout=true" class="z-10" />
   <div>
-    <ReceiptsReceiptCards />
+    <Users />
   </div>
 </template>
 

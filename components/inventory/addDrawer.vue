@@ -267,8 +267,20 @@ import type { FormInstance } from 'element-plus'
 const emit = defineEmits(['close-drawer'])
 
 const loading = ref(false)
+
+// Get today's date
+const today = new Date();
+
+// Get the components of the date
+const month = ref(today.getMonth() + 1); // Months are zero-based, so add 1
+const day = ref(today.getDate());
+const year = ref(today.getFullYear());
+
+// Format the date as "m/dd/yyyy"
+const formattedDate = computed<string>(()=> `${month}/${day}/${year}`) ;
+
 const newInventoryData = ref({
-    dateIn: '',
+    dateIn: formattedDate,
     supplier: '',
     grade: '',
     storage: '',

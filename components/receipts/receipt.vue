@@ -1,68 +1,79 @@
 <template>
-  <div class="px-[1.5em] md:px-[5em] lg:px-[25em] py-[3em] bg-blue-50 h-[50em]">
-    <div>
-      <div v-loading="loading" class="border mt-[4em] px-[1em] py-[2em] bg-white rounded-lg shadow-lg" ref="pdfSection">
-        <div class="flex justify-between pt-[1em] px-[1em]">
-          <div class="flex gap-x-[0.5em]">
-            <img class="w-[1em] h-[1em]" src="/public/snapbill-logo.png" />
-            <p class="font-bold text-[0.6em] text-sky-600">snapB!LL</p>
+  <div class="print:m-auto px-4 md:px-20 py-12 bg-blue-50 min-h-screen">
+    <div class="max-w-3xl mx-auto">
+      <div ref="pdfSection" v-loading="loading" class="border rounded-lg shadow-lg bg-white mt-[4em]">
+        <div class="flex justify-between items-center px-4 py-2 bg-blue-100 rounded-t-lg">
+          <div class="flex items-center">
+            <img class="w-4 h-4 mr-1" src="/snapbill-logo.png" alt="SnapBill Logo" />
+            <p class="font-bold text-xs text-blue-800">snapB!LL</p>
           </div>
-          <p class="text-[0.5em]">{{ rpt?.date }}</p>
+          <p class="text-xs">{{ rpt?.date }}</p>
         </div>
 
-        <div class="py-[1em] px-[1em] text-sm">
+        <div class="px-4 pb-4 text-sm">
           <el-divider content-position="left"><span class="text-lg">Transaction Receipt</span></el-divider>
 
-          <div class="text-[0.6em] font-thin">
+          <div class="font-light mt-4 text-xs md:text-base">
             <p>Dear {{ rpt?.customerName }},</p>
-            <p>Below are your purchase details from <span>{{ rpt?.name }}</span></p>
-            <p>Be sure to keep this document safe</p>
+            <p>Below are your purchase details from <span class="font-semibold">{{ rpt?.name }}</span></p>
+            <p>Please keep this document safe.</p>
           </div>
-          <div class="font-thin bg-white py-[1em] border rounded-lg text-[0.6em] mt-[2em] grid grid-cols-1 gap-y-[1em] px-[0.5em]">
-            <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
-              <p>Customer Name </p>
+
+          <div class="text-xs md:text-base grid md:grid-cols-2 gap-2 mt-4">
+            <div class="bg-gray-100 rounded-lg p-2">
+              <p class="font-semibold">Customer Name</p>
               <p>{{ rpt?.customerName }}</p>
             </div>
-            <hr>
-            <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
-              <p>Product Name </p>
+            <div class="bg-gray-100 rounded-lg p-2">
+              <p class="font-semibold">Customer Address</p>
+              <p>{{ rpt?.customerAddress }}</p>
+            </div>
+            <div class="bg-gray-100 rounded-lg p-2">
+              <p class="font-semibold">Product</p>
               <p>{{ rpt?.productName }}</p>
             </div>
-            <hr>
-            <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
-              <p>Description </p>
+            <div class="bg-gray-100 rounded-lg p-2">
+              <p class="font-semibold">Description</p>
               <p>{{ rpt?.productDescription }}</p>
             </div>
-            <hr>
-            <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
-              <p>Quantity </p>
-              <p>{{ rpt?.productQuantity }}</p>
-            </div>
-            <hr>
-            <div class="grid grid-cols-2 bg-white rounded-lg px-[1em]">
-              <p>Price per unit </p>
-              <p>{{ rpt?.productPrice }}</p>
+            <div class="grid grid-cols-2 gap-[0.2em]">
+              <div class="bg-gray-100 rounded-lg p-2">
+                <p class="font-semibold">Quantity</p>
+                <p>{{ rpt?.productQuantity }}</p>
+              </div>
+              <div class="bg-gray-100 rounded-lg p-2">
+                <p class="font-semibold">Unit price</p>
+                <p>{{ rpt?.productPrice }}</p>
+              </div>
+              <div class="bg-gray-100 rounded-lg p-2">
+                <p class="font-semibold">Paid via</p>
+                <p>{{ rpt?.paidVia }}</p>
+              </div>
+              <div v-if="rpt?.swapFrom" class="bg-gray-100 rounded-lg p-2">
+                <p class="font-semibold">Swapped from</p>
+                <p>{{ rpt?.swapFrom }}</p>
+              </div>
             </div>
           </div>
 
-          <div class="font-thin text-[0.7em] flex w-[full] justify-between bg-white rounded-lg mt-[2em]">
-            <p class="">Total Price </p>
-            <p class="">₦{{ rpt?.newPrice }}</p>
+          <div class="text-xs md:text-base flex justify-between items-center bg-gray-100 rounded-lg p-4 mt-2">
+            <p class="font-semibold">Total Price</p>
+            <p class="font-bold">₦{{ rpt?.newPrice }}</p>
           </div>
         </div>
       </div>
 
-      <div class="flex justify-between">
-        <NuxtLink to="/dashboard">
-          <el-button class="mt-[2em]" type="primary">
+      <div class="flex justify-between mt-6">
+        <NuxtLink to="/receiptTable">
+          <el-button class="py-2 px-4" type="primary">
             <el-icon><Back /></el-icon>
-            <span class="ml-[1em] text-[0.7em] md:text-base">Back home</span>
+            <span class="ml-2 text-sm md:text-base">Back</span>
           </el-button>
         </NuxtLink>
 
-        <el-button class="mt-[2em]" type="success" @click="exportToPDF('my-pdf-file.pdf', pdfSection)">
+        <el-button class="py-2 px-4" type="success" @click="exportToPDF('receipt.pdf', pdfSection)">
           <Icon name="line-md:download-loop" color="white" size="20" />
-          <span class="ml-[1em] text-[0.7em] md:text-base">Download Receipt</span>
+          <span class="ml-2 text-sm md:text-base">Download Receipt</span>
         </el-button>
       </div>
     </div>
@@ -73,7 +84,7 @@
 import { useStore } from "@/store/receipts"
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
-import { Download, Back } from '@element-plus/icons-vue'
+import { Back } from '@element-plus/icons-vue'
 
 const pdfSection = ref<HTMLElement | null>(null)
 const store = useStore()
@@ -101,11 +112,15 @@ onMounted(async () => {
 
 const exportToPDF = async (filename: string, element: HTMLElement | null) => {
   if (!element) {
+    console.error('Element to export is not found.')
     return;
   }
 
   try {
+    console.log('Starting PDF export...')
     const canvas = await html2canvas(element, { scale: 2 })
+    console.log('Canvas generated successfully:', canvas)
+
     const imgData = canvas.toDataURL('image/png')
     const pdf = new jsPDF()
     const imgProps = pdf.getImageProperties(imgData)
@@ -114,8 +129,14 @@ const exportToPDF = async (filename: string, element: HTMLElement | null) => {
 
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
     pdf.save(filename)
+    console.log('PDF exported successfully.')
   } catch (error) {
     console.error('Error exporting to PDF:', error)
   }
 }
+
 </script>
+
+<style scoped>
+
+</style>
