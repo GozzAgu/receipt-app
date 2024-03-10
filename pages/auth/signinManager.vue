@@ -18,10 +18,13 @@
     style="max-width: 500px"
   >
     <img class="lg:hidden w-[3em] m-auto mb-8" src="/snapbill-logo.png"/>
-    
+
     <div>
       <h2 class="text-center lg:text-left text-gray-500 text-[1.5em] md:text-[2.5em] mb-[0.5em]">Sign In</h2>
-      <p class="text-sm text-gray-500 mb-[1em]">Welcome back, Please enter your credentials to get signed into your account.</p>
+      <p class="text-sm text-gray-500 mb-[1em]">
+        Welcome back, Please enter your credentials to get signed into your account.
+        
+      </p>
     </div>
     
     <el-form-item label="Email" prop="email">
@@ -36,6 +39,9 @@
         Sign In
       </el-button>
     </el-form-item>
+    <NuxtLink to="/auth/signin">
+      <span class="text-xs text-gray-500 hover:underline hover:text-blue-400 cursor-pointer">If you're an admin, click here</span>
+    </NuxtLink>
     <div class="flex justify-between">
       <NuxtLink to="/auth/signup">
         <p class="hover:underline text-xs text-gray-500 mt-[3em]">Don't have an account?</p>
