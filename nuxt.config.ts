@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     "nuxt-particles",
     "nuxt-icon"
   ],
+  plugins:[],
   tailwindcss: {
     exposeConfig: true,
     viewer: true,

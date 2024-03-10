@@ -1,0 +1,23 @@
+{
+    "excelData": [
+      {
+        "name": "John Doe",
+        "age": 30,
+        "location": "City A",
+        "occupation": "Engineer"
+      },
+      {
+        "name": "Jane Smith",
+        "age": 28,
+        "location": "City B",
+        "occupation": "Designer"
+      },
+      {
+        "name": "Bob Johnson",
+        "age": 35,
+        "location": "City C",
+        "occupation": "Manager"
+      }
+    ]
+  }
+  
