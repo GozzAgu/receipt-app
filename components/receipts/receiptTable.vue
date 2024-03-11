@@ -3,7 +3,7 @@
     <div class="grid grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
-        <span class=""> Receipts ({{ store.receipts.length }})</span>
+        <span class="text-sm md:text-base"> Receipts ({{ store.receipts.length }})</span>
       </h1>
       <div class="flex gap-x-[1em]">
         <el-input
