@@ -3,7 +3,7 @@
     <div class="grid grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="fa6-solid:users" color="gray" size="25" />
-        <span class=""> Staff</span>
+        <span class=""> Staff ({{ authStore.managers.length }}) </span>
       </h1>
       <el-input
         v-model="search"
