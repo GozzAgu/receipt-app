@@ -13,7 +13,7 @@
     </div>
     <hr class="mt-[1em]">
     <div v-loading="loading" class="mt-[1em] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[1em]">
-      <div v-for="manager in authStore.managers">
+      <div v-for="manager in paginatedReceipts">
         <div class=
           "hover:scale-105 
           transition-transform 
@@ -38,13 +38,13 @@
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item>
-                    <NuxtLink to="/profile">
+                    <NuxtLink to="">
                       <Icon name="material-symbols:accessibility" color="" size="15" /> 
                       <span class="text-xs ml-[1em]">Permission to delete</span>
                     </NuxtLink> 
                   </el-dropdown-item>
                   <el-dropdown-item>
-                    <NuxtLink to="/users">
+                    <NuxtLink to="">
                       <Icon name="ic:twotone-delete" color="red" size="15" />
                       <span class="text-xs ml-[1em]">Delete Staff account</span>
                     </NuxtLink> 
@@ -76,6 +76,15 @@
         </div>
       </div>
     </div>
+
+    <div class="fixed bottom-3 pt-[1em] right-[1em] md:right-[5em] lg:right-[15em] bg-white">
+      <vue-awesome-paginate
+        v-model="currentPage"
+        :total-items="authStore.managers.length"
+        :items-per-page="10"
+        :max-pages-shown="5"
+      />
+    </div>
   </div>
 </template>
 
@@ -85,7 +94,21 @@ import { useAuthStore } from '~/store/users'
 import { Search } from '@element-plus/icons-vue'
 
 const store = useStore()
+const search = ref('')
 const authStore = useAuthStore()
+const currentPage = ref(1)
+
+const searchR = computed(() => {
+  return authStore.managers.filter(m => {
+    return m.email.toLowerCase().includes(search.value.toLowerCase());
+  })
+})
+
+const paginatedReceipts = computed(() => {
+  const start = (currentPage.value - 1) * 10
+  const end = start + 10
+  return searchR.value.slice(start, end)
+})
 
 onMounted(() => {
   authStore.loadCurrentUserFromStorage()
@@ -95,55 +118,34 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* .spiral-gradient {
-  background: conic-gradient(
-    from 0deg at 50% 50%,
-    rgb(225, 236, 255) 180deg,
-    rgb(202, 222, 255) 360deg
-  );
-} */
-
-:global(h2#card-usage ~ .example .example-showcase) {
-  background-color: var(--el-fill-color) !important;
-}
-
-.el-statistic {
-  --el-statistic-content-font-size: 28px;
-}
-
-.statistic-card {
-  height: 100%;
-  padding: 20px;
-  border-radius: 4px;
-  background-color: var(--el-bg-color-overlay);
-}
-
-.statistic-footer {
+.pagination-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  font-size: 12px;
-  color: var(--el-text-color-regular);
-  margin-top: 16px;
+  gap: 0.5em;
+  margin-top: 2em;
+  font-size: 0.7em;
 }
 
-.statistic-footer .footer-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+::v-deep(.paginate-buttons){
+  border: 1px solid #E2E8F0;
+  padding: 0.5rem;
+  height: 3em;
+  width: 3em;
+  border-radius: 0.5em;
 }
 
-.statistic-footer .footer-item span:last-child {
-  display: inline-flex;
-  align-items: center;
-  margin-left: 4px;
+::v-deep(.paginate-buttons:hover){
+  background-color: #0055ffc2; /* Assuming e-primary is a blue color */
+  color: white;
+  border: none;
+  border-radius: 0.5em;
+  transition: background-color 300ms;
 }
 
-.green {
-  color: var(--el-color-success);
-}
-.red {
-  color: var(--el-color-error);
+::v-deep(.active-page){
+  background-color: #0055ffc2; /* Assuming e-primary is a blue color */
+  color: white;
+  height: 3.3em;
+  width: 3.3em;
+  border-radius: 0.5em;
 }
 </style>

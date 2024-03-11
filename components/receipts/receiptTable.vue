@@ -226,7 +226,7 @@ const paginatedReceipts = computed(() => {
   const start = (currentPage.value - 1) * 10
   const end = start + 10
   return searchR.value.slice(start, end)
-});
+})
 
 onMounted(() => {
   authStore.loadCurrentUserFromStorage()
