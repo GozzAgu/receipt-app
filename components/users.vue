@@ -1,9 +1,17 @@
 <template>
   <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[15em]">
-    <h1 class="font-semibold text-xl text-gray-500">
-      <Icon name="fa6-solid:users" color="gray" size="25" />
-      <span class=""> Staff</span>
-    </h1>
+    <div class="grid grid-cols-2">
+      <h1 class="font-semibold text-xl text-gray-500">
+        <Icon name="fa6-solid:users" color="gray" size="25" />
+        <span class=""> Staff</span>
+      </h1>
+      <el-input
+        v-model="search"
+        placeholder="Search for a product receipt"
+        :prefix-icon="Search"
+      />
+    </div>
+    <hr class="mt-[1em]">
     <div class="mt-[1em] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[1em]">
       <div v-for="manager in authStore.managers">
         <div class=
