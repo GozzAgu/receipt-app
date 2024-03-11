@@ -136,7 +136,7 @@
         </NuxtLink>
       </el-empty>
 
-      <div class="fixed bottom-3 pt-[1em] right-[1em] md:right-[5em] lg:right-[15em] bg-white">
+      <div class="fixed bottom-3 mt-[1em] right-[1em] md:right-[5em] lg:right-[15em] bg-white">
         <vue-awesome-paginate
           v-model="currentPage"
           :total-items="store.receipts.length"
