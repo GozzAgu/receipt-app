@@ -27,6 +27,12 @@
           rounded-xl 
           p-[1em]"
         >
+          <div class="flex justify-between">
+            <!-- <Icon name="jam:padlock-open-f" size="20" color="gray" /> -->
+            <Icon name="jam:padlock-f" size="20" color="gray" />
+            <Icon name="mdi:dots-horizontal" size="20" color="gray" />
+          </div>
+
           <div class=
             "my-[1em] 
             border 

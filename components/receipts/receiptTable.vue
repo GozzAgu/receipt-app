@@ -55,7 +55,7 @@
     <div v-loading="loading" class="mt-[1em] z-0">
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
-        :border="parentBorder" 
+        :border="parentBorder"
         v-if="store.receipts.length > 0" 
         :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
