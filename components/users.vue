@@ -7,7 +7,7 @@
       </h1>
       <el-input
         v-model="search"
-        placeholder="Search for a product receipt"
+        placeholder="Search for a staff"
         :prefix-icon="Search"
       />
     </div>
@@ -55,6 +55,7 @@
 <script setup>
 import { useStore } from '~/store/receipts'
 import { useAuthStore } from '~/store/users'
+import { Search } from '@element-plus/icons-vue'
 
 const store = useStore()
 const authStore = useAuthStore()
