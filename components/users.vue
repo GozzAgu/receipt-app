@@ -12,7 +12,7 @@
       />
     </div>
     <hr class="mt-[1em]">
-    <div class="mt-[1em] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[1em]">
+    <div v-loading="loading" class="mt-[1em] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[1em]">
       <div v-for="manager in authStore.managers">
         <div class=
           "hover:scale-105 
@@ -40,7 +40,7 @@
                   <el-dropdown-item>
                     <NuxtLink to="/profile">
                       <Icon name="material-symbols:accessibility" color="" size="15" /> 
-                      <span class="text-xs ml-[1em]">Deletion permission</span>
+                      <span class="text-xs ml-[1em]">Permission to delete</span>
                     </NuxtLink> 
                   </el-dropdown-item>
                   <el-dropdown-item>
