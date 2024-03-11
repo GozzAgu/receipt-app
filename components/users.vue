@@ -24,13 +24,34 @@
           from-blue-100 
           to-slate-100 
           shadow-lg 
+          spiral-gradient
           rounded-xl 
           p-[1em]"
         >
           <div class="flex justify-between">
             <!-- <Icon name="jam:padlock-open-f" size="20" color="gray" /> -->
-            <Icon name="jam:padlock-f" size="20" color="gray" />
-            <Icon name="mdi:dots-horizontal" size="20" color="gray" />
+            <Icon name="jam:padlock-f" size="15" color="gray" />
+            <el-dropdown trigger="click">
+              <span class="el-dropdown-link">
+                <Icon name="mdi:dots-horizontal" size="20" color="gray" />
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item>
+                    <NuxtLink to="/profile">
+                      <Icon name="material-symbols:accessibility" color="" size="15" /> 
+                      <span class="text-xs ml-[1em]">Deletion permission</span>
+                    </NuxtLink> 
+                  </el-dropdown-item>
+                  <el-dropdown-item>
+                    <NuxtLink to="/users">
+                      <Icon name="ic:twotone-delete" color="red" size="15" />
+                      <span class="text-xs ml-[1em]">Delete Staff account</span>
+                    </NuxtLink> 
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
           </div>
 
           <div class=
@@ -74,6 +95,14 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* .spiral-gradient {
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    rgb(225, 236, 255) 180deg,
+    rgb(202, 222, 255) 360deg
+  );
+} */
+
 :global(h2#card-usage ~ .example .example-showcase) {
   background-color: var(--el-fill-color) !important;
 }
