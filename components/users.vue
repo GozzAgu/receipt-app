@@ -13,7 +13,7 @@
     </div>
     <hr class="mt-[1em]">
     <div v-loading="loading" class="mt-[1em] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[1em]">
-      <div v-for="manager in paginatedReceipts">
+      <div v-if="authStore.managers.length > 0" v-for="manager in paginatedManagers">
         <div class=
           "hover:scale-105 
           transition-transform 
@@ -75,6 +75,14 @@
           <p class="text-xs text-center">{{ manager.accountType }}</p>
         </div>
       </div>
+
+      <!-- <div v-else class="">
+        <el-empty>
+          <NuxtLink to="/profile">
+            <el-button type="primary">Create a manager</el-button>
+          </NuxtLink>
+        </el-empty>
+      </div>  -->
     </div>
 
     <div class="fixed bottom-3 pt-[1em] right-[1em] md:right-[5em] lg:right-[15em] bg-white">
@@ -89,11 +97,10 @@
 </template>
 
 <script setup>
-import { useStore } from '~/store/receipts'
 import { useAuthStore } from '~/store/users'
 import { Search } from '@element-plus/icons-vue'
 
-const store = useStore()
+const loading = ref(true)
 const search = ref('')
 const authStore = useAuthStore()
 const currentPage = ref(1)
@@ -104,7 +111,7 @@ const searchR = computed(() => {
   })
 })
 
-const paginatedReceipts = computed(() => {
+const paginatedManagers = computed(() => {
   const start = (currentPage.value - 1) * 10
   const end = start + 10
   return searchR.value.slice(start, end)
@@ -113,7 +120,9 @@ const paginatedReceipts = computed(() => {
 onMounted(() => {
   authStore.loadCurrentUserFromStorage()
   authStore.fetchManagers()
-  console.log(authStore.currentUser)
+  if(paginatedManagers) {
+    loading.value = false
+  }
 })
 </script>
 
