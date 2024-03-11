@@ -30,7 +30,7 @@
                   Profile
                 </NuxtLink> 
               </el-dropdown-item>
-              <el-dropdown-item>
+              <el-dropdown-item v-if="isAdmin">
                 <NuxtLink to="/users">
                   <Icon class="mr-[0.5em]" name="fa6-solid:users" color="" size="20" />
                   Users
@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { signOut, onAuthStateChanged } from '@firebase/auth'
+import { signOut } from '@firebase/auth'
 import { useAuthStore } from '~/store/users'
 
 const router = useRouter()
@@ -68,8 +68,4 @@ const logout = () => {
   }, 3000);
   emit('signing-out')
 }
-
-onMounted(() => {
-  
-})
 </script>

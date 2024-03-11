@@ -56,10 +56,11 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules, FormProps } from 'element-plus'
-import { updateProfile } from '@firebase/auth';
+import { updateProfile, signOut } from '@firebase/auth';
 import type { Container } from 'tsparticles-engine'
 import { AccountType } from '~/types/types';
 import { useAuthStore } from '~/store/users';
+import { doc, getDoc } from "firebase/firestore"
 
 definePageMeta({
   layout:'auth'
@@ -140,22 +141,32 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       loading.value = true
       try {
         const response = await store.signin(manager.email, manager.password, manager.accountType)
-        try {
-          await updateProfile(nuxtApp.$auth.currentUser!, {
-            displayName: manager.email
-          });
-        } catch (error) {
-          console.error(error);
-        }
-        ElNotification({
-          title: 'Success',
-          message: 'Sign in successful',
-          type: 'success',
-        })
-        if(manager.accountType === AccountType.Manager) {
-          router.push('/')
-        }else {
-          router.push('/receiptTable')
+        if(response) {
+          try {
+            const docRef = doc(nuxtApp.$firestore, "users", response.user.uid)
+            const docSnap = await getDoc(docRef)
+            if(docSnap.data()?.accountType === 'manager') {
+              // await updateProfile(nuxtApp.$auth.currentUser!, {
+              //   displayName: admin.email
+              // })
+              ElNotification({
+                title: 'Success',
+                message: 'Sign in successful',
+                type: 'success',
+              })
+              router.push('/receiptTable')
+            } else {
+              ElNotification({
+                title: 'Error',
+                message: 'You are not authorized to sign in as a manager',
+                type: 'error',
+              })
+              await signOut(nuxtApp.$auth)
+              router.push('/auth/signinManager')
+            }
+          } catch (error) {
+            console.error(error)
+          }
         }
       }
       catch(error) {
@@ -164,7 +175,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           message: 'Incorrect details',
           type: 'error',
         })
-        console.log(error)
       }
       finally {
         loading.value = false

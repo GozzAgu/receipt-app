@@ -1,6 +1,5 @@
 <template>
   <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[15em] relative">
-    <pre>{{ isAdmin }}</pre>
     <div class="grid grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
@@ -165,7 +164,6 @@ const incorrectPassword = ref(false);
 let deleteId = ref('')
 const currentPage = ref(1)
 const search = ref('')
-const nuxtApp = useNuxtApp()
 
 const deleteSuccess = () => {
   ElMessage({

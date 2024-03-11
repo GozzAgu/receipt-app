@@ -1,9 +1,44 @@
 <template>
   <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[15em]">
-    <div>
-      <div>
-        <pre>{{ authStore.currentUser?.uid }}</pre>
-        <pre>{{ authStore.managers }}</pre>
+    <h1 class="font-semibold text-xl text-gray-500">
+      <Icon name="fa6-solid:users" color="gray" size="25" />
+      <span class=""> Staff</span>
+    </h1>
+    <div class="mt-[1em] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[1em]">
+      <div v-for="manager in authStore.managers">
+        <div class=
+          "hover:scale-105 
+          transition-transform 
+          duration-300 
+          cursor-pointer 
+          font-mono 
+          bg-gradient-to-t 
+          from-blue-100 
+          to-slate-100 
+          shadow-lg 
+          rounded-xl 
+          p-[1em]"
+        >
+          <div class=
+            "my-[1em] 
+            border 
+            rounded-full 
+            text-white 
+            bg-blue-400 
+            text-xl 
+            font-bold 
+            w-12 
+            h-12 
+            flex 
+            items-center 
+            m-auto 
+            justify-center"
+          >
+            {{ manager.email.charAt(0).toUpperCase() }}
+          </div>
+          <p class="text-xs text-center">{{ manager.email }}</p>
+          <p class="text-xs text-center">{{ manager.accountType }}</p>
+        </div>
       </div>
     </div>
   </div>
