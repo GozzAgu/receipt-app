@@ -8,7 +8,7 @@
 
       <div class="flex gap-x-[0.7em]">
         <NuxtLink class="" to="">
-          <Icon name="ri:notification-2-fill" color="gray" size="20" />
+          <Icon name="ri:notification-2-fill" color="orange" size="20" />
         </NuxtLink>
         <NuxtLink class="" to="/receiptTable"> 
           <el-button plain type="primary">
