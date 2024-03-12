@@ -204,7 +204,7 @@ const addR = async (formEl: FormInstance | undefined) => {
     } else {
       console.log('error submit!', fields);
     }
-  });
+  })
 }
 
 // const formattedProductPrice = computed(() => {
