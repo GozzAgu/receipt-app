@@ -36,14 +36,16 @@
                   Users
                 </NuxtLink> 
               </el-dropdown-item>
-              <el-popconfirm @confirm="logout" title="Are you sure to logout?">
-                <template #reference>
-                  <div class="cursor-pointer mt-[0.5em] flex justify-center gap-x[2em]">
-                    <Icon class="mr-[1em] text-red-400" name="fa6-solid:power-off" size="18" />
-                    <span class="text-red-400">Logout</span> 
-                  </div>
-                </template>
-              </el-popconfirm>
+              <el-dropdown-item>
+                <el-popconfirm @confirm="logout" title="Are you sure to logout?">
+                  <template #reference>
+                    <div class="">
+                      <Icon class="mr-[0.5em] text-red-400" name="fa6-solid:power-off" size="16" />
+                      <span class="text-red-400">Logout</span> 
+                    </div>
+                  </template>
+                </el-popconfirm>
+              </el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
