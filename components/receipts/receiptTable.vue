@@ -209,6 +209,7 @@ const validatePassword = () => {
   const userPassword = 'password';
   if (password.value === userPassword) {
     handleDelete();
+    password.value = ''
   } else {
     incorrectPassword.value = true
   }
