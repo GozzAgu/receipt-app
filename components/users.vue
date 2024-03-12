@@ -45,6 +45,12 @@
                   </el-dropdown-item>
                   <el-dropdown-item>
                     <NuxtLink to="">
+                      <Icon name="ic:baseline-block" color="" size="15" /> 
+                      <span class="text-xs ml-[1em]">Deactivate staff</span>
+                    </NuxtLink> 
+                  </el-dropdown-item>
+                  <el-dropdown-item>
+                    <NuxtLink to="">
                       <Icon name="ic:twotone-delete" color="red" size="15" />
                       <span class="text-xs ml-[1em]">Delete Staff account</span>
                     </NuxtLink> 
