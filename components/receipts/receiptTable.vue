@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[15em] relative">
+  <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[5em] relative">
     <div class="grid grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
@@ -69,7 +69,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="productName" label="PRODUCT" width="200" />
-        <el-table-column prop="swapFrom" label="SWAPPED FROM" width="200">
+        <el-table-column prop="swapFrom" label="SWAPPED FROM" width="150">
           <template #default="{ row }">
             <span v-if="row.swapFrom">{{ row.swapFrom }}</span>
             <span v-else>None</span>
@@ -89,7 +89,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="productDescription" width="400" label="DESCRIPTION" />
+        <el-table-column prop="productDescription" width="300" label="DESCRIPTION" />
         <el-table-column prop="newPrice" label="PRICE" width="200">
           <template #default="scope">
             ₦{{ scope.row.newPrice }} 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ReceiptsAddReceipt />
+    
   </div>
 </template>
 
