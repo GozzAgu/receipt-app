@@ -8,7 +8,7 @@
 
       <div class="flex gap-x-[0.7em]">
         <NuxtLink class="" to="">
-          <Icon name="ri:notification-2-fill" color="gray" size="20" />
+          <Icon name="ri:notification-2-fill" color="orange" size="20" />
         </NuxtLink>
         <NuxtLink class="" to="/receiptTable"> 
           <el-button plain type="primary">
@@ -30,15 +30,21 @@
                   Profile
                 </NuxtLink> 
               </el-dropdown-item>
-              <el-dropdown-item>
+              <el-dropdown-item v-if="isAdmin">
                 <NuxtLink to="/users">
                   <Icon class="mr-[0.5em]" name="fa6-solid:users" color="" size="20" />
                   Users
                 </NuxtLink> 
               </el-dropdown-item>
-              <el-dropdown-item @click="logout">
-                <Icon class="mr-[0.5em] text-red-400" name="fa6-solid:power-off" size="15" /> 
-                <span class="text-red-400">Logout</span>
+              <el-dropdown-item>
+                <el-popconfirm @confirm="logout" title="Are you sure to logout?">
+                  <template #reference>
+                    <div class="">
+                      <Icon class="mr-[0.5em] text-red-400" name="fa6-solid:power-off" size="16" />
+                      <span class="text-red-400">Logout</span> 
+                    </div>
+                  </template>
+                </el-popconfirm>
               </el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -49,7 +55,7 @@
 </template>
 
 <script setup>
-import { signOut, onAuthStateChanged } from '@firebase/auth'
+import { signOut } from '@firebase/auth'
 import { useAuthStore } from '~/store/users'
 
 const router = useRouter()
@@ -68,8 +74,4 @@ const logout = () => {
   }, 3000);
   emit('signing-out')
 }
-
-onMounted(() => {
-  
-})
 </script>

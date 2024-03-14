@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[1em] md:px-[5em] lg:px-[15em] py-[5em] bg-blue-50">
+  <div class="px-[1em] md:px-[5em] lg:px-[15em] py-[5em]">
     <NuxtLink to="/receiptTable">
       <el-button class="mb-[1em]" type="primary">
         <el-icon><Back /></el-icon>
@@ -11,7 +11,7 @@
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
 
-    <div v-loading="loading" class=" bg-white px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
+    <div v-loading="loading" class="shadow-lg bg-white px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <el-divider content-position="left"><span class="text-lg text-blue-400">Receipt Form</span></el-divider>
 
       <el-form
@@ -25,28 +25,28 @@
       >
         <div class="md:grid grid-cols-3 gap-[1em]">
           <el-form-item label="Customer name" prop="customerName">
-            <el-input v-model="duplicate.customerName" placeholder="" />
+            <el-input v-model="duplicate!.customerName" placeholder="" />
           </el-form-item>
           <el-form-item label="Customer address" prop="customerAddress">
-            <el-input v-model="duplicate.customerAddress" placeholder="" />
+            <el-input v-model="duplicate!.customerAddress" placeholder="" />
           </el-form-item>
           <el-form-item label="Customer number" prop="customerNumber">
-            <el-input v-model="duplicate.customerNumber" placeholder="" />
+            <el-input v-model="duplicate!.customerNumber" placeholder="" />
           </el-form-item>
           <el-form-item label="Company name" prop="name">
-            <el-input disabled v-model="duplicate.name" placeholder="" />
+            <el-input disabled v-model="duplicate!.name" placeholder="" />
           </el-form-item>
           <el-form-item label="Company address" prop="address">
-            <el-input disabled v-model="duplicate.address" placeholder="" />
+            <el-input disabled v-model="duplicate!.address" placeholder="" />
           </el-form-item>
           <el-form-item label="Product name" prop="productName">
-            <el-input v-model="duplicate.productName" placeholder="" />
+            <el-input v-model="duplicate!.productName" placeholder="" />
           </el-form-item>
           <el-form-item label="Product description" prop="productDescription">
-            <el-input v-model="duplicate.productDescription" placeholder="" type="textarea"/>
+            <el-input v-model="duplicate!.productDescription" placeholder="" type="textarea"/>
           </el-form-item>
           <el-form-item label="Payment Mode">
-            <el-select v-model="duplicate.paidVia" placeholder="select" style="width: 240px">
+            <el-select v-model="duplicate!.paidVia" placeholder="select">
               <el-option v-for="item in paymentMethods" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item> 
@@ -61,18 +61,18 @@
             />
           </el-form-item>  
           <el-form-item v-if="swap == true" label="Swap from" prop="swapFrom">
-            <el-input v-model="duplicate.swapFrom" placeholder="" />
+            <el-input v-model="duplicate!.swapFrom" placeholder="" />
           </el-form-item> 
           <el-form-item v-if="swap == true" label="Swap to" prop="productName">
-            <el-input disabled v-model="duplicate.productName" placeholder="" />
+            <el-input disabled v-model="duplicate!.productName" placeholder="" />
           </el-form-item> 
         </div>
-        <div class="flex gap-x-[1em]">
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-x-[1em]">
           <el-form-item label="Product quantity" prop="productQuantity">
-            <el-input v-model="duplicate.productQuantity" placeholder="" />
+            <el-input v-model="duplicate!.productQuantity" placeholder="" />
           </el-form-item>
           <el-form-item label="Product price" prop="productPrice">
-            <el-input v-model="duplicate.productPrice" placeholder="" />
+            <el-input v-model="duplicate!.productPrice" placeholder="" />
           </el-form-item>
         </div>
       </el-form>
@@ -89,7 +89,7 @@
 import { useStore } from "@/store/receipts"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
-import type { RuleForm } from '@/types/types'
+import type { Receipt } from '@/types/types'
 import { Tickets, Back, Check, Close } from '@element-plus/icons-vue'
 
 const swap = ref(false)
@@ -100,7 +100,7 @@ const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
 
-const rules = reactive<FormRules<RuleForm>>({
+const rules = reactive<FormRules<Receipt>>({
   customerName: [
     { required: true, message: 'Please input Customer name', trigger: 'blur' },
   ],
@@ -175,14 +175,14 @@ const addR = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true
       try {
-        let newCompanyDetails = { ...duplicate.value, date: currentDate.value } as RuleForm
+        let newCompanyDetails = { ...duplicate.value, date: currentDate.value } as Receipt
         if (newCompanyDetails.productQuantity > 1) {
           let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
           newCompanyDetails.newPrice = newPrice
         }
         const res = await store.addReceipt(newCompanyDetails)       
         router.push({path:`/receipt/${res}`})
-        newCompanyDetails = {} as RuleForm
+        newCompanyDetails = {} as Receipt
         loading.value = false
       } catch (e) {
         console.log(e)

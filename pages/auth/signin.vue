@@ -55,10 +55,11 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules, FormProps } from 'element-plus'
-import { updateProfile } from '@firebase/auth';
+import { updateProfile, signOut } from '@firebase/auth';
 import type { Container } from 'tsparticles-engine'
 import { AccountType } from '~/types/types';
 import { useAuthStore } from '~/store/users';
+import { doc, getDoc } from "firebase/firestore"
 
 definePageMeta({
   layout:'auth'
@@ -141,21 +142,30 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         const response = await store.signin(admin.email, admin.password, admin.accountType)
         if(response) {
           try {
-            await updateProfile(nuxtApp.$auth.currentUser!, {
-              displayName: admin.email
-            });
+            const docRef = doc(nuxtApp.$firestore, "users", response.user.uid)
+            const docSnap = await getDoc(docRef)
+            if(docSnap.data()?.accountType === 'admin') {
+              // await updateProfile(nuxtApp.$auth.currentUser!, {
+              //   displayName: admin.email
+              // })
+              ElNotification({
+                title: 'Success',
+                message: 'Sign in successful',
+                type: 'success',
+              })
+              router.push('/receiptTable')
+            } else {
+              ElNotification({
+                title: 'Error',
+                message: 'You are not authorized to sign in as an admin',
+                type: 'error',
+              })
+              await signOut(nuxtApp.$auth)
+              router.push('/auth/signin')
+            }
           } catch (error) {
-            console.error(error);
+            console.error(error)
           }
-          ElNotification({
-            title: 'Success',
-            message: 'Sign in successful',
-            type: 'success',
-          })
-          router.push('/receiptTable')
-        }else {
-          router.push('/signinManager')
-          console.log('Not an admin')
         }
       }
       catch(error) {
@@ -164,7 +174,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           message: 'Incorrect details',
           type: 'error',
         })
-        console.log(error)
       }
       finally {
         loading.value = false

@@ -17,7 +17,7 @@
               justify-center"
           >
             <div class="bg-black h-screen w-[100%] bg-opacity-80 flex items-center justify-center">
-              <div class="lg:w-[60%] py-4 px-8 opacity-80 rounded-[5em]">
+              <div class="lg:w-[50%] py-4 px-8 opacity-80 rounded-[5em]">
                 <img src="/snapbill-logo.png"/>
               </div>
             </div>

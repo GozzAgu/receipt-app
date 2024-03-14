@@ -1,10 +1,9 @@
 <template>
   <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[15em] relative">
-    <pre>{{ isAdmin }}</pre>
     <div class="grid grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
-        <span class=""> Receipts</span>
+        <span class="text-sm md:text-base"> Receipts ({{ store.receipts.length }})</span>
       </h1>
       <div class="flex gap-x-[1em]">
         <el-input
@@ -56,7 +55,7 @@
     <div v-loading="loading" class="mt-[1em] z-0">
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
-        :border="parentBorder" 
+        :border="parentBorder"
         v-if="store.receipts.length > 0" 
         :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
@@ -91,6 +90,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="productDescription" width="400" label="DESCRIPTION" />
+        <el-table-column prop="productPrice" label="PRICE" width="200">
+          <template #default="scope">
+            ₦{{ scope.row.productPrice }} 
+          </template>
+        </el-table-column>
         <el-table-column prop="date" sortable label="DATE" width="150"/>
         <el-table-column fixed="right" width="61">
           <template #default="scope">
@@ -137,7 +141,7 @@
         </NuxtLink>
       </el-empty>
 
-      <div class="fixed bottom-3 pt-[1em] right-[1em] md:right-[5em] lg:right-[15em] bg-white">
+      <div class="fixed bottom-3 mt-[1em] right-[1em] md:right-[5em] lg:right-[15em] bg-white">
         <vue-awesome-paginate
           v-model="currentPage"
           :total-items="store.receipts.length"
@@ -165,7 +169,6 @@ const incorrectPassword = ref(false);
 let deleteId = ref('')
 const currentPage = ref(1)
 const search = ref('')
-const nuxtApp = useNuxtApp()
 
 const deleteSuccess = () => {
   ElMessage({
@@ -211,6 +214,7 @@ const validatePassword = () => {
   const userPassword = 'password';
   if (password.value === userPassword) {
     handleDelete();
+    password.value = ''
   } else {
     incorrectPassword.value = true
   }
@@ -228,7 +232,7 @@ const paginatedReceipts = computed(() => {
   const start = (currentPage.value - 1) * 10
   const end = start + 10
   return searchR.value.slice(start, end)
-});
+})
 
 onMounted(() => {
   authStore.loadCurrentUserFromStorage()

@@ -85,9 +85,11 @@ import { useStore } from "@/store/receipts"
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 import { Back } from '@element-plus/icons-vue'
+import { useAuthStore } from "~/store/users";
 
 const pdfSection = ref<HTMLElement | null>(null)
 const store = useStore()
+const authStore = useAuthStore()
 const route = useRoute()
 const loading = ref(true)
 

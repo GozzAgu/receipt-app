@@ -8,7 +8,7 @@
       <el-tab-pane label="Profile" name="first">
         <EditProfile />
       </el-tab-pane>
-      <el-tab-pane label="Managers" name="second">
+      <el-tab-pane v-if="isAdmin" label="Managers" name="second">
         <AddManager />
       </el-tab-pane>
       <el-tab-pane label="Payment plans" name="third">Payment plans</el-tab-pane>
@@ -21,14 +21,16 @@ import type { TabsPaneContext } from 'element-plus'
 import { useAuthStore } from '~/store/users'
 
 const activeName = ref('first')
+const authStore = useAuthStore()
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   console.log(tab, event)
 }
 
-onMounted(() => {
-
+const isAdmin = computed(() => {
+  return authStore.currentUser?.accountType === 'admin'
 })
+
 </script>
 <style>
 .demo-tabs > .el-tabs__content {
