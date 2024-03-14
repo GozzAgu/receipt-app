@@ -90,9 +90,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="productDescription" width="400" label="DESCRIPTION" />
-        <el-table-column prop="productPrice" label="PRICE" width="200">
+        <el-table-column prop="newPrice" label="PRICE" width="200">
           <template #default="scope">
-            ₦{{ scope.row.productPrice }} 
+            ₦{{ scope.row.newPrice }} 
           </template>
         </el-table-column>
         <el-table-column prop="date" sortable label="DATE" width="150"/>

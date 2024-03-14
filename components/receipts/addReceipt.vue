@@ -195,7 +195,7 @@ const addR = async (formEl: FormInstance | undefined) => {
           let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
           newCompanyDetails.newPrice = newPrice
         }
-        const res = await store.addReceipt(newCompanyDetails)        
+        const res = await store.addReceipt(newCompanyDetails)
         router.push({path:`/receipt/${res}`})
         companyDetails = {} as Receipt
         loading.value = false
