@@ -7,7 +7,8 @@ export default defineNuxtConfig({
     '@element-plus/nuxt',
     '@sidebase/nuxt-pdf',
     "nuxt-particles",
-    "nuxt-icon"
+    "nuxt-icon",
+    '@vueuse/nuxt'
   ],
   plugins:[],
   tailwindcss: {

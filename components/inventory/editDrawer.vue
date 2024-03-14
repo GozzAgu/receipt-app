@@ -9,13 +9,13 @@
         <p>Fill in the details of a new entry and it will automatically be added to the inventory</p>
       </div>
   
-      <div class="add-admin--body">
+      <div>
         <div class="body">
           <el-form
-            ref="addEntryRef"
+            ref="editEntryRef"
             label-width="auto"
             label-position="top"
-            :model="newInventoryData"
+            :model="editInventoryData"
             :rules="addInventoryRules"
             size="large"
             :hide-required-asterisk="true"
@@ -33,7 +33,7 @@
                     </p>
                     </template>
                     <el-input
-                    v-model="newInventoryData.supplier"
+                    v-model="editInventoryData.supplier"
                     type="text"
                     placeholder="Supplier"
                     />
@@ -51,7 +51,7 @@
                     </p>
                   </template>
                   <el-input
-                    v-model="newInventoryData.imei"
+                    v-model="editInventoryData.imei"
                     type="text"
                     placeholder="IMEI"
                   />
@@ -68,7 +68,7 @@
                     </p>
                   </template>
                   <el-input
-                    v-model="newInventoryData.storage"
+                    v-model="editInventoryData.storage"
                     type="text"
                     placeholder="Storage"
                   />
@@ -87,7 +87,7 @@
                     </p>
                   </template>
                   <el-date-picker
-                    v-model="newInventoryData.dateIn"
+                    v-model="editInventoryData.dateIn"
                     type="date"
                     placeholder="Pick a date"
                     value-format="M/DD/YYYY"
@@ -105,7 +105,7 @@
                     </p>
                   </template>
                   <el-date-picker
-                    v-model="newInventoryData.dateOut"
+                    v-model="editInventoryData.dateOut"
                     type="date"
                     placeholder="Pick a date"
                     value-format="M/DD/YYYY"
@@ -125,7 +125,7 @@
                     </p>
                   </template>
                   <el-input
-                    v-model="newInventoryData.colour"
+                    v-model="editInventoryData.colour"
                     type="text"
                   />
                 </el-form-item>
@@ -141,7 +141,7 @@
                     </p>
                   </template>
                   <el-input
-                    v-model="newInventoryData.amount"
+                    v-model="editInventoryData.amount"
                     type="number"
                   />
                 </el-form-item>
@@ -159,7 +159,7 @@
                     </p>
                   </template>
                   <el-input
-                    v-model="newInventoryData.cost"
+                    v-model="editInventoryData.cost"
                     type="number"
                   />
                 </el-form-item>
@@ -175,7 +175,7 @@
                     </p>
                   </template>
                   <el-input
-                    v-model="newInventoryData.margin"
+                    v-model="editInventoryData.margin"
                     type="number"
                   />
                 </el-form-item>
@@ -193,7 +193,7 @@
                     </p>
                   </template>
                   <el-select
-                    v-model="newInventoryData.grade"
+                    v-model="editInventoryData.grade"
                     filterable
                     placeholder="Grade"
                     class="w-full"
@@ -218,7 +218,7 @@
                     </p>
                   </template>
                   <el-select
-                    v-model="newInventoryData.swap"
+                    v-model="editInventoryData.swap"
                     filterable
                     placeholder="Swap"
                     class="w-full"
@@ -250,12 +250,12 @@
             type="primary"
             class="min-w-20"
             :loading="loading"
-            @click="addNewEntry(addEntryRef)"
+            @click="editEntry(editEntryRef)"
           >
             <template #loading>
               <div class="i-svg-spinners:3-dots-move h3" />
             </template>
-            {{ loading ? '' : 'Add' }}
+            {{ loading ? '' : 'Save' }}
           </el-button>
         </div>
       </div>
@@ -269,55 +269,42 @@ import { useInventoryStore } from '~/store/inventory';
 
 const emit = defineEmits(['close-drawer'])
 
-const inventoryStore = useInventoryStore();
-const { addToInventory } = inventoryStore
+const { entry } = defineProps<{
+  entry:Inventory
+}>()
 
-const addEntryRef = ref()
+const inventoryStore = useInventoryStore();
+const { editInventory } = inventoryStore
+
+const editEntryRef = ref()
 const loading = ref(false)
 
-// Get today's date
-const today = new Date();
-
-// Get the components of the date
-const month = ref(today.getMonth() + 1); // Months are zero-based, so add 1
-const day = ref(today.getDate());
-const year = ref(today.getFullYear());
-
-// Format the date as "m/dd/yyyy"
-const formattedDate = computed<string>(()=> `${month.value}/${day.value}/${year.value}`) ;
-
-const newInventoryData = ref({
-    dateIn: formattedDate.value,
-    supplier: '',
-    grade: '',
-    storage: '',
-    imei: '',
-    colour:'',
-    amount: null,
-    cost: null,
-    margin: null,
-    swap: '',
-    dateOut:''
+const editInventoryData = ref({
+    dateIn: entry.dateIn,
+    supplier: entry.supplier,
+    grade: entry.grade,
+    storage: entry.storage,
+    imei: entry.imei,
+    colour: entry.colour,
+    amount: entry.amount,
+    cost: entry.cost,
+    margin: entry.margin,
+    swap: entry.swap,
+    dateOut: entry.dateOut
 })
 
 const grade = ['New', 'Used']
 const swap = ['yes', 'no']
 
-function addNewEntry(formInput: FormInstance | undefined) {
+function editEntry(formInput: FormInstance | undefined) {
   if (!formInput)
     return
 
   formInput.validate((valid: boolean) => {
     if (valid) {
       loading.value = true
-
-      const newEntry = {
-        ...newInventoryData.value
-      }
-
-      addToInventory(newEntry as Inventory)
+      editInventory(editInventoryData.value)
       loading.value = false
-      formInput.resetFields()
   }})
 }
 </script>

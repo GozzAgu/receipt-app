@@ -60,3 +60,17 @@ export interface SigninUser {
   password: string,
   accountType: AccountType
 }
+
+export interface Inventory{
+  dateIn: string,
+  supplier: string,
+  grade: 'New' | 'Used',
+  storage: string,
+  imei: string,
+  colour:string,
+  amount: null | number,
+  cost: null | number,
+  margin: null | number,
+  swap: 'yes' | 'no',
+  dateOut: string
+}

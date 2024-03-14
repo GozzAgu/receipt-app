@@ -2,14 +2,15 @@
     <SignoutLoader v-if="isSigningout" />
     <Navbar @signing-out="isSigningout=true" class="z-10" />
     <div class="mt-24 w-[80%] mx-auto">
-        <div class="flex justify-between mb-8">
-            <div class="flex gap-4">
+        <div class="flex flex-col md:flex-row justify-between mb-8 gap-8">
+            <div class="flex flex-col sm:flex-row gap-4">
                 <el-input
                 v-model="searchValue"
                 size="large"
                 placeholder="Search for an item..."
                 :prefix-icon="Search"
-                class="max-w-[20rem] shadow-sm"
+                class="shadow-sm lg:max-w-[20rem]"
+                style="width:100%"
                 />
                 <el-date-picker
                     v-model="dateRange"
@@ -23,7 +24,8 @@
                     format="M/DD/YYYY"
                     value-format="M/DD/YYYY"
                     clearable
-                    class="shadow-sm"
+                    class="shadow-sm lg:max-w-[20rem] date-picker-input"
+                    style="width:100%"
                 />
             </div>
             
@@ -32,13 +34,13 @@
                 Add Entry
             </el-button>
         </div>
-        <div class="flex justify-between items-center font-light py-2 text-gray-500 text-sm px-3">
-            <div class="flex gap-6 items-center">
+        <div class="flex justify-between items-center font-light py-2 text-gray-500 text-xs sm:text-sm lg:px-3">
+            <div class="flex gap-2 sm:gap-4 lg:gap-6 items-center">
                 <p>{{ selected.length }} entries selected</p>
-                <div class="flex gap-2" v-if="selected.length > 0">
-                    <button @click="clearSelection" class="flex items-center justify-center gap-1 rounded px-2 py-1 hover:bg-gray-400/10">Clear selection</button>
-                    <button v-if="selected.length == 1" class="flex items-center justify-center gap-1 text-purple-500 rounded px-2 py-1  hover:bg-purple-500/10"><Icon name="heroicons:eye" size="1em"/>View</button>
-                    <button class="flex items-center justify-center gap-1 text-red-400 rounded px-2 py-1 hover:bg-red-400/10"><Icon name="heroicons:trash-16-solid" size="1em" />Delete</button>
+                <div class="flex gap-2 text-sm" v-if="selected.length > 0">
+                    <button v-if="largerThanSm" @click="clearSelection" class="flex items-center justify-center gap-1 rounded px-2 py-1 hover:bg-gray-400/10">Clear selection</button>
+                    <button v-if="selected.length == 1" class="flex text-sm items-center justify-center gap-1 text-purple-500 rounded px-2 py-1  hover:bg-purple-500/10"><Icon name="heroicons:eye" size="1em"/><span v-if="largerThanSm" class="text-sm">View</span></button>
+                    <button class="flex items-center justify-center gap-1 text-red-400 rounded px-2 py-1 hover:bg-red-400/10"><Icon name="heroicons:trash-16-solid" size="1em" /><span v-if="largerThanSm" class="text-sm">Delete</span></button>
                 </div>
             </div>
             <div class="relative">
@@ -99,11 +101,15 @@
                     </template>
                 </el-table-column>
                 <el-table-column v-if="columns.includes('Storage')" property="storage" label="Storage" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('IMEI')" property="imei" label="IMEI" width="120"/>
+                <el-table-column v-if="columns.includes('IMEI')" property="imei" label="IMEI" width="140">
+                    <template #default="scope">
+                        <p class="bg-gray-200 text-sky-600 rounded-md px-2">{{ scope.row.imei }}</p>
+                    </template>
+                </el-table-column>
                 <el-table-column v-if="columns.includes('Colour')" property="colour" label="Colour" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('Amount')" property="amount" label="Amount" show-overflow-tooltip sortable width="100"/>
-                <el-table-column v-if="columns.includes('Cost')" property="cost" label="Cost" show-overflow-tooltip sortable width="100"/>
-                <el-table-column v-if="columns.includes('Margin')" property="margin" label="Margin" show-overflow-tooltip sortable width="100"/>
+                <el-table-column v-if="columns.includes('Amount')" property="amount" label="Amount" show-overflow-tooltip sortable width="120"/>
+                <el-table-column v-if="columns.includes('Cost')" property="cost" label="Cost" show-overflow-tooltip sortable width="120"/>
+                <el-table-column v-if="columns.includes('Margin')" property="margin" label="Margin" show-overflow-tooltip sortable width="120"/>
                 <el-table-column v-if="columns.includes('Swap')" property="swap" label="Swap" show-overflow-tooltip :filters="[
                     { text: 'no', value: 'no' },
                     { text: 'yes', value: 'yes' },]"
@@ -124,14 +130,19 @@
             </el-table>
         </div>
     </div>
-    <el-drawer v-model="showDrawer" title="I am the title" :with-header="false" size="40%" @closed="closeDrawer">
+    <el-drawer v-model="showDrawer" title="I am the title" :with-header="false" :size="largerThanXl? '40%' :largerThanlg? '50%':largerThanSm? '70%': '100%'" @closed="closeDrawer">
       <InventoryAddDrawer v-if="showAddDrawer" @close-drawer="closeDrawer"/>
+      <InventoryEditDrawer v-if="showEditDrawer" @close-drawer="closeDrawer" :entry="selectedEntry"/>
     </el-drawer>
 </template>
   
 <script setup>
+import { useInventoryStore } from "~/store/inventory";
 import { useStore } from "../store/receipts"
 import { Search } from '@element-plus/icons-vue'
+
+const inventoryStore = useInventoryStore();
+const { inventory } = toRefs(inventoryStore)
   
 const showDropDown = ref(false)
 
@@ -142,76 +153,33 @@ const tableRef = ref();
 
 const columns = ref(['Date In', 'Supplier', 'Grade', 'Storage', 'IMEI', 'Colour', 'Amount', 'Cost', 'Margin', 'Swap', 'Date Out']);
 
-const tableData = ref([
-    {
-        dateIn: '1/13/2024',
-        supplier: 'Hassan Mohuied',
-        grade: 'Used',
-        storage: '8GB/512GB',
-        imei: '5CG71657NK',
-        colour:'Silver',
-        amount: 50000,
-        cost: 250,
-        margin: 50000,
-        swap: 'no',
-        dateOut:'2/22/2024'
-    },
-    {
-        dateIn: '2/12/2024',
-        supplier: 'Hassan Mohuied',
-        grade: 'New',
-        storage: '8GB/512GB',
-        imei: '7CG716357QK',
-        colour:'Silver',
-        amount: 20000,
-        cost: 250,
-        margin: 50000,
-        swap: 'no',
-        dateOut:'2/22/2024'
-    },
-    {
-        dateIn: '3/10/2024',
-        supplier: 'Hassan Mohuied',
-        grade: 'New',
-        storage: '8GB/512GB',
-        imei: '3CE62657BK',
-        colour:'Silver',
-        amount: 50500,
-        cost: 250,
-        margin: 50000,
-        swap: 'yes',
-        dateOut:'2/22/2024'
-    },
-    {
-        dateIn: '2/12/2024',
-        supplier: 'Hassan Mohuied',
-        grade: 'Used',
-        storage: '8GB/512GB',
-        imei: '5AD71657PD',
-        colour:'Silver',
-        amount: 52000,
-        cost: 250,
-        margin: 50000,
-        swap: 'no',
-        dateOut:'2/22/2024'
-    }
-])
-
-const handleEdit = (index, row) => {
-  console.log(index, row)
-}
 //drawer function
 const showDrawer = ref(false);
 const showAddDrawer = ref(false)
+const showEditDrawer = ref(false)
 
 function openAddDrawer(){
     showDrawer.value = true;
-    showAddDrawer.value = true
+    showAddDrawer.value = true;
+    showEditDrawer.value = false;
+}
+
+function openEditDrawer(){
+    showDrawer.value = true;
+    showAddDrawer.value = false;
+    showEditDrawer.value = true;
 }
 
 function closeDrawer(){
     showDrawer.value = false;
     showAddDrawer.value = false;
+}
+
+//edit functions
+const selectedEntry = ref();
+const handleEdit = (index, row) => {
+  selectedEntry.value = row
+  openEditDrawer()
 }
 
 //select functions
@@ -269,7 +237,7 @@ function filterByDate(data){
 }
 
 const filterTableData = computed(() =>
-  tableData.value.filter(
+  inventory.value.filter(
     (data) =>
     {
         if (searchValue.value && dateRange.value.length > 1){
@@ -307,4 +275,17 @@ store.fetchReceipts();
 </script>
 
 <style scoped>
+.date-picker-input{
+    
+    ::v-deep(.el-date-range-picker.has-sidebar){
+        width:200px;
+        font-weight: 200;
+        border:2px solid red;
+        background-color: red;
+    }
+}
+
+.el-date-range-picker .el-picker-panel__body{
+    min-width:200px
+}
 </style>
