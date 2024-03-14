@@ -2,12 +2,12 @@
   <div class="print:m-auto px-4 md:px-20 py-12 min-h-screen">
     <div class="max-w-3xl mx-auto">
       <div ref="pdfSection" v-loading="loading" class="border rounded-lg shadow-lg bg-white mt-[4em]">
-        <div class="flex justify-between items-center px-4 py-2 bg-blue-100 rounded-t-lg">
+        <div class="flex justify-between items-center px-4 py-2 bg-sky-100 rounded-t-lg">
           <div class="flex items-center">
             <img class="w-4 h-4 mr-1" src="/snapbill-logo.png" alt="SnapBill Logo" />
-            <p class="font-bold text-xs text-blue-800">snapB!LL</p>
+            <p class="font-bold text-xs text-sky-600">snapB!LL</p>
           </div>
-          <p class="text-xs">{{ rpt?.date }}</p>
+          <p class="text-xs text-sky-600">{{ rpt?.date }}</p>
         </div>
 
         <div class="px-4 pb-4 text-sm">
@@ -64,12 +64,22 @@
       </div>
 
       <div class="flex justify-between mt-6">
-        <NuxtLink to="/receiptTable">
-          <el-button class="py-2 px-4" type="primary">
-            <el-icon><Back /></el-icon>
-            <span class="ml-2 text-sm md:text-base">Back</span>
-          </el-button>
-        </NuxtLink>
+        <NuxtLink 
+          class="
+            bg-sky-600 
+            hover:bg-sky-500 
+            transition 
+            duration-500 
+            hover:shadow-lg 
+            rounded-lg 
+            flex 
+            justify-center 
+            items-center 
+            w-[3rem]" 
+          to="/receiptTable"
+        > 
+          <Icon class="text-white ml-[0.5rem]" name="material-symbols:arrow-back-ios" size="25" />
+        </NuxtLink> 
 
         <el-button class="py-2 px-4" type="success" @click="exportToPDF('receipt.pdf', pdfSection)">
           <Icon name="line-md:download-loop" color="white" size="20" />
@@ -138,5 +148,19 @@ const exportToPDF = async (filename: string, element: HTMLElement | null) => {
 </script>
 
 <style scoped>
+/* Restyled receipt */
 
+/* Styling for the main container */
+.print:m-auto {
+  width: 210mm; /* A4 width */
+  margin: auto;
+}
+
+/* Styling for the receipt container */
+.pdfSection {
+  width: 100%; /* Make sure it's full width */
+  padding: 20px; /* Add some padding */
+}
+
+/* Rest of your styles */
 </style>

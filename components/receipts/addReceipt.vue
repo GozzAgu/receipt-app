@@ -1,18 +1,30 @@
 <template>
-  <div class="px-[1em] md:px-[5em] lg:px-[15em] py-[5em]">
-    <NuxtLink to="/receiptTable">
-      <el-button class="mb-[1em]" type="primary">
-        <el-icon><Back /></el-icon>
-        <span class="ml-[1em] text-[0.7em] md:text-base">Back</span>
-      </el-button>
-    </NuxtLink>
+  <div class="px-[1em] md:px-[5em] lg:px-[10em] py-[5em]">
+    <NuxtLink 
+      class="
+        p-[0.5rem]
+        my-[1rem]
+        bg-sky-600 
+        hover:bg-sky-500 
+        transition 
+        duration-500 
+        hover:shadow-lg 
+        rounded-lg 
+        flex 
+        justify-center 
+        items-center 
+        w-[3rem]" 
+      to="/receiptTable"
+    > 
+      <Icon class="text-white ml-[0.5rem]" name="material-symbols:arrow-back-ios" size="25" />
+    </NuxtLink> 
     
-    <p class="text-gray-50 bg-blue-400 p-[1em] rounded-t-lg text-sm">
+    <p class="text-gray-50 bg-sky-600 p-[1em] rounded-t-lg text-sm">
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
 
     <div v-loading="loading" class=" bg-white shadow-lg px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
-      <el-divider content-position="left"><span class="text-lg text-blue-400">Receipt Form</span></el-divider>
+      <el-divider content-position="left"><span class="text-lg text-sky-600">Receipt Form</span></el-divider>
 
       <el-form
         ref="ruleFormRef"
@@ -78,10 +90,24 @@
         </div>
       </el-form>
 
-      <el-button class="mt-[2em]" type="primary" @click="addR(ruleFormRef)">
-        <el-icon><Tickets /></el-icon>
-        <span class="ml-[1em] text-[0.7em] md:text-base">Generate Receipt</span>
-      </el-button>
+      <NuxtLink 
+        class="
+          p-[0.5rem]
+          my-[1rem]
+          bg-sky-600 
+          hover:bg-sky-500 
+          transition 
+          duration-500 
+          hover:shadow-lg 
+          rounded-lg 
+          flex 
+          justify-center 
+          items-center 
+          w-[100%]" 
+          @click="addR(ruleFormRef)"
+      > 
+        <span class="ml-[1em] text-[0.7em] md:text-base text-white">Generate Receipt</span>
+      </NuxtLink> 
     </div>
   </div>
 </template>

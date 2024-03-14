@@ -2,12 +2,12 @@
   <div class="">    
     <div v-loading="loading" class=" bg-white py-[0.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <div>
-        <p class="text-sm bg-blue-400 p-[0.5em] rounded-t-2xl text-white font-thin text-center">
+        <p class="text-sm bg-sky-600 p-[0.5em] rounded-t-2xl text-white font-thin text-center">
           After creating a manager, you can assign the manager to delete a receipt. 
           Without that assignment, a manager CANNOT delete a receipt.
         </p>
       </div>
-      <el-divider content-position="left"><span class="text-lg text-blue-400">Create  Managers</span></el-divider>
+      <el-divider content-position="left"><span class="text-lg text-sky-600">Create  Managers</span></el-divider>
       
       <el-form
         ref="ruleFormRef"
@@ -27,10 +27,24 @@
             <el-input v-model="manager.password" placeholder="" />
           </el-form-item>
         </div>
-        <el-button class="mt-[2em]" type="primary" @click="addM(ruleFormRef)">
-          <Icon name="tabler:users-plus" color="white" size="15" />
-          <span class="ml-[0.2em] text-[0.7em] md:text-base">Create</span>
-        </el-button>
+        <NuxtLink 
+          class="
+            bg-sky-600 
+            hover:bg-sky-500 
+            transition 
+            duration-500 
+            hover:shadow-lg 
+            rounded-lg 
+            flex 
+            justify-center 
+            items-center
+            py-[0.3rem]
+            mt-[2rem]" 
+          @click="addM(ruleFormRef)"
+        > 
+          <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="25" />
+          <span class="ml-[0.2em] text-[0.7em] md:text-base text-white">Create</span>
+        </NuxtLink> 
       </el-form>
     </div>
   </div>

@@ -17,13 +17,8 @@
           content="Create receipt"
           placement="bottom"
         >
-          <NuxtLink class="" to="/addReceipts"> 
-            <el-button
-              type="primary"
-              plain
-            >
-              <Icon name="mdi:receipt-text-plus" size="20" />
-            </el-button>
+          <NuxtLink class="bg-sky-600 hover:bg-sky-500 transition duration-500 hover:shadow-lg rounded-lg flex justify-center items-center w-[5rem]" to="/addReceipts"> 
+            <Icon class="text-white" name="mdi:receipt-text-plus" size="25" />
           </NuxtLink> 
         </el-tooltip>
       </div>
@@ -96,25 +91,19 @@
           </template>
         </el-table-column>
         <el-table-column prop="date" sortable label="DATE" width="150"/>
-        <el-table-column fixed="right" width="61">
+        <el-table-column fixed="right" width="45">
           <template #default="scope">
             <el-tooltip
               class="box-item"
               effect="dark"
               content="Duplicate"
               placement="left"
-            >
-              <el-button
-                size="small"
-                type="primary"
-                @click="dupR(scope.row.id)"
-              >
-                <Icon name="ic:twotone-file-copy" color="white" size="12" />
-              </el-button>
+            >  
+              <Icon @click="dupR(scope.row.id)" class="text-sky-600 cursor-pointer" name="ic:twotone-file-copy" size="20" />
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column v-if="isAdmin" fixed="right" width="61">
+        <el-table-column v-if="isAdmin" fixed="right" width="45">
           <template #default="scope">
             <el-tooltip
               class="box-item"
@@ -122,13 +111,7 @@
               content="Delete"
               placement="right"
             >
-              <el-button
-                size="small"
-                type="danger"
-                @click="delR(scope.row.id)"
-              >
-                <Icon name="ic:twotone-delete" color="white" size="12" />
-              </el-button>
+              <Icon @click="delR(scope.row.id)" class="text-red-400 cursor-pointer" name="material-symbols:delete-forever-outline" size="20" />
             </el-tooltip>  
           </template>
         </el-table-column>
@@ -286,7 +269,7 @@ onMounted(() => {
 }
 
 ::v-deep(.paginate-buttons:hover){
-  background-color: #0055ffc2; /* Assuming e-primary is a blue color */
+  @apply bg-sky-600;
   color: white;
   border: none;
   border-radius: 0.5em;
@@ -294,7 +277,7 @@ onMounted(() => {
 }
 
 ::v-deep(.active-page){
-  background-color: #0055ffc2; /* Assuming e-primary is a blue color */
+  @apply bg-sky-600;
   color: white;
   height: 3.3em;
   width: 3.3em;

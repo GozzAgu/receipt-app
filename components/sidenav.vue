@@ -3,7 +3,7 @@
     <div v-for="route in routes" :key="route.name">
       <div :class="{ 'active-tab': $route.path === route.link }" 
         v-if="isAdmin || route.name !== 'Staff'" 
-        class="my-[0.5rem] p-[0.7rem] rounded-xl cursor-pointer hover:bg-blue-50 transition duration-300"
+        class="my-[0.5rem] p-[0.7rem] rounded-xl cursor-pointer hover:bg-sky-50 transition duration-300"
       >
         <NuxtLink class="flex gap-x-[0.5rem]" :to="route.link">
           <Icon class="mt-[0.3rem] " :name="route.icon" />
@@ -55,6 +55,6 @@ const isAdmin = computed(() => {
 
 <style scoped>
 .active-tab {
-  @apply bg-blue-400 text-white
+  @apply bg-sky-600 text-white
 }
 </style>

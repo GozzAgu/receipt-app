@@ -3,35 +3,46 @@
     <div class="flex justify-between py-[1em] px-[1em] md:px-[5em] lg:px-[5em]">
       <NuxtLink class="flex gap-x-[0.5em]" to="/receiptTable">
         <img class="w-[2em]" src="/snapbill-logo.png" />
-        <p class="font-bold text-base md:text-lg text-sky-600">snapB!LL</p>
+        <p class="font-bold text-base md:text-lg text-sky-600 mt-[0.15rem]">snapB!LL</p>
       </NuxtLink>
 
       <div class="flex gap-x-[0.7em]">
         <NuxtLink class="" to="">
-          <Icon class="text-orange-200" name="ri:notification-2-fill" size="20" />
+          <Icon class="text-orange-200 mt-[0.3rem]" name="ri:notification-2-fill" size="25" />
         </NuxtLink>
-        <!-- <NuxtLink class="lg:hidden" to="/receiptTable"> 
-          <Icon class="text-blue-400" name="material-symbols:receipt-long-outline" color="" size="25" />
-        </NuxtLink> -->
 
         <div class="lg:hidden" @click="showDrawer">
-          <el-button type="primary">
-            <Icon class="text-blue-100" name="material-symbols:dashboard-outline" color="" size="25" />
-          </el-button>
+          <NuxtLink 
+            class="
+              p-[0.25rem]
+             
+              transition 
+              duration-500 
+              hover:shadow-lg 
+              rounded-lg 
+              flex 
+              justify-center 
+              items-center 
+              w-[100%]" 
+              @click="addR(ruleFormRef)"
+          > 
+            <Icon class="text-sky-600" name="material-symbols:dashboard" color="" size="27" />
+          </NuxtLink> 
         </div>
 
         <Transition name="slide-fade">
-          <div v-show="drawer" class="rounded-l-[3rem] p-[1rem] absolute top-0 left-[5rem] h-[100vh] w-full bg-white shadow-lg z-10">
+          <div v-show="drawer" class="lg:hidden rounded-l-[3rem] p-[1rem] absolute top-0 left-[5rem] h-[100vh] w-full bg-white shadow-lg z-10">
             <div class="">
-              <div @click="showDrawer" class="cursor-pointer p-4">
-                <Icon class="text-blue-400" name="material-symbols:close" color="" size="25" />
+              <div @click="showDrawer" class="cursor-pointer p-[1.5rem]">
+                <Icon class="text-sky-600" name="material-symbols:close" color="" size="25" />
               </div>
             </div>
-            <div>
+            <hr>
+            <div class="px-[1.5rem] mt-[2rem]">
               <div v-for="route in routes" :key="route.name">
                 <div :class="{ 'active-tab': $route.path === route.link }" 
                   v-if="isAdmin || route.name !== 'Staff'" 
-                  class="my-[0.5rem] p-[0.7rem] rounded-xl cursor-pointer hover:bg-blue-50 transition duration-300"
+                  class="flex my-[0.5rem] p-[0.7rem] rounded-xl cursor-pointer hover:bg-blue-50 transition duration-300"
                 >
                   <NuxtLink class="flex gap-x-[0.5rem]" :to="route.link">
                     <Icon class="mt-[0.3rem] " :name="route.icon" />
@@ -39,16 +50,24 @@
                   </NuxtLink>
                 </div>
               </div>
+              <div class="p-[0.7rem]">
+                  <el-popconfirm @confirm="logout" title="Are you sure to logout?">
+                    <template #reference>
+                      <div class="">
+                        <Icon class="mr-[0.5em] text-red-400" name="lucide:log-out" size="16" />
+                        <span class="text-red-400">Logout</span> 
+                      </div>
+                    </template>
+                  </el-popconfirm>
+                </div>
             </div>
           </div>
         </Transition>
 
         <div class="hidden lg:block">
           <el-dropdown trigger="click">
-            <span class="el-dropdown-link">
-              <el-button type="primary">
-                <Icon name="solar:user-circle-bold-duotone" color="" size="25" />
-              </el-button>
+            <span class="el-dropdown-link"> 
+              <Icon class="text-gray-600" name="material-symbols-light:person" color="" size="30" />
             </span>
             <template #dropdown>
               <el-dropdown-menu>

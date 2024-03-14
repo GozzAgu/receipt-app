@@ -1,7 +1,7 @@
 <template>
   <div class="">    
     <div v-loading="loading" class=" bg-white py-[0.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
-      <el-divider content-position="left"><span class="text-lg text-blue-400">Edit Profile</span></el-divider>
+      <el-divider content-position="left"><span class="text-lg text-sky-600">Edit Profile</span></el-divider>
 
       <el-form
         ref="ruleFormRef"
@@ -24,10 +24,24 @@
             <el-input v-model="user.phone" placeholder="" />
           </el-form-item>
         </div>
-        <el-button class="mt-[2em]" type="primary" @click="addR(ruleFormRef)">
-          <Icon name="tabler:user-plus" color="white" size="15" />
-          <span class="ml-[0.2em] text-[0.7em] md:text-base">Update</span>
-        </el-button>
+        <NuxtLink 
+          class="
+            bg-sky-600 
+            hover:bg-sky-500 
+            transition 
+            duration-500 
+            hover:shadow-lg 
+            rounded-lg 
+            flex 
+            justify-center 
+            items-center
+            py-[0.3rem]
+            mt-[2rem]" 
+          @click="addR(ruleFormRef)"
+        > 
+          <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="25" />
+          <span class="ml-[0.2em] text-[0.7em] md:text-base text-white">Update</span>
+        </NuxtLink> 
       </el-form>
     </div>
   </div>
