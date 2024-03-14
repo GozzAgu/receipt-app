@@ -99,6 +99,7 @@ const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
+const nuxtApp = useNuxtApp()
 
 let companyDetails = reactive<Receipt>({
   id: '',

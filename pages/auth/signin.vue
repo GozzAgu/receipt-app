@@ -139,7 +139,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true
       try {
-        const response = await store.signin(admin.email, admin.password, admin.accountType)
+        const response = await store.signin(admin.email, admin.password, admin.accountType,)
         if(response) {
           try {
             const docRef = doc(nuxtApp.$firestore, "users", response.user.uid)
