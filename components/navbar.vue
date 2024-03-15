@@ -159,8 +159,8 @@ const routes = ref([
 
 const logout = () => {
   setTimeout(function(){
-    signOut(nuxtApp.$auth);
-      router.push('/auth/signin');
+    signOut(nuxtApp.$auth)
+    router.push('/auth/signin')
   }, 3000);
   emit('signing-out')
 }

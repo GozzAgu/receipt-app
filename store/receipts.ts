@@ -60,7 +60,6 @@ export const useStore = defineStore('receipts', {
             let receiptData = doc.data() as Receipt
             receiptData.receiptOf = doc.data().receiptOf
             this.receipts.unshift({...receiptData} as Receipt)
-            console.log(this.receipts)
           }
         })
       })
