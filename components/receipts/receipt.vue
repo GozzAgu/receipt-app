@@ -11,12 +11,11 @@
         </div>
 
         <div class="px-4 pb-4 text-sm">
-          <el-divider content-position="left"><span class="text-lg">Transaction Receipt</span></el-divider>
+          <el-divider content-position="left"><span class="text-base">Transaction Receipt</span></el-divider>
 
           <div class="font-light mt-4 text-xs md:text-base">
             <p>Dear {{ rpt?.customerName }},</p>
             <p>Below are your purchase details from <span class="font-semibold">{{ rpt?.name }}</span></p>
-            <p>Please keep this document safe.</p>
           </div>
 
           <div class="text-xs md:text-base grid md:grid-cols-2 gap-2 mt-4">
@@ -28,9 +27,15 @@
               <p class="font-semibold">Customer Address</p>
               <p>{{ rpt?.customerAddress }}</p>
             </div>
-            <div class="bg-gray-100 rounded-lg p-2">
-              <p class="font-semibold">Product</p>
-              <p>{{ rpt?.productName }}</p>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="bg-gray-100 rounded-lg p-2">
+                <p class="font-semibold">Product</p>
+                <p>{{ rpt?.productName }}</p>
+              </div>
+              <div v-if="rpt?.swapFrom" class="bg-gray-100 rounded-lg p-2">
+                <p class="font-semibold">Swapped from</p>
+                <p>{{ rpt?.swapFrom }}</p>
+              </div>
             </div>
             <div class="bg-gray-100 rounded-lg p-2">
               <p class="font-semibold">Description</p>
@@ -49,16 +54,11 @@
                 <p class="font-semibold">Paid via</p>
                 <p>{{ rpt?.paidVia }}</p>
               </div>
-              <div v-if="rpt?.swapFrom" class="bg-gray-100 rounded-lg p-2">
-                <p class="font-semibold">Swapped from</p>
-                <p>{{ rpt?.swapFrom }}</p>
+              <div class="bg-gray-100 rounded-lg p-2">
+                <p class="font-bold">Total Price</p>
+                <p>{{ rpt?.newPrice }}</p>
               </div>
             </div>
-          </div>
-
-          <div class="text-xs md:text-base flex justify-between items-center bg-gray-100 rounded-lg p-4 mt-2">
-            <p class="font-semibold">Total Price</p>
-            <p class="font-bold">₦{{ rpt?.newPrice }}</p>
           </div>
         </div>
       </div>
