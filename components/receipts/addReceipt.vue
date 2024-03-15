@@ -92,6 +92,7 @@
 
       <NuxtLink 
         class="
+          cursor-pointer
           p-[0.5rem]
           my-[1rem]
           bg-sky-600 
@@ -220,6 +221,8 @@ const addR = async (formEl: FormInstance | undefined) => {
         if (newCompanyDetails.productQuantity > 1) {
           let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
           newCompanyDetails.newPrice = newPrice
+        } else {
+          newCompanyDetails.newPrice = newCompanyDetails.productPrice
         }
         const res = await store.addReceipt(newCompanyDetails)
         router.push({path:`/receipt/${res}`})

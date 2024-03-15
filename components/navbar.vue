@@ -8,14 +8,13 @@
 
       <div class="flex gap-x-[0.7em]">
         <NuxtLink class="" to="">
-          <Icon class="text-orange-200 mt-[0.3rem]" name="ri:notification-2-fill" size="25" />
+          <Icon class="text-orange-300 mt-[0.2rem]" name="ic:round-notifications" size="27" />
         </NuxtLink>
 
         <div class="lg:hidden" @click="showDrawer">
           <NuxtLink 
             class="
               p-[0.25rem]
-             
               transition 
               duration-500 
               hover:shadow-lg 
@@ -31,7 +30,11 @@
         </div>
 
         <Transition name="slide-fade">
-          <div v-show="drawer" class="lg:hidden rounded-l-[3rem] p-[1rem] absolute top-0 left-[5rem] h-[100vh] w-full bg-white shadow-lg z-10">
+          <div v-show="drawer" 
+            class="
+              lg:hidden rounded-l-[2rem] p-[1rem] absolute top-0 
+              left-[10rem] h-[100vh] w-full bg-white shadow-lg z-10"
+          >
             <div class="">
               <div @click="showDrawer" class="cursor-pointer p-[1.5rem]">
                 <Icon class="text-sky-600" name="material-symbols:close" color="" size="25" />
@@ -42,7 +45,9 @@
               <div v-for="route in routes" :key="route.name">
                 <div :class="{ 'active-tab': $route.path === route.link }" 
                   v-if="isAdmin || route.name !== 'Staff'" 
-                  class="flex my-[0.5rem] p-[0.7rem] rounded-xl cursor-pointer hover:bg-blue-50 transition duration-300"
+                  class="
+                    flex my-[0.5rem] p-[0.7rem] rounded-xl cursor-pointer 
+                    hover:bg-blue-50 transition duration-300"
                 >
                   <NuxtLink class="flex gap-x-[0.5rem]" :to="route.link">
                     <Icon class="mt-[0.3rem] " :name="route.icon" />

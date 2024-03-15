@@ -38,7 +38,7 @@ const routes = ref([
   {
     name: 'Staff',
     icon: 'ph:users-three-bold',
-    link: ''
+    link: '/users'
   },
   {
     name: 'Account',

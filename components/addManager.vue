@@ -29,6 +29,7 @@
         </div>
         <NuxtLink 
           class="
+            cursor-pointer
             bg-sky-600 
             hover:bg-sky-500 
             transition 

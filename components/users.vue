@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[15em]">
+  <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[5em]">
     <div class="grid grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="fa6-solid:users" color="gray" size="25" />
@@ -21,7 +21,7 @@
           cursor-pointer 
           font-mono 
           bg-gradient-to-t 
-          from-blue-100 
+          from-sky-100 
           to-slate-100 
           shadow-lg 
           spiral-gradient
@@ -65,7 +65,7 @@
             border 
             rounded-full 
             text-white 
-            bg-blue-400 
+            bg-sky-600 
             text-xl 
             font-bold 
             w-12 
@@ -81,14 +81,6 @@
           <p class="text-xs text-center">{{ manager.accountType }}</p>
         </div>
       </div>
-
-      <!-- <div v-else class="">
-        <el-empty>
-          <NuxtLink to="/profile">
-            <el-button type="primary">Create a manager</el-button>
-          </NuxtLink>
-        </el-empty>
-      </div>  -->
     </div>
 
     <div class="fixed bottom-3 mt-[1em] right-[1em] md:right-[5em] lg:right-[15em] bg-white">
@@ -149,7 +141,7 @@ onMounted(() => {
 }
 
 ::v-deep(.paginate-buttons:hover){
-  background-color: #0055ffc2; /* Assuming e-primary is a blue color */
+  @apply bg-sky-600;
   color: white;
   border: none;
   border-radius: 0.5em;
@@ -157,7 +149,7 @@ onMounted(() => {
 }
 
 ::v-deep(.active-page){
-  background-color: #0055ffc2; /* Assuming e-primary is a blue color */
+  @apply bg-sky-600;
   color: white;
   height: 3.3em;
   width: 3.3em;

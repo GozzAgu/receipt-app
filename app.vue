@@ -5,6 +5,8 @@
 </template>
 
 <script setup>
+import { useAuthStore } from './store/users'
+
 useHead({
 	htmlAttrs: {
 		lang: 'en'
@@ -16,7 +18,13 @@ useHead({
 		{ rel: 'icon', href: '/snapbill-logo.png' }
 	],
 	title: 'snapbill',
-});
+})
+
+const store = useAuthStore()
+
+onMounted(() => {
+	store.loadCurrentUserFromStorage()
+})
 </script>
 
 <style>
