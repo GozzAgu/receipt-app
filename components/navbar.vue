@@ -2,19 +2,18 @@
   <div class="shadow-md shadow-slate-100 drop-shadow-sm fixed top-0 bg-white w-[100%]">
     <div class="flex justify-between py-[1em] px-[1em] md:px-[5em] lg:px-[5em]">
       <NuxtLink class="flex gap-x-[0.5em]" to="/receiptTable">
-        <img class="w-[2em]" src="/snapbill-logo.png" />
-        <p class="font-bold text-base md:text-lg text-sky-600 mt-[0.15rem]">snapB!LL</p>
+        <img class="shrink-0 w-[2rem] h-[2rem]" src="/snapbill-logo.png" />
+        <p class="shrink-0 font-bold text-base md:text-lg text-sky-600 mt-[0.15rem]">snapB!LL</p>
       </NuxtLink>
 
-      <div class="flex gap-x-[0.7em]">
+      <div class="flex gap-x-[0.4rem]">
         <NuxtLink class="" to="">
-          <Icon class="text-orange-300 mt-[0.2rem]" name="ic:round-notifications" size="27" />
+          <Icon class="text-orange-300" name="ic:round-notifications" size="27" />
         </NuxtLink>
 
         <div class="lg:hidden" @click="showDrawer">
           <NuxtLink 
             class="
-              p-[0.25rem]
               transition 
               duration-500 
               hover:shadow-lg 
@@ -25,7 +24,7 @@
               w-[100%]" 
               @click="addR(ruleFormRef)"
           > 
-            <Icon class="text-sky-600" name="material-symbols:dashboard" color="" size="27" />
+            <Icon class="text-sky-600" name="majesticons:dashboard" color="" size="30" />
           </NuxtLink> 
         </div>
 
