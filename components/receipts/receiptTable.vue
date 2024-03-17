@@ -64,7 +64,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="productName" label="PRODUCT" width="150" show-overflow-tooltip />
-        <el-table-column prop="grade" label="GRADE" width="70"  show-overflow-tooltip>
+        <el-table-column prop="grade" label="GRADE" width="80"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
               :class="
@@ -76,7 +76,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="swap" label="SWAP" width="70"  show-overflow-tooltip>
+        <el-table-column prop="swap" label="SWAP" width="80"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
               :class="
