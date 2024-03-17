@@ -33,7 +33,7 @@ const routes = ref([
   {
     name: 'Inventory',
     icon: 'material-symbols:inventory-rounded',
-    link: ''
+    link: '/inventory'
   },
   {
     name: 'Staff',

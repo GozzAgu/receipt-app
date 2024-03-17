@@ -1,7 +1,6 @@
 <template>
     <SignoutLoader v-if="isSigningout" />
-    <Navbar @signing-out="isSigningout=true" class="z-10" />
-    <div class="mt-24 w-[80%] mx-auto">
+    <div class="mt-24 px-[1em] md:px-[5em] lg:px-[5em] mx-auto">
         <div class="flex flex-col md:flex-row justify-between mb-8 gap-8">
             <div class="flex flex-col sm:flex-row gap-4">
                 <el-input
@@ -28,11 +27,17 @@
                     style="width:100%"
                 />
             </div>
-            
-            <el-button type="primary" size="large" class="shadow-sm" @click="openAddDrawer">
+
+            <NuxtLink 
+                @click="openAddDrawer"
+                class="
+                    bg-sky-600 hover:bg-sky-500 transition duration-500 
+                    hover:shadow-lg rounded-lg flex justify-center 
+                    items-center w-[10rem] text-white cursor-pointer"
+            > 
                 <Icon name="heroicons:plus-solid" size="1.2em" class="mr-2" />
                 Add Entry
-            </el-button>
+            </NuxtLink> 
         </div>
         <div class="flex justify-between items-center font-light py-2 text-gray-500 text-xs sm:text-sm lg:px-3">
             <div class="flex gap-2 sm:gap-4 lg:gap-6 items-center">
@@ -140,6 +145,10 @@
 import { useInventoryStore } from "~/store/inventory";
 import { useStore } from "../store/receipts"
 import { Search } from '@element-plus/icons-vue'
+
+definePageMeta({
+  layout:'dashboard'
+})
 
 const inventoryStore = useInventoryStore();
 const { inventory } = toRefs(inventoryStore)
