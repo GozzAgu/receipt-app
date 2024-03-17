@@ -93,7 +93,7 @@
         <el-table-column prop="swap" label="SWAP" width="70"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
-              class="flex m-auto w-[2rem] text-center pl-[0.5rem]"
+              class="text-center"
               :class="
                 { 'text-gray-50 bg-gray-400 rounded-md p-[0.1rem] text-xs': row.swap === 'Yes', 
                   'text-gray-800 bg-gray-200 rounded-md p-[0.1rem] text-xs': row.swap === 'No',
