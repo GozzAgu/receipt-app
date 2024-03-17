@@ -89,7 +89,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="productDescription" width="350" label="DESCRIPTION"  show-overflow-tooltip />
-        <el-table-column prop="paidVia" width="85" label="PAID VIA"  show-overflow-tooltip>
+        <el-table-column prop="paidVia" width="90" label="PAID VIA"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
               :class="
