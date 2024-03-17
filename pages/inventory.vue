@@ -94,7 +94,7 @@
                 </el-table-column>
                 <el-table-column v-if="columns.includes('Date In')" label="Date In" property="dateIn" width="120" sortable/>
                 <el-table-column v-if="columns.includes('Supplier')" property="supplier" label="Supplier" width="120" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('Grade')" property="grade" label="Grade" show-overflow-tooltip :filters="[
+                <el-table-column v-if="columns.includes('Grade')" property="grade" width="100" label="Grade" show-overflow-tooltip :filters="[
                     { text: 'Used', value: 'Used' },
                     { text: 'New', value: 'New' },]"
                 :filter-method="filterGradeTag"
@@ -106,7 +106,7 @@
                         >{{ scope.row.grade }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column v-if="columns.includes('Storage')" property="storage" label="Storage" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('Storage')" property="storage" width="100" label="Storage" show-overflow-tooltip />
                 <el-table-column v-if="columns.includes('IMEI')" property="imei" label="IMEI" width="140">
                     <template #default="scope">
                         <p class="bg-gray-200 text-sky-600 rounded-md px-2">{{ scope.row.imei }}</p>
