@@ -1,11 +1,11 @@
 <template>
   <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[5em] relative">
-    <div class="grid grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
         <span class="text-sm md:text-base"> Receipts ({{ store.receipts.length }})</span>
       </h1>
-      <div class="flex gap-x-[1em]">
+      <div class="flex gap-x-[1em] mt-[1em] md:mt-0">
         <el-input
           v-model="search"
           placeholder="Search for a product receipt"
