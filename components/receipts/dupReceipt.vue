@@ -199,10 +199,6 @@ const paymentMethods = [
     value: 'Transfer',
     label: 'Transfer',
   },
-  {
-    value: 'Usdt',
-    label: 'Usdt',
-  },
 ]
 
 onMounted(() => {

@@ -58,45 +58,44 @@
         <el-table-column fixed type="selection" width="40" />
         <el-table-column width="130" prop="customerName" label="CUSTOMER"  show-overflow-tooltip>
           <template #default="scope">
-            <span @click="viewR(scope.row.id)">
+            <span class="cursor-pointer" @click="viewR(scope.row.id)">
               {{ scope.row.customerName }}
             </span>
           </template>
         </el-table-column>
         <el-table-column prop="productName" label="PRODUCT" width="150" show-overflow-tooltip />
-        <el-table-column prop="grade" label="GRADE" width="80"  show-overflow-tooltip>
+        <el-table-column prop="grade" label="GRADE" width="70"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
               :class="
-                { 'text-green-50 bg-green-300 rounded-md px-[0.5rem] text-center': row.grade === 'Used', 
-                  'text-orange-50 bg-blue-300 rounded-md px-[0.5rem] text-center': row.grade === 'New',
-                }"
-            >
-              {{ row.swap }}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="swap" label="SWAP" width="80"  show-overflow-tooltip>
-          <template #default="{ row }">
-            <div
-              :class="
-                { 'text-green-50 bg-green-300 rounded-md px-[0.5rem] text-center': row.swap === 'Yes', 
-                  'text-orange-50 bg-orange-200 rounded-md px-[0.5rem] text-center': row.swap === 'No',
+                { 'text-sky-600 bg-sky-100 rounded-md px-[0.2rem] text-center': row.grade === 'Used', 
+                  'text-sky-50 bg-sky-600 rounded-md px-[0.2rem] text-center': row.grade === 'New',
                 }"
             >
               {{ row.grade }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="productDescription" width="350" label="DESCRIPTION"  show-overflow-tooltip />
-        <el-table-column prop="paidVia" width="90" label="PAID VIA"  show-overflow-tooltip>
+        <el-table-column prop="swap" label="SWAP" width="70"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
               :class="
-                { 'text-pink-500 text-center': row.paidVia === 'Usdt', 
-                  'text-green-500 text-center': row.paidVia === 'Cash',
-                  'text-cyan-500 text-center': row.paidVia === 'Pos',
-                  'text-blue-500 text-center': row.paidVia === 'Transfer'
+                { 'text-gray-50 bg-gray-400 rounded-md px-[0.2rem] text-center': row.swap === 'Yes', 
+                  'text-gray-800 bg-gray-200 rounded-md px-[0.2rem] text-center': row.swap === 'No',
+                }"
+            >
+              {{ row.swap }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="productDescription" width="350" label="DESCRIPTION"  show-overflow-tooltip />
+        <el-table-column prop="paidVia" width="85" label="PAID VIA"  show-overflow-tooltip>
+          <template #default="{ row }">
+            <div
+              :class="
+                { 'text-green-500 text-center': row.paidVia === 'Cash',
+                  'text-pink-500 text-center': row.paidVia === 'Pos',
+                  'text-sky-500 text-center': row.paidVia === 'Transfer'
                 }"
             >
               {{ row.paidVia }}

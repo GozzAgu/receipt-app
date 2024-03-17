@@ -183,10 +183,6 @@ const paymentMethods = [
     value: 'Transfer',
     label: 'Transfer',
   },
-  {
-    value: 'Usdt',
-    label: 'Usdt',
-  },
 ]
 
 const rules = reactive<FormRules<Receipt>>({
