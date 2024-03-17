@@ -64,38 +64,53 @@
           </template>
         </el-table-column>
         <el-table-column prop="productName" label="PRODUCT" width="150" show-overflow-tooltip />
-        <el-table-column prop="grade" label="GRADE" width="80"  show-overflow-tooltip>
+        <!-- <el-table-column prop="grade" label="GRADE" width="80"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
               :class="
-                { 'text-sky-600 bg-sky-100 rounded-md px-[0.2rem] text-center': row.grade === 'Used', 
-                  'text-sky-50 bg-sky-600 rounded-md px-[0.2rem] text-center': row.grade === 'New',
+                { 'text-sky-600 bg-sky-100 rounded-md p-[0.1rem] text-center text-xs': row.grade === 'Used', 
+                  'text-sky-50 bg-sky-600 rounded-md p-[0.1rem] text-center text-xs': row.grade === 'New',
                 }"
             >
               {{ row.grade }}
             </div>
           </template>
+        </el-table-column> -->
+        <el-table-column property="grade" width="90" label="Grade" show-overflow-tooltip :filters="[
+          { text: 'Used', value: 'Used' },
+          { text: 'New', value: 'New' },]"
+          :filter-method="filterGradeTag"
+          filter-placement="bottom-end">
+          <template #default="scope">
+            <el-tag
+              :type="scope.row.grade === 'Used' ? '' : 'success'"
+              disable-transitions
+            >
+              {{ scope.row.grade }}
+            </el-tag>
+          </template>
         </el-table-column>
-        <el-table-column prop="swap" label="SWAP" width="80"  show-overflow-tooltip>
+        <el-table-column prop="swap" label="SWAP" width="70"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
+              class="flex m-auto w-[2rem] text-center pl-[0.5rem]"
               :class="
-                { 'text-gray-50 bg-gray-400 rounded-md px-[0.2rem] text-center': row.swap === 'Yes', 
-                  'text-gray-800 bg-gray-200 rounded-md px-[0.2rem] text-center': row.swap === 'No',
+                { 'text-gray-50 bg-gray-400 rounded-md p-[0.1rem] text-xs': row.swap === 'Yes', 
+                  'text-gray-800 bg-gray-200 rounded-md p-[0.1rem] text-xs': row.swap === 'No',
                 }"
             >
               {{ row.swap }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="productDescription" width="350" label="DESCRIPTION"  show-overflow-tooltip />
+        <el-table-column prop="productDescription" width="300" label="DESCRIPTION"  show-overflow-tooltip />
         <el-table-column prop="paidVia" width="90" label="PAID VIA"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
               :class="
-                { 'text-green-500 text-center': row.paidVia === 'Cash',
-                  'text-pink-500 text-center': row.paidVia === 'Pos',
-                  'text-sky-500 text-center': row.paidVia === 'Transfer'
+                { 'text-green-500 text-center text-xs': row.paidVia === 'Cash',
+                  'text-pink-500 text-center text-xs': row.paidVia === 'Pos',
+                  'text-sky-500 text-center text-xs': row.paidVia === 'Transfer'
                 }"
             >
               {{ row.paidVia }}
@@ -175,6 +190,10 @@ const deleteSuccess = () => {
     message: 'Receipt deleted successfully',
     type: 'success',
   })
+}
+
+const filterGradeTag = (value:string, row:any) => {
+  return row.grade === value
 }
 
 const isAdmin = computed(() => {
