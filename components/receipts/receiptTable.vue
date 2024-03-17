@@ -56,21 +56,21 @@
         style="width: 100%; max-height: 100%;"
       >
         <el-table-column fixed type="selection" width="40" />
-        <el-table-column width="130" prop="customerName" label="CUSTOMER">
+        <el-table-column width="130" prop="customerName" label="CUSTOMER"  show-overflow-tooltip>
           <template #default="scope">
             <span @click="viewR(scope.row.id)">
               {{ scope.row.customerName }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="productName" label="PRODUCT" width="200" />
-        <el-table-column prop="swapFrom" label="SWAPPED FROM" width="150">
+        <el-table-column prop="productName" label="PRODUCT" width="150" show-overflow-tooltip />
+        <el-table-column prop="swapFrom" label="SWAPPED FROM" width="150"  show-overflow-tooltip>
           <template #default="{ row }">
             <span v-if="row.swapFrom">{{ row.swapFrom }}</span>
             <span v-else>None</span>
           </template>
         </el-table-column>
-        <el-table-column prop="paidVia" width="100" label="PAID VIA" >
+        <el-table-column prop="paidVia" width="90" label="PAID VIA"  show-overflow-tooltip>
           <template #default="{ row }">
             <div 
               :class="
@@ -84,13 +84,13 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="productDescription" width="300" label="DESCRIPTION" />
-        <el-table-column prop="newPrice" label="PRICE" width="200">
+        <el-table-column prop="productDescription" width="300" label="DESCRIPTION"  show-overflow-tooltip />
+        <el-table-column prop="newPrice" label="PRICE" width="100"  show-overflow-tooltip>
           <template #default="scope">
             ₦{{ scope.row.newPrice }} 
           </template>
         </el-table-column>
-        <el-table-column prop="date" sortable label="DATE" width="150"/>
+        <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
         <el-table-column fixed="right" width="45">
           <template #default="scope">
             <el-tooltip

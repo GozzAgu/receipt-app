@@ -82,8 +82,9 @@
                 style="width: 100%"
                 @selection-change="handleSelectionChange"
                 highlight-current-row
+                :border="parentBorder"
             >
-                <el-table-column fixed type="selection" width="30" />
+                <el-table-column fixed type="selection" width="40" />
                 <el-table-column fixed width="60" align="center">
                     <template #default="scope">
                         <button class="text-sky-600 cursor-pointer px-2 py-1 rounded hover:bg-sky-600/10" @click="handleEdit(scope.$index, scope.row)">
@@ -92,7 +93,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column v-if="columns.includes('Date In')" label="Date In" property="dateIn" width="120" sortable/>
-                <el-table-column v-if="columns.includes('Supplier')" property="supplier" label="Supplier" width="120" />
+                <el-table-column v-if="columns.includes('Supplier')" property="supplier" label="Supplier" width="120" show-overflow-tooltip />
                 <el-table-column v-if="columns.includes('Grade')" property="grade" label="Grade" show-overflow-tooltip :filters="[
                     { text: 'Used', value: 'Used' },
                     { text: 'New', value: 'New' },]"
@@ -154,7 +155,7 @@ const inventoryStore = useInventoryStore();
 const { inventory } = toRefs(inventoryStore)
   
 const showDropDown = ref(false)
-
+const parentBorder = ref(true)
 const store = useStore()
 const isSigningout = ref(false)
 
@@ -296,5 +297,30 @@ store.fetchReceipts();
 
 .el-date-range-picker .el-picker-panel__body{
     min-width:200px
+}
+
+::v-deep(.el-table__header th) {
+  color: #4b5563;
+  font-weight: semibold;
+  font-size: 1em
+}
+
+::v-deep(.el-table__header-wrapper) {
+  border-bottom: 1px solid #d1d5db;
+}
+
+::v-deep(.el-table__row) {
+  font-size: 1em;
+}
+
+@media screen and (max-width: 768px) {
+  ::v-deep(.el-table__row) {
+    font-size: 0.8em;
+    font-weight: 300;
+  }
+}
+
+.el-table tr {
+  @apply text-[0.75em] md:text-[0.9em]
 }
 </style>
