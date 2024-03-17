@@ -33,7 +33,7 @@
                 class="
                     bg-sky-600 hover:bg-sky-500 transition duration-500 
                     hover:shadow-lg rounded-lg flex justify-center 
-                    items-center w-[10rem] text-white cursor-pointer"
+                    items-center w-[10rem] text-white cursor-pointer py-[0.3em]"
             > 
                 <Icon name="heroicons:plus-solid" size="1.2em" class="mr-2" />
                 Add Entry
