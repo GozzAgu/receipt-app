@@ -28,11 +28,13 @@
           </NuxtLink> 
         </div>
 
+        <div v-show="drawer" class="fixed inset-0 h-screen bg-sky-950 opacity-50 z-10" @click="showDrawer"></div>
+
         <Transition name="slide-fade">
           <div v-show="drawer" 
             class="
-              lg:hidden rounded-l-[2rem] p-[1rem] absolute top-0 
-              left-[10rem] h-[100vh] w-full bg-white shadow-lg z-10"
+              lg:hidden rounded-l-[1.5rem] p-[1rem] absolute 
+              h-[100vh] right-0 top-0 bg-white shadow-lg z-20"
           >
             <div class="">
               <div @click="showDrawer" class="cursor-pointer p-[1.5rem]">
@@ -55,15 +57,15 @@
                 </div>
               </div>
               <div class="p-[0.7rem]">
-                  <el-popconfirm @confirm="logout" title="Are you sure to logout?">
-                    <template #reference>
-                      <div class="">
-                        <Icon class="mr-[0.5em] text-red-400" name="lucide:log-out" size="16" />
-                        <span class="text-red-400">Logout</span> 
-                      </div>
-                    </template>
-                  </el-popconfirm>
-                </div>
+                <el-popconfirm @confirm="logout" title="Are you sure to logout?">
+                  <template #reference>
+                    <div class="">
+                      <Icon class="mr-[0.5em] text-red-400" name="lucide:log-out" size="16" />
+                      <span class="text-red-400">Logout</span> 
+                    </div>
+                  </template>
+                </el-popconfirm>
+              </div>
             </div>
           </div>
         </Transition>
@@ -167,15 +169,13 @@ const logout = () => {
 </script>
 
 <style scoped>
-.slide-fade-enter-active, .slide-fade-leave-active {
-  transition: transform 1s ease;
+.slide-fade-enter-active {
+  transition: transform 0.3s ease-in;
 }
-
-.slide-fade-enter, .slide-fade-leave-to {
+.slide-fade-leave-active {
+  transition: transform 0.3s ease-out;
+}
+.slide-fade-enter-from, .slide-fade-leave-to {
   transform: translateX(100%);
-}
-
-.slide-fade-leave-enter, .slide-fade-enter-to {
-  transform: translateX(0);
 }
 </style>

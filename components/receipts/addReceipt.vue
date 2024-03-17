@@ -68,7 +68,7 @@
               <el-option v-for="item in grades" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item> 
-          <el-form-item label="Swap ?">
+          <el-form-item label="Swap ?" prop="swap">
             <el-select v-model="companyDetails.swap" placeholder="select">
               <el-option v-for="item in swap" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>

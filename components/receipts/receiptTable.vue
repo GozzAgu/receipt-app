@@ -54,7 +54,7 @@
         v-if="store.receipts.length > 0" 
         :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
-      >
+      > 
         <el-table-column fixed type="selection" width="40" />
         <el-table-column width="130" prop="customerName" label="CUSTOMER"  show-overflow-tooltip>
           <template #default="scope">
@@ -76,7 +76,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="swapFrom" label="SWAP" width="80"  show-overflow-tooltip>
+        <el-table-column prop="swap" label="SWAP" width="80"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
               :class="
@@ -84,10 +84,11 @@
                   'text-orange-50 bg-orange-200 rounded-md px-[0.5rem] text-center': row.swap === 'No',
                 }"
             >
-              {{ row.swap }}
+              {{ row.grade }}
             </div>
           </template>
         </el-table-column>
+        <el-table-column prop="productDescription" width="350" label="DESCRIPTION"  show-overflow-tooltip />
         <el-table-column prop="paidVia" width="90" label="PAID VIA"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
@@ -102,7 +103,6 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="productDescription" width="350" label="DESCRIPTION"  show-overflow-tooltip />
         <el-table-column prop="newPrice" label="PRICE" width="120"  show-overflow-tooltip>
           <template #default="scope">
             ₦{{ scope.row.newPrice }} 
