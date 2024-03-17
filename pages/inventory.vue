@@ -87,8 +87,8 @@
                 <el-table-column fixed type="selection" width="40" />
                 <el-table-column fixed width="60" align="center">
                     <template #default="scope">
-                        <button class="text-sky-600 cursor-pointer px-2 py-1 rounded hover:bg-sky-600/10" @click="handleEdit(scope.$index, scope.row)">
-                            <Icon name="heroicons:pencil"  size="1.2em" />
+                        <button class=" cursor-pointer px-2 py-1 rounded hover:bg-sky-600/10" @click="handleEdit(scope.$index, scope.row)">
+                            <Icon class="text-sky-600" name="heroicons:pencil"  size="1.2em" />
                         </button>     
                     </template>
                 </el-table-column>
