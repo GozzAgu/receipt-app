@@ -58,25 +58,26 @@
           <el-form-item label="Product description" prop="productDescription">
             <el-input v-model="companyDetails.productDescription" placeholder="" type="textarea"/>
           </el-form-item>
-          <el-form-item label="Payment Mode">
+          <el-form-item label="Payment Mode" prop="paidVia">
             <el-select v-model="companyDetails.paidVia" placeholder="select">
               <el-option v-for="item in paymentMethods" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item> 
-          <el-form-item label="Swap deal?">
-            <el-switch
-              v-model="swap"
-              class="mt-2"
-              style="margin-left: 24px"
-              inline-prompt
-              :active-icon="Check"
-              :inactive-icon="Close"
-            />
-          </el-form-item>  
-          <el-form-item v-if="swap == true" label="Swap from" prop="swapFrom">
+          <el-form-item label="Grade" prop="grade">
+            <el-select v-model="companyDetails.grade" placeholder="select">
+              <el-option v-for="item in grades" :key="item.value" :label="item.label" :value="item.value" />
+            </el-select>
+          </el-form-item> 
+          <el-form-item label="Swap ?">
+            <el-select v-model="companyDetails.swap" placeholder="select">
+              <el-option v-for="item in swap" :key="item.value" :label="item.label" :value="item.value" />
+            </el-select>
+          </el-form-item> 
+
+          <el-form-item v-if="companyDetails.swap === 'Yes'" label="Swap from" prop="swap">
             <el-input v-model="companyDetails.swapFrom" placeholder="" />
           </el-form-item> 
-          <el-form-item v-if="swap == true" label="Swap to" prop="productName">
+          <el-form-item v-if="companyDetails.swap === 'Yes'" label="Swap to" prop="swap">
             <el-input disabled v-model="companyDetails.productName" placeholder="" />
           </el-form-item> 
         </div>
@@ -118,9 +119,7 @@ import { useStore } from "@/store/receipts"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { Receipt } from '@/types/types'
-import { Tickets, Back, Check, Close } from '@element-plus/icons-vue'
 
-const swap = ref(false)
 const store = useStore()
 const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('top')
@@ -144,8 +143,32 @@ let companyDetails = reactive<Receipt>({
   receiptOf: '',
   imei: '',
   paidVia: '',
-  swapFrom: ''
+  swapFrom: '',
+  swap: '',
+  grade: ''
 })
+
+const swap = [
+  {
+    value: 'Yes',
+    label: 'Yes',
+  },
+  {
+    value: 'No',
+    label: 'No',
+  }
+]
+
+const grades = [
+  {
+    value: 'Used',
+    label: 'Used',
+  },
+  {
+    value: 'New',
+    label: 'New',
+  }
+]
 
 const paymentMethods = [
   {
@@ -197,9 +220,15 @@ const rules = reactive<FormRules<Receipt>>({
   paidVia: [
     { required: true, message: 'Please select a payment method', trigger: 'blur' },
   ],
+  swap: [
+    { required: true, message: 'Please input Product price', trigger: 'blur' },
+  ],
   swapFrom: [
-    { required: true, message: 'Please input what you swapped from', trigger: 'blur' },
-  ]
+    { required: true, message: 'Please input Product price', trigger: 'blur' },
+  ],
+  grade: [
+    { required: true, message: 'Please input Product price', trigger: 'blur' },
+  ],
 })
 
 onMounted(() => {

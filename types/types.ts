@@ -20,6 +20,8 @@ export interface Receipt {
   imei: string
   paidVia: string
   swapFrom: string
+  swap: string
+  grade: string
 }
 
 export interface User {

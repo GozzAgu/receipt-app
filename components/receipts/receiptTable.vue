@@ -64,28 +64,46 @@
           </template>
         </el-table-column>
         <el-table-column prop="productName" label="PRODUCT" width="150" show-overflow-tooltip />
-        <el-table-column prop="swapFrom" label="SWAPPED FROM" width="150"  show-overflow-tooltip>
+        <el-table-column prop="grade" label="GRADE" width="80"  show-overflow-tooltip>
           <template #default="{ row }">
-            <span v-if="row.swapFrom">{{ row.swapFrom }}</span>
-            <span v-else>None</span>
+            <div
+              :class="
+                { 'text-green-50 bg-green-300 rounded-md px-[0.5rem] text-center': row.grade === 'Used', 
+                  'text-orange-50 bg-blue-300 rounded-md px-[0.5rem] text-center': row.grade === 'New',
+                }"
+            >
+              {{ row.swap }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="swapFrom" label="SWAP" width="80"  show-overflow-tooltip>
+          <template #default="{ row }">
+            <div
+              :class="
+                { 'text-green-50 bg-green-300 rounded-md px-[0.5rem] text-center': row.swap === 'Yes', 
+                  'text-orange-50 bg-orange-200 rounded-md px-[0.5rem] text-center': row.swap === 'No',
+                }"
+            >
+              {{ row.swap }}
+            </div>
           </template>
         </el-table-column>
         <el-table-column prop="paidVia" width="90" label="PAID VIA"  show-overflow-tooltip>
           <template #default="{ row }">
-            <div 
+            <div
               :class="
-                { 'text-orange-500': row.paidVia === 'Usdt', 
-                  'text-gray-500': row.paidVia === 'Cash',
-                  'text-green-500': row.paidVia === 'Pos',
-                  'text-blue-500': row.paidVia === 'Transfer'
+                { 'text-pink-500 text-center': row.paidVia === 'Usdt', 
+                  'text-green-500 text-center': row.paidVia === 'Cash',
+                  'text-cyan-500 text-center': row.paidVia === 'Pos',
+                  'text-blue-500 text-center': row.paidVia === 'Transfer'
                 }"
             >
               {{ row.paidVia }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="productDescription" width="300" label="DESCRIPTION"  show-overflow-tooltip />
-        <el-table-column prop="newPrice" label="PRICE" width="100"  show-overflow-tooltip>
+        <el-table-column prop="productDescription" width="350" label="DESCRIPTION"  show-overflow-tooltip />
+        <el-table-column prop="newPrice" label="PRICE" width="120"  show-overflow-tooltip>
           <template #default="scope">
             ₦{{ scope.row.newPrice }} 
           </template>
@@ -219,7 +237,6 @@ const paginatedReceipts = computed(() => {
 
 onMounted(() => {
   authStore.loadCurrentUserFromStorage()
-  // store.fetchReceipts()
   if(paginatedReceipts) {
     loading.value = false
   }
