@@ -36,7 +36,7 @@
             flex 
             justify-center 
             items-center
-            py-[0.3rem]
+            py-[0.4rem]
             mt-[2rem]" 
           @click="addR(ruleFormRef)"
         > 
