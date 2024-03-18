@@ -1,7 +1,7 @@
 <template>
   <div class="shadow-md shadow-slate-100 drop-shadow-sm fixed top-0 bg-white w-[100%]">
     <div class="flex justify-between py-[1em] px-[1em] sm:px-[5em] lg:px-[5em]">
-      <NuxtLink class="flex gap-x-[0.5em]" to="/receiptTable">
+      <NuxtLink class="flex gap-x-[0.5em]" to="/dashboard">
         <img class="shrink-0 w-[2rem] h-[2rem]" src="/snapbill-logo.png" />
         <p class="shrink-0 font-bold text-base md:text-lg text-sky-600 mt-[0.15rem]">snapB!LL</p>
       </NuxtLink>
@@ -150,6 +150,11 @@ const routes = ref([
     name: 'Inventory',
     icon: 'material-symbols:inventory-rounded',
     link: '/inventory'
+  },
+  {
+    name: 'Returns',
+    icon: 'heroicons:receipt-refund',
+    link: '/returns'
   },
   {
     name: 'Staff',
