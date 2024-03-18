@@ -1,8 +1,8 @@
 <template>
-  <div class="px-[1em] pb-[3rem] md:px-[5em] lg:px-[5em] mt-[3rem] relative">
+  <div class="px-[1em] pb-[3rem] sm:px-[5em] lg:px-[5em] mt-[3rem] relative">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-[3rem]">
-      <div class="border p-[2rem] rounded-lg h-[25rem]">
-        <div class="flex gap-x-[0.5rem] mb-[0.5rem]">
+      <div class="shadow-md bg-slate-50 p-[1rem] rounded-xl h-[25rem]">
+        <div class="flex gap-x-[0.5rem] mb-[1rem]">
           <Icon class="text-2xl text-sky-600" name="ic:sharp-swap-horiz" />
           <p class="font-semibold text-sky-600">Recent swaps</p>
         </div>
@@ -10,7 +10,7 @@
           :default-sort="{ prop: 'date', order: 'descending' }" 
           v-if="store.receipts.length > 0" 
           :data="filteredReceipts" 
-          height="95%"
+          height="90%"
           style="width: 100%; max-height: 100%;"
         > 
           <el-table-column prop="swapFrom" label="SWAP FROM" width="130"  show-overflow-tooltip>
@@ -24,16 +24,16 @@
         </el-table>
       </div>
 
-      <div class="border p-[2rem] rounded-lg h-[25rem]">
-        <div class="flex gap-x-[0.5rem] mb-[0.5rem]">
+      <div class="shadow-md bg-slate-50 p-[1rem] rounded-xl h-[25rem]">
+        <div class="flex gap-x-[0.5rem] mb-[1rem]">
           <Icon class="text-2xl text-green-500" name="ic:twotone-loyalty" />
-          <p class="font-semibold text-green-500">Patrons</p>
+          <p class="font-semibold text-green-500">Patrons <span class="text-xs">(Customer expenses over ₦500,000)</span></p>
         </div>
         <el-table 
           :default-sort="{ prop: 'date', order: 'descending' }" 
           v-if="store.receipts.length > 0" 
-          :data="filteredReceipts" 
-          height="95%"
+          :data="filteredPatrons" 
+          height="90%"
           style="width: 100%; max-height: 100%;"
         > 
           <el-table-column prop="customerName" label="CUSTOMER" width="130" show-overflow-tooltip />
@@ -61,12 +61,44 @@ const filteredReceipts = computed(() => {
   return store.receipts.filter(receipt => receipt.swap === "Yes")
 })
 
+const filteredPatrons = computed(() => {
+  const targetPrice = 500000
+  const filtered = store.receipts.filter(r => r.productPrice > targetPrice)
+  const sorted = filtered.sort((a, b) => a.newPrice - b.newPrice)
+  return sorted
+})
+
 onMounted(() =>{
   store.fetchReceipts()
 })
 </script>
 
 <style scoped>
+::v-deep(.el-table__header th) {
+  color: #4b5563;
+  font-weight: semibold;
+  font-size: 1em
+}
+
+::v-deep(.el-table__header-wrapper) {
+  border-bottom: 1px solid #d1d5db;
+}
+
+::v-deep(.el-table__row) {
+  font-size: 1em;
+}
+
+@media screen and (max-width: 768px) {
+  ::v-deep(.el-table__row) {
+    font-size: 0.8em;
+    font-weight: 300;
+  }
+}
+
+.el-table tr {
+  @apply text-[0.75em] md:text-[0.9em]
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }

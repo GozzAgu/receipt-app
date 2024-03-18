@@ -1,12 +1,6 @@
 <template>
   <div class="">    
     <div v-loading="loading" class=" bg-white py-[0.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
-      <div>
-        <p class="text-sm bg-sky-600 p-[0.5em] rounded-t-2xl text-white font-thin text-center">
-          After creating a manager, you can assign the manager to delete a receipt. 
-          Without that assignment, a manager CANNOT delete a receipt.
-        </p>
-      </div>
       <el-divider content-position="left"><span class="text-lg text-sky-600">Create  Managers</span></el-divider>
       
       <el-form

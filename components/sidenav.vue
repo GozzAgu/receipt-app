@@ -36,6 +36,11 @@ const routes = ref([
     link: '/inventory'
   },
   {
+    name: 'Returns',
+    icon: 'heroicons:receipt-refund',
+    link: '/returns'
+  },
+  {
     name: 'Staff',
     icon: 'ph:users-three-bold',
     link: '/users'
@@ -44,7 +49,7 @@ const routes = ref([
     name: 'Account',
     icon: 'material-symbols:settings-account-box-outline-rounded',
     link: '/profile'
-  }
+  },
 ])
 
 const isAdmin = computed(() => {

@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[1em] md:px-[5em] lg:px-[15em]">
+  <div class="px-[1em] sm:px-[5em] lg:px-[15em]">
     <el-input
       v-model="search"
       placeholder="Search for a receipt"

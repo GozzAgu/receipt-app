@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[1em] md:px-[5em] lg:px-[5em] py-[5em]">
+  <div class="px-[1em] sm:px-[5em] lg:px-[5em] py-[5em]">
     <h1 class="font-semibold text-xl text-gray-500 my-[0.5rem]">
       <Icon name="material-symbols:settings-account-box-outline-rounded" color="gray" size="25" />
       <span class="text-sm md:text-base"> Account Management </span>

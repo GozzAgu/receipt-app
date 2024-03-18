@@ -1,13 +1,13 @@
 <template>
   <div class="shadow-md shadow-slate-100 drop-shadow-sm fixed top-0 bg-white w-[100%]">
-    <div class="flex justify-between py-[1em] px-[1em] md:px-[5em] lg:px-[5em]">
+    <div class="flex justify-between py-[1em] px-[1em] sm:px-[5em] lg:px-[5em]">
       <NuxtLink class="flex gap-x-[0.5em]" to="/receiptTable">
         <img class="shrink-0 w-[2rem] h-[2rem]" src="/snapbill-logo.png" />
         <p class="shrink-0 font-bold text-base md:text-lg text-sky-600 mt-[0.15rem]">snapB!LL</p>
       </NuxtLink>
 
       <div class="flex gap-x-[0.4rem]">
-        <NuxtLink class="" to="">
+        <NuxtLink class="border-2 border-orange-200 p-[0.1rem] rounded-lg" to="">
           <Icon class="text-orange-300" name="solar:bell-bing-bold-duotone" size="27" />
         </NuxtLink>
 
@@ -72,8 +72,8 @@
 
         <div class="hidden lg:block">
           <el-dropdown trigger="click">
-            <span class="el-dropdown-link"> 
-              <Icon class="text-gray-600" name="material-symbols-light:person" color="" size="30" />
+            <span class="el-dropdown-link border-2 border-sky-200 p-[0.1rem] rounded-lg"> 
+              <Icon class="text-sky-600" name="material-symbols-light:person" color="" size="30" />
             </span>
             <template #dropdown>
               <el-dropdown-menu>

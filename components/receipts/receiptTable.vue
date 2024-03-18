@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[5.5em] px-[1em] md:px-[5em] lg:px-[5em] relative">
+  <div class="py-[5.5em] px-[1em] sm:px-[5em] lg:px-[5em] relative">
     <div class="grid grid-cols-1 md:grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
@@ -17,7 +17,13 @@
           content="Create receipt"
           placement="bottom"
         >
-          <NuxtLink class="bg-sky-600 hover:bg-sky-500 transition duration-500 hover:shadow-lg rounded-lg flex justify-center items-center w-[5rem]" to="/addReceipts"> 
+          <NuxtLink 
+            class="
+              bg-sky-600 hover:bg-sky-500 transition duration-500 
+              hover:shadow-lg rounded-lg flex justify-center 
+              items-center w-[5rem]" 
+            to="/addReceipts"
+          > 
             <Icon class="text-white" name="mdi:receipt-text-plus" size="25" />
           </NuxtLink> 
         </el-tooltip>
@@ -90,7 +96,7 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="swap" label="SWAP" width="70"  show-overflow-tooltip>
+        <el-table-column prop="swap" label="SWAP" width="70">
           <template #default="{ row }">
             <div
               class="text-center"
@@ -156,7 +162,7 @@
         </NuxtLink>
       </el-empty>
 
-      <div class="fixed bottom-3 mt-[1em] right-[1em] md:right-[5em] lg:right-[15em] bg-white">
+      <div class="fixed bottom-3 mt-[1em] right-[1em] sm:right-[5em] lg:right-[15em] bg-white">
         <vue-awesome-paginate
           v-model="currentPage"
           :total-items="store.receipts.length"

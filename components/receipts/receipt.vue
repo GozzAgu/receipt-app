@@ -1,5 +1,5 @@
 <template>
-  <div class="print:m-auto px-4 md:px-20 py-12 min-h-screen">
+  <div class="print:m-auto px-4 sm:px-20 py-12 min-h-screen">
     <div class="max-w-3xl mx-auto">
       <div ref="pdfSection" v-loading="loading" class="border rounded-lg shadow-lg bg-white mt-[4em]">
         <div class="flex justify-between items-center px-4 py-2 bg-sky-100 rounded-t-lg">

@@ -1,19 +1,18 @@
 <template>
-  <div class="pt-[5.5em] px-[1em] md:px-[5em] lg:px-[5em] relative">
+  <div class="pt-[5.5em] px-[1em] sm:px-[5em] lg:px-[5em] relative">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-[3rem]">
-      <div class="px-[2rem] py-[1rem] border rounded-lg shadow-md">
-        <p class="font-semibold lg:w-[70%]">
-          Welcome to snapB!LL, <span class="font-bold">{{ authStore.currentUser?.email }}</span> 
+      <div class="flex justify-center items-center px-[2rem] py-[1rem] rounded-2xl shadow-md bg-gradient-to-t from-sky-100 to-slate-100 ">
+        <p class="text-base md:text-xl font-black text-sky-500">
+          Welcome <span class="">{{ authStore.currentUser?.email }} </span> 
+          <!-- <span v-if="authStore.currentUser?.accountType === 'admin'"> you're an {{ authStore.currentUser?.accountType }}</span>
+          <span v-else> you're a staff</span> -->
         </p>
-        <div class="flex justify-end">
-          <p class="mt-[0.5rem] text-sm text-green-500 border border-green-400 bg-green-100 rounded-lg w-[4rem] text-center px-[0.5rem] py-[0.1rem]">
-            {{ authStore.currentUser?.accountType }}
-          </p>
-        </div>  
       </div>
-      <!-- <div class="grid grid-cols-2">
+
+      <div class="bg-gradient-to-t from-sky-100 to-slate-100 flex justify-between gap-x-[3rem] px-[2rem] py-[1rem] rounded-2xl shadow-md">
         <el-statistic title="Total Receipts" :value="outputValue" />
-      </div> -->
+        <el-statistic title="Total Inventories" :value="outputValue2" />
+      </div>
     </div>
   </div>
 </template>
@@ -21,21 +20,25 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/store/users'
 import { useStore } from '~/store/receipts'
+import { useInventoryStore } from '~/store/inventory';
 
-const route = useRoute()
 const authStore = useAuthStore()
 const store = useStore()
+const invStore = useInventoryStore()
 const receipts = ref(0)
+const inventories = ref(0)
 
-watch(() => store.receipts.length, (newLength) => {
-  receipts.value = newLength
-})
-
-watch(() => store.receipts.length, (newLength) => {
-  receipts.value = newLength
+watchEffect(() => {
+  receipts.value = store.receipts.length
+  inventories.value = invStore.inventory.length
 })
 
 const outputValue = useTransition(receipts, {
   duration: 1500,
 })
+
+const outputValue2 = useTransition(inventories, {
+  duration: 1500,
+})
+
 </script>
