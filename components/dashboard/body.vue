@@ -27,7 +27,7 @@
       <div class="shadow-md bg-slate-50 p-[1rem] rounded-xl h-[25rem]">
         <div class="flex gap-x-[0.5rem] mb-[1rem]">
           <Icon class="text-2xl text-green-500" name="ic:twotone-loyalty" />
-          <p class="font-semibold text-green-500">Patrons <span class="text-xs">(Customer expenses over ₦500,000)</span></p>
+          <p class="font-semibold text-green-500">Patrons <span class="text-xs">(Over ₦500,000)</span></p>
         </div>
         <el-table 
           :default-sort="{ prop: 'date', order: 'descending' }" 
@@ -52,13 +52,11 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store/receipts"
-import { useAuthStore } from "~/store/users"
 
 const store = useStore()
-const authStore = useAuthStore()
 
 const filteredReceipts = computed(() => {
-  return store.receipts.filter(receipt => receipt.swap === "Yes")
+  return store.receipts.filter(receipt => receipt.swap === "Yes").slice(0, 6)
 })
 
 const filteredPatrons = computed(() => {
