@@ -8,7 +8,7 @@
 
       <div class="flex gap-x-[0.4rem]">
         <NuxtLink class="" to="">
-          <Icon class="text-orange-300" name="ic:round-notifications" size="27" />
+          <Icon class="text-orange-300" name="solar:bell-bing-bold-duotone" size="27" />
         </NuxtLink>
 
         <div class="lg:hidden" @click="showDrawer">

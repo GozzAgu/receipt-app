@@ -1,6 +1,7 @@
 <template>
   <div>
-    
+    <DashboardWelcomeCard />
+    <DashboardBody />
   </div>
 </template>
 
