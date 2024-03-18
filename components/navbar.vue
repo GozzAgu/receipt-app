@@ -7,13 +7,17 @@
       </NuxtLink>
 
       <div class="flex gap-x-[0.4rem]">
-        <NuxtLink class="border-2 border-orange-200 p-[0.1rem] rounded-lg" to="">
+        <NuxtLink class="border-2 border-orange-200 bg-orange-50 p-[0.1rem] rounded-lg" to="">
           <Icon class="text-orange-300" name="solar:bell-bing-bold-duotone" size="27" />
         </NuxtLink>
 
         <div class="lg:hidden" @click="showDrawer">
           <NuxtLink 
             class="
+              border-2 
+              border-sky-600
+              bg-sky-100 
+              p-[0.1rem]
               transition 
               duration-500 
               hover:shadow-lg 
@@ -28,7 +32,7 @@
           </NuxtLink> 
         </div>
 
-        <div v-show="drawer" class="fixed inset-0 h-screen bg-sky-950 opacity-50 z-10" @click="showDrawer"></div>
+        <div v-show="drawer" class="fixed inset-0 h-screen bg-sky-950 opacity-20 z-10" @click="drawer = false"></div>
 
         <Transition name="slide-fade">
           <div v-show="drawer" 
