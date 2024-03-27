@@ -153,7 +153,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
                 message: 'Sign in successful',
                 type: 'success',
               })
-              router.push('/receiptTable')
+              router.push('/dashboard')
             } else {
               ElNotification({
                 title: 'Error',

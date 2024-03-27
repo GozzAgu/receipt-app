@@ -18,6 +18,16 @@
           placement="bottom"
         >
           <NuxtLink 
+            to="/addReceipts"
+            class="
+              bg-sky-600 hover:bg-sky-500 transition duration-500 
+              hover:shadow-lg rounded-lg flex justify-center gap-x-[0.5rem]
+              items-center w-[15rem] text-white cursor-pointer py-[0.3em]"
+          > 
+            <Icon class="text-white" name="mdi:receipt-text-plus" size="20" />
+            New Receipt
+          </NuxtLink> 
+          <!-- <NuxtLink 
             class="
               bg-sky-600 hover:bg-sky-500 transition duration-500 
               hover:shadow-lg rounded-lg flex justify-center 
@@ -25,7 +35,8 @@
             to="/addReceipts"
           > 
             <Icon class="text-white" name="mdi:receipt-text-plus" size="25" />
-          </NuxtLink> 
+            Generate Receipt
+          </NuxtLink>  -->
         </el-tooltip>
       </div>
     </div>

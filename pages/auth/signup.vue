@@ -192,7 +192,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           if(admin.accountType === AccountType.Manager) {
             router.push('/')
           }else {
-            router.push('/receiptTable')
+            router.push('/dashboard')
           }
         }
       }
