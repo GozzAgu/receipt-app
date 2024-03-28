@@ -28,16 +28,28 @@
                 />
             </div>
 
-            <NuxtLink 
+            <div class="flex gap-4">
+              <NuxtLink 
                 @click="openAddDrawer"
                 class="
-                    bg-sky-600 hover:bg-sky-500 transition duration-500 
-                    hover:shadow-lg rounded-lg flex justify-center 
-                    items-center w-[10rem] text-white cursor-pointer py-[0.3em]"
-            > 
+                  bg-sky-600 hover:bg-sky-500 transition duration-500 
+                  hover:shadow-lg rounded-lg flex justify-center 
+                  items-center w-[10rem] text-white cursor-pointer py-[0.3em]"
+              > 
                 <Icon name="heroicons:plus-solid" size="1.2em" class="mr-2" />
                 Add Entry
-            </NuxtLink> 
+              </NuxtLink> 
+              
+              <NuxtLink 
+                class="
+                  bg-sky-600 hover:bg-sky-500 transition duration-500 
+                  hover:shadow-lg rounded-lg flex justify-center 
+                  items-center w-[10rem] text-white cursor-pointer py-[0.3em]"
+              > 
+                <Icon name="heroicons:plus-solid" size="1.2em" class="mr-2" />
+                Import Excel
+              </NuxtLink> 
+            </div>
         </div>
         <div class="flex justify-between items-center font-light py-2 text-gray-500 text-xs sm:text-sm lg:px-3">
             <div class="flex gap-2 sm:gap-4 lg:gap-6 items-center">

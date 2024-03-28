@@ -27,16 +27,6 @@
             <Icon class="text-white" name="mdi:receipt-text-plus" size="20" />
             New Receipt
           </NuxtLink> 
-          <!-- <NuxtLink 
-            class="
-              bg-sky-600 hover:bg-sky-500 transition duration-500 
-              hover:shadow-lg rounded-lg flex justify-center 
-              items-center w-[5rem]" 
-            to="/addReceipts"
-          > 
-            <Icon class="text-white" name="mdi:receipt-text-plus" size="25" />
-            Generate Receipt
-          </NuxtLink>  -->
         </el-tooltip>
       </div>
     </div>

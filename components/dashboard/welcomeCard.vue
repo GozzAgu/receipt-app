@@ -2,7 +2,7 @@
   <div class="pt-[5.5em] px-[1em] sm:px-[5em] lg:px-[5em] relative">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[3rem] gap-y-[1rem]">
       <div class="flex justify-center items-center px-[2rem] py-[1rem] rounded-2xl shadow-md bg-gradient-to-t from-sky-100 to-slate-100 ">
-        <p class="text-base md:text-xl font-black text-sky-500">
+        <p class="text-base md:text-xl font-bold text-sky-400">
           Welcome <span class="">{{ authStore.currentUser?.email }} </span> 
           <!-- <span v-if="authStore.currentUser?.accountType === 'admin'"> you're an {{ authStore.currentUser?.accountType }}</span>
           <span v-else> you're a staff</span> -->
