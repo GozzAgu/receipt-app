@@ -1,5 +1,5 @@
 <template>
-  <LoadersSignoutLoader v-if="loading" />
+  <!-- <LoadersSignoutLoader v-if="loading" /> -->
   <NuxtParticles
     id="tsparticles"
     :options="options"
