@@ -26,6 +26,8 @@
         </div>
         <NuxtLink 
           class="
+            w-[100%]
+            md:w-[30%]
             cursor-pointer
             bg-sky-600 
             hover:bg-sky-500 
@@ -36,12 +38,12 @@
             flex 
             justify-center 
             items-center
-            py-[0.4rem]
+            py-[0.3rem]
             mt-[2rem]" 
           @click="addR(ruleFormRef)"
         > 
-          <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="25" />
-          <span class="ml-[0.2em] text-[0.7em] md:text-base text-white">Update</span>
+          <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="15" />
+          <span class="ml-[0.2em] text-[0.3em] md:text-base text-white font-thin">Update</span>
         </NuxtLink> 
       </el-form>
     </div>

@@ -23,6 +23,8 @@
         </div>
         <NuxtLink 
           class="
+            w-[100%]
+            md:w-[30%]
             cursor-pointer
             bg-sky-600 
             hover:bg-sky-500 
@@ -37,15 +39,15 @@
             mt-[2rem]" 
           @click="addM(ruleFormRef)"
         > 
-          <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="25" />
-          <span class="ml-[0.2em] text-[0.7em] md:text-base text-white">Create</span>
+        <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="15" />
+          <span class="ml-[0.2em] text-[0.3em] md:text-base text-white font-thin">Create</span>
         </NuxtLink> 
       </el-form>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts">q
 import { ref, reactive } from 'vue'
 import { type FormProps, type FormInstance, type FormRules} from 'element-plus'
 import type { Manager } from '@/types/types'

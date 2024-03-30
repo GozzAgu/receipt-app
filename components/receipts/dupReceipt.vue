@@ -218,6 +218,13 @@ const currentDate = computed(() => {
   return date
 })
 
+const success = () => {
+  ElMessage({
+    message: 'Receipt created successfully',
+    type: 'success',
+  })
+}
+
 const addR = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
@@ -238,6 +245,7 @@ const addR = async (formEl: FormInstance | undefined) => {
       } catch (e) {
         console.log(e)
       }
+      success()
     } else {
       console.log('error submit!', fields);
     }

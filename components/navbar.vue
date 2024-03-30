@@ -7,8 +7,8 @@
       </NuxtLink>
 
       <div class="flex gap-x-[0.4rem]">
-        <NuxtLink class="border-2 border-orange-200 bg-orange-50 p-[0.1rem] rounded-lg" to="">
-          <Icon class="text-orange-300" name="solar:bell-bing-bold-duotone" size="27" />
+        <NuxtLink class="" to="">
+          <Icon class="text-orange-300 mt-[0.3rem]" name="solar:bell-bing-bold-duotone" size="27" />
         </NuxtLink>
 
         <div class="lg:hidden" @click="showDrawer">
@@ -76,8 +76,8 @@
 
         <div class="hidden lg:block">
           <el-dropdown trigger="click">
-            <span class="el-dropdown-link border-2 border-sky-200 p-[0.1rem] rounded-lg"> 
-              <Icon class="text-sky-600" name="material-symbols-light:person" color="" size="30" />
+            <span class="el-dropdown-link bg-sky-100 p-[0.1rem] rounded-lg"> 
+              <Icon class="text-sky-600" name="material-symbols-light:person" color="" size="35" />
             </span>
             <template #dropdown>
               <el-dropdown-menu>
