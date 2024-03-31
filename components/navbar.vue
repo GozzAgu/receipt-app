@@ -14,10 +14,8 @@
         <div class="lg:hidden" @click="showDrawer">
           <NuxtLink 
             class="
-              border-2 
-              border-sky-600
               bg-sky-100 
-              p-[0.1rem]
+              p-[0.2rem]
               transition 
               duration-500 
               hover:shadow-lg 
@@ -55,11 +53,12 @@
                     hover:bg-blue-50 transition duration-300"
                 >
                   <NuxtLink class="flex gap-x-[0.5rem]" :to="route.link">
-                    <Icon class="mt-[0.3rem] " :name="route.icon" />
-                    <p class="">{{ route.name }}</p>
+                    <Icon class="mt-[0.3rem] text-sky-600" :name="route.icon" />
+                    <p class="text-sky-600 font-semibold">{{ route.name }}</p>
                   </NuxtLink>
                 </div>
               </div>
+              <hr>
               <div class="p-[0.7rem]">
                 <el-popconfirm @confirm="logout" title="Are you sure to logout?">
                   <template #reference>
