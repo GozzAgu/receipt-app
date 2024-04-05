@@ -65,7 +65,6 @@ definePageMeta({
   layout:'auth'
 });
 
-// const isLoading = ref(false)
 const options = {
   fullScreen: {
     enable: true,

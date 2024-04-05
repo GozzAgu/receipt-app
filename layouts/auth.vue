@@ -22,7 +22,7 @@
               </div>
             </div>
           </div>
-          <div class="flex justify-center m-auto items-center lg:w-[50%]">
+          <div class="flex justify-center m-auto items-center lg:w-[50%] ">
             <div class="">
               <slot class="" />
             </div>
