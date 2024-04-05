@@ -1,7 +1,32 @@
 <template>
   <div class="print:m-auto px-4 sm:px-20 py-12 min-h-screen">
     <div class="max-w-3xl mx-auto">
-      <div ref="pdfSection" v-loading="loading" class="border rounded-lg shadow-lg bg-white mt-[4em]">
+      <div class="flex justify-between mt-[4em] mb-[2em]">
+        <NuxtLink 
+          class="
+            p-[0.5rem]
+            bg-sky-600 
+            hover:bg-sky-500 
+            transition 
+            duration-500 
+            hover:shadow-lg 
+            rounded-lg 
+            flex 
+            justify-center 
+            items-center 
+            w-[2.5rem]" 
+          to="/receiptTable"
+        > 
+          <Icon class="text-white" name="solar:arrow-left-line-duotone" size="20" />
+        </NuxtLink> 
+
+        <el-button class="py-2 px-4" type="success" @click="exportToPDF('receipt.pdf', pdfSection)">
+          <Icon name="line-md:download-loop" color="white" size="20" />
+          <span class="ml-2 text-sm md:text-base">Download Receipt</span>
+        </el-button>
+      </div>
+
+      <div ref="pdfSection" v-loading="loading" class="border rounded-lg shadow-lg bg-white">
         <div class="flex justify-between items-center px-4 py-2 bg-sky-100 rounded-t-lg">
           <div class="flex items-center">
             <img class="w-4 h-4 mr-1" src="/snapbill-logo.png" alt="SnapBill Logo" />
@@ -61,30 +86,6 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="flex justify-between mt-6">
-        <NuxtLink 
-          class="
-            bg-sky-600 
-            hover:bg-sky-500 
-            transition 
-            duration-500 
-            hover:shadow-lg 
-            rounded-lg 
-            flex 
-            justify-center 
-            items-center 
-            w-[3rem]" 
-          to="/receiptTable"
-        > 
-          <Icon class="text-white ml-[0.5rem]" name="material-symbols:arrow-back-ios" size="25" />
-        </NuxtLink> 
-
-        <el-button class="py-2 px-4" type="success" @click="exportToPDF('receipt.pdf', pdfSection)">
-          <Icon name="line-md:download-loop" color="white" size="20" />
-          <span class="ml-2 text-sm md:text-base">Download Receipt</span>
-        </el-button>
       </div>
     </div>
   </div>

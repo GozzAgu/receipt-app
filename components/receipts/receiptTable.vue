@@ -71,18 +71,6 @@
           </template>
         </el-table-column>
         <el-table-column prop="productName" label="PRODUCT" width="150" show-overflow-tooltip />
-        <!-- <el-table-column prop="grade" label="GRADE" width="80"  show-overflow-tooltip>
-          <template #default="{ row }">
-            <div
-              :class="
-                { 'text-sky-600 bg-sky-100 rounded-md p-[0.1rem] text-center text-xs': row.grade === 'Used', 
-                  'text-sky-50 bg-sky-600 rounded-md p-[0.1rem] text-center text-xs': row.grade === 'New',
-                }"
-            >
-              {{ row.grade }}
-            </div>
-          </template>
-        </el-table-column> -->
         <el-table-column property="grade" width="90" label="Grade" show-overflow-tooltip :filters="[
           { text: 'Used', value: 'Used' },
           { text: 'New', value: 'New' },]"
@@ -130,7 +118,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
-        <el-table-column fixed="right" width="45">
+        <el-table-column fixed="right" width="48">
           <template #default="scope">
             <el-tooltip
               class="box-item"
@@ -138,11 +126,11 @@
               content="Duplicate"
               placement="left"
             >  
-              <Icon @click="dupR(scope.row.id)" class="text-sky-600 cursor-pointer" name="ic:twotone-file-copy" size="20" />
+              <Icon @click="dupR(scope.row.id)" class="text-sky-600 cursor-pointer" name="solar:copy-bold" size="20" />
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column v-if="isAdmin" fixed="right" width="45">
+        <el-table-column v-if="isAdmin" fixed="right" width="48">
           <template #default="scope">
             <el-tooltip
               class="box-item"
@@ -150,7 +138,7 @@
               content="Delete"
               placement="right"
             >
-              <Icon @click="delR(scope.row.id)" class="text-red-400 cursor-pointer" name="material-symbols:delete-forever-outline" size="20" />
+              <Icon @click="delR(scope.row.id)" class="text-red-400 cursor-pointer" name="solar:trash-bin-trash-bold-duotone" size="22" />
             </el-tooltip>  
           </template>
         </el-table-column>

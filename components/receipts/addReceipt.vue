@@ -13,10 +13,10 @@
         flex 
         justify-center 
         items-center 
-        w-[3rem]" 
+        w-[2.5rem]" 
       to="/receiptTable"
     > 
-      <Icon class="text-white ml-[0.5rem]" name="material-symbols:arrow-back-ios" size="25" />
+      <Icon class="text-white" name="solar:arrow-left-line-duotone" size="20" />
     </NuxtLink> 
     
     <p class="text-gray-50 bg-sky-600 p-[1em] rounded-t-lg text-sm">
@@ -54,6 +54,9 @@
           </el-form-item>
           <el-form-item label="Product name" prop="productName">
             <el-input v-model="companyDetails.productName" placeholder="" />
+          </el-form-item>
+          <el-form-item label="Imei" prop="imei">
+            <el-input v-model="companyDetails.imei" placeholder="" />
           </el-form-item>
           <el-form-item label="Product description" prop="productDescription">
             <el-input v-model="companyDetails.productDescription" placeholder="" type="textarea"/>
@@ -116,11 +119,13 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store/receipts"
+import { useInventoryStore } from "@/store/inventory"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { Receipt } from '@/types/types'
 
 const store = useStore()
+const invStore = useInventoryStore()
 const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
@@ -204,6 +209,9 @@ const rules = reactive<FormRules<Receipt>>({
   productName: [
     { required: true, message: 'Please input Product name', trigger: 'blur' },
   ],
+  imei: [
+    { required: true, message: 'Please input imei', trigger: 'blur' },
+  ],
   productDescription: [
     { required: true, message: 'Please input Product description', trigger: 'blur' },
   ],
@@ -248,31 +256,41 @@ const addR = async (formEl: FormInstance | undefined) => {
   await formEl.validate(async (valid, fields) => {
     if (valid) {
       loading.value = true
+      
       try {
-        let newCompanyDetails = { ...companyDetails, date: currentDate.value }
-        if (newCompanyDetails.productQuantity > 1) {
-          let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
-          newCompanyDetails.newPrice = newPrice
-        } else {
-          newCompanyDetails.newPrice = newCompanyDetails.productPrice
+        if (companyDetails.imei) {
+          const inventoryItem = invStore.searchInventoryByIMEI(companyDetails.imei)
+          
+          if (inventoryItem) {
+            let newCompanyDetails = { ...companyDetails, date: currentDate.value }
+            if (newCompanyDetails.productQuantity > 1) {
+              let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
+              newCompanyDetails.newPrice = newPrice
+            } else {
+              newCompanyDetails.newPrice = newCompanyDetails.productPrice
+            }
+            const res = await store.addReceipt(newCompanyDetails)
+            router.push({ path:`/receipt/${res}` })
+            companyDetails = {} as Receipt
+            loading.value = false
+            success()
+          } else {
+            ElMessage({
+              message: 'Inventory item with provided IMEI does not exist',
+              type: 'error',
+            })
+            loading.value = false
+          }
         }
-        const res = await store.addReceipt(newCompanyDetails)
-        router.push({path:`/receipt/${res}`})
-        companyDetails = {} as Receipt
-        loading.value = false
       } catch (e) {
         console.log(e)
       }
-      success()
     } else {
       console.log('error submit!', fields);
     }
   })
 }
 
-// const formattedProductPrice = computed(() => {
-//   return companyDetails.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-// })
 
 </script>
 

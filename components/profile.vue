@@ -20,7 +20,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { TabsPaneContext } from 'element-plus'
 import { useAuthStore } from '~/store/users'
 
@@ -36,7 +36,8 @@ const isAdmin = computed(() => {
 })
 
 </script>
-<style>
+
+<style scoped>
 .demo-tabs > .el-tabs__content {
   padding: 32px;
   color: #6b778c;

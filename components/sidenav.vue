@@ -1,5 +1,5 @@
 <template>
-  <div class="border-r h-[100vh] pt-[5rem] px-[1rem]">
+  <div class="border-r h-[100vh] pt-[7rem] px-[1rem]">
     <div v-for="route in routes" :key="route.name">
       <div :class="{ 'active-tab': $route.path === route.link }" 
         v-if="isAdmin || route.name !== 'Staff'" 

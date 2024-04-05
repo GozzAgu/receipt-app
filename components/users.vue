@@ -5,13 +5,18 @@
         <Icon name="fa6-solid:users" color="gray" size="25" />
         <span class="text-sm md:text-base"> Staff ({{ authStore.managers.length }}) </span>
       </h1>
-      <el-input
-        v-model="search"
-        placeholder="Search for a staff"
-        :prefix-icon="Search"
-      />
+
+      <div class="flex">
+        <el-input
+          v-model="search"
+          placeholder="Search for a staff"
+          :prefix-icon="Search"
+        />
+      </div>
     </div>
+
     <hr class="mt-[1em]">
+    
     <div v-loading="loading" class="mt-[1em] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[1em]">
       <div v-if="authStore.managers.length > 0" v-for="manager in paginatedManagers">
         <div class=

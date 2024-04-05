@@ -47,7 +47,7 @@
   </div>
 </template>
 
-<script setup lang="ts">q
+<script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { type FormProps, type FormInstance, type FormRules} from 'element-plus'
 import type { Manager } from '@/types/types'

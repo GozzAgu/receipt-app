@@ -66,6 +66,10 @@ export const useInventoryStore = defineStore('inventory', {
         editInventory(entry:Inventory){
             const idx = this.inventory.findIndex(e => e.imei === entry.imei)
             this.inventory[idx] = entry
+        },
+
+        searchInventoryByIMEI(imei: string){
+            return this.inventory.find(item => item.imei === imei)
         }
     }
 })
