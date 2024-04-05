@@ -180,7 +180,7 @@ const showDrawer = ref(false);
 const showAddDrawer = ref(false)
 const showEditDrawer = ref(false)
 
-const openAddDrawer = () => {
+function openAddDrawer(){
     showDrawer.value = true;
     showAddDrawer.value = true;
     showEditDrawer.value = false;
