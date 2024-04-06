@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div v-loading="loading" class="mt-[1em] z-0">
+    <div v-loading="loading" class="mt-[3em] z-0">
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
         :border="parentBorder"

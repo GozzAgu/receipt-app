@@ -29,7 +29,7 @@
       <div ref="pdfSection" v-loading="loading" class="border rounded-lg shadow-lg bg-white">
         <div class="flex justify-between items-center px-4 py-2 bg-sky-100 rounded-t-lg">
           <div class="flex items-center">
-            <img class="w-4 h-4 mr-1" src="/snapbill-logo.png" alt="SnapBill Logo" />
+            <img v-if="authStore.currentUser?.imageUrl" :src="authStore.currentUser.imageUrl" class="w-4 h-4 mr-1" />
             <p class="font-bold text-xs text-sky-600">snapB!LL</p>
           </div>
           <p class="text-xs text-sky-600">{{ rpt?.date }}</p>
@@ -95,8 +95,9 @@
 import { useStore } from "@/store/receipts"
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
-import { Back } from '@element-plus/icons-vue'
+import { useAuthStore } from '~/store/users'
 
+const authStore = useAuthStore()
 const pdfSection = ref<HTMLElement | null>(null)
 const store = useStore()
 const route = useRoute()

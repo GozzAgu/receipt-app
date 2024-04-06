@@ -237,38 +237,50 @@ const addR = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
     if (valid) {
-      loading.value = true
+      loading.value = true;
       try {
         if (duplicate.value?.imei) {
-          const inventoryItem = invStore.searchInventoryByIMEI(duplicate.value?.imei)
-
-          if(inventoryItem) {
-            let newCompanyDetails = { ...duplicate.value, date: currentDate.value } as Receipt
-            if (newCompanyDetails.productQuantity > 1) {
-              let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
-              newCompanyDetails.newPrice = newPrice
-            } else {
-              newCompanyDetails.newPrice = newCompanyDetails.productPrice
-            }
-            const res = await store.addReceipt(newCompanyDetails)       
-            router.push({path:`/receipt/${res}`})
-            newCompanyDetails = {} as Receipt
-            loading.value = false
-            success()
-          } else {
+          const inventoryItem = invStore.searchInventoryByIMEI(duplicate.value?.imei);
+          if (!inventoryItem) {
             ElMessage({
               message: 'Inventory item with provided IMEI does not exist',
               type: 'error',
-            })
-            loading.value = false
+            });
+            loading.value = false;
+            return;
           }
+
+          const isImeiInReceipts = store.receipts.some(receipt => receipt.imei === duplicate.value?.imei);
+          if (isImeiInReceipts) {
+            ElMessage({
+              message: 'This product has been sold',
+              type: 'error',
+            });
+            loading.value = false;
+            return;
+          }
+
+          let newCompanyDetails = { ...duplicate.value, date: currentDate.value } as Receipt;
+          if (newCompanyDetails.productQuantity > 1) {
+            let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice;
+            newCompanyDetails.newPrice = newPrice;
+          } else {
+            newCompanyDetails.newPrice = newCompanyDetails.productPrice;
+          }
+
+          const res = await store.addReceipt(newCompanyDetails);       
+          router.push({ path: `/receipt/${res}` });
+          newCompanyDetails = {} as Receipt;
+          loading.value = false;
+          success();
         } 
-      }catch (e) {
-        console.log(e)
+      } catch (e) {
+        console.log(e);
       }
     } else {
       console.log('error submit!', fields);
     }
   });
 };
+
 </script>

@@ -8,20 +8,26 @@ export const useAuthStore = defineStore('users', {
   state: () => ({
     managers: [] as Manager[],
     admins: [] as Admin[],
-    currentUser: null as null | User & { password: string, accountType: string }
+    currentUser: null as null | User & { password: string, accountType: string, imageUrl: string, name: string, phone: string, address: string }
   }),
 
   actions: {
-    async signupAdmin(email:string, password:string, accountType:string) {
+    async signupAdmin(email:string, password:string, accountType:string, imageUrl: string, name: string, phone: string, address: string) {
       const nuxtApp = useNuxtApp()
       const response = await createUserWithEmailAndPassword(nuxtApp.$auth, email, password)
       const user = response.user
       if (user) {
-        this.currentUser = {...user, password: password, accountType: accountType }
+        this.currentUser = {...user, password: password, accountType: accountType, imageUrl: imageUrl, name: name, phone: phone, address: address }
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
       }
       return response
     },
+
+    // async uploadLogo(imageUrl: string) {
+    //   this.currentUser = {...this.currentUser, imageUrl }
+    //   localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
+    //   console.log(this.currentUser)
+    // },
 
     async signin(email:string, password:string, accountType: string) {
       const nuxtApp = useNuxtApp()

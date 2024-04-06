@@ -12,17 +12,28 @@
         class="demo-ruleForm"
         :label-position="labelPosition"
       >
-        <div class="md:grid grid-cols-3 gap-[1em]">
-          
-          <el-form-item label="Company name" prop="name">
-            <el-input v-model="user.name" placeholder="" />
-          </el-form-item>
-          <el-form-item label="Company email" prop="email">
-            <el-input v-model="user.email" placeholder="" />
-          </el-form-item>
-          <el-form-item label="Company phone number" prop="phone">
-            <el-input v-model="user.phone" placeholder="" />
-          </el-form-item>
+        <div class="md:grid grid-cols-2 gap-[1em]">
+          <el-upload
+            class="avatar-uploader"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <el-icon v-else class="avatar-uploader-icon  border"><Plus /></el-icon>
+          </el-upload>
+
+          <div class="">
+            <el-form-item label="Company name" prop="name">
+              <el-input v-model="user.name" placeholder="Company name" />
+            </el-form-item>
+            <el-form-item label="Company address" prop="address">
+              <el-input v-model="user.address" placeholder="Company address" />
+            </el-form-item>
+            <el-form-item label="Company phone no" prop="phone">
+              <el-input v-model="user.phone" placeholder="Company phone no" />
+            </el-form-item>
+          </div>
         </div>
         <NuxtLink 
           class="
@@ -40,7 +51,7 @@
             items-center
             py-[0.3rem]
             mt-[2rem]" 
-          @click="addR(ruleFormRef)"
+          @click="update(ruleFormRef)"
         > 
           <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="15" />
           <span class="ml-[0.2em] text-[0.3em] md:text-base text-white font-thin">Update</span>
@@ -52,32 +63,34 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store/receipts"
+import { useAuthStore } from "@/store/users"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { User } from '@/types/types'
-import { Tickets } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
+import { Plus } from '@element-plus/icons-vue'
+import type { UploadProps } from 'element-plus'
+import { updateProfile } from '@firebase/auth';
+
+const usersStore = useAuthStore()
+const imageUrl = ref()
 
 const store = useStore()
-const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
+const nuxtApp = useNuxtApp()
 
 let user = reactive<User>({
-  email: '',
   name: '',
-  phone: ''
+  address: '',
+  phone: '',
+  imageUrl: ''
 })
 
 const passwordRules = reactive<FormRules<User>>({
-  email: [
-    { required: true, message: 'Please input a password', trigger: 'blur' },
-  ],
   name: [
-    { required: true, message: 'Please input a password', trigger: 'blur' },
-  ],
-  phone: [
-    { required: true, message: 'Please input a password', trigger: 'blur' },
+    { required: true, message: 'Please input company name', trigger: 'blur' },
   ],
 })
 
@@ -85,15 +98,40 @@ onMounted(() => {
   store.fetchReceipts()
 })
 
-const addR = async (formEl: FormInstance | undefined) => {
+const handleAvatarSuccess: UploadProps['onSuccess'] = (
+  response,
+  uploadFile
+) => {
+  if (uploadFile.raw) {
+    imageUrl.value = String(URL.createObjectURL(uploadFile.raw))
+    user.imageUrl = imageUrl.value
+  } else {
+    console.error("Upload file raw is null")
+  }
+}
+
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+  if (rawFile.type !== 'image/jpeg') {
+    ElMessage.error('Avatar picture must be JPG format!')
+    return false
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error('Avatar picture size can not exceed 2MB!')
+    return false
+  }
+  return true
+}
+
+const update = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
     if (valid) {
       loading.value = true
       try {
-        
+        // await usersStore.updateProfile(user.name, user.address, user.phone, imageUrl.value)
       } catch (e) {
-        console.log(e)
+        console.log(e);
+      } finally {
+        loading.value = false;
       }
     } else {
       console.log('error submit!', fields);
@@ -104,5 +142,24 @@ const addR = async (formEl: FormInstance | undefined) => {
 </script>
 
 <style scoped>
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
 
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
 </style>

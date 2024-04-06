@@ -9,7 +9,7 @@
       class="demo-tabs"
       @tab-click="handleClick"
     >
-      <el-tab-pane label="Profile" name="first">
+      <el-tab-pane v-if="isAdmin" label="Profile" name="first">
         <EditProfile />
       </el-tab-pane>
       <el-tab-pane v-if="isAdmin" label="Managers" name="second">

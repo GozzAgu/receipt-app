@@ -120,12 +120,14 @@
 <script setup lang="ts">
 import { useStore } from "@/store/receipts"
 import { useInventoryStore } from "@/store/inventory"
+import { useAuthStore } from "@/store/users"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { Receipt } from '@/types/types'
 
 const store = useStore()
 const invStore = useInventoryStore()
+const usersStore = useAuthStore()
 const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
@@ -255,41 +257,52 @@ const addR = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
     if (valid) {
-      loading.value = true
-      
+      loading.value = true;
       try {
         if (companyDetails.imei) {
-          const inventoryItem = invStore.searchInventoryByIMEI(companyDetails.imei)
-          
-          if (inventoryItem) {
-            let newCompanyDetails = { ...companyDetails, date: currentDate.value }
-            if (newCompanyDetails.productQuantity > 1) {
-              let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice
-              newCompanyDetails.newPrice = newPrice
-            } else {
-              newCompanyDetails.newPrice = newCompanyDetails.productPrice
-            }
-            const res = await store.addReceipt(newCompanyDetails)
-            router.push({ path:`/receipt/${res}` })
-            companyDetails = {} as Receipt
-            loading.value = false
-            success()
-          } else {
+          const inventoryItem = invStore.searchInventoryByIMEI(companyDetails.imei);
+          if (!inventoryItem) {
             ElMessage({
               message: 'Inventory item with provided IMEI does not exist',
               type: 'error',
-            })
-            loading.value = false
+            });
+            loading.value = false;
+            return;
           }
-        }
+
+          const isImeiInReceipts = store.receipts.some(receipt => receipt.imei === companyDetails.imei);
+          if (isImeiInReceipts) {
+            ElMessage({
+              message: 'This product has been sold',
+              type: 'error',
+            });
+            loading.value = false;
+            return;
+          }
+
+          let newCompanyDetails = { ...companyDetails, date: currentDate.value } as Receipt;
+          if (newCompanyDetails.productQuantity > 1) {
+            let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice;
+            newCompanyDetails.newPrice = newPrice;
+          } else {
+            newCompanyDetails.newPrice = newCompanyDetails.productPrice;
+          }
+
+          const res = await store.addReceipt(newCompanyDetails);       
+          router.push({ path: `/receipt/${res}` });
+          newCompanyDetails = {} as Receipt;
+          loading.value = false;
+          success();
+        } 
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     } else {
       console.log('error submit!', fields);
     }
-  })
-}
+  });
+};
+
 
 
 </script>

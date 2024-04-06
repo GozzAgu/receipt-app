@@ -88,7 +88,9 @@ const success = () => {
 
 const setUserAccountType = async (adminId: string, manager: Manager) => {
   const userDocRef = doc(nuxtApp.$firestore, 'users', adminId)
-  await setDoc(userDocRef, { ...manager }, { merge: true })
+  await setDoc(userDocRef, 
+  { ...manager },
+  { merge: true })
 }
 
 const addM = async (formEl: FormInstance | undefined) => {

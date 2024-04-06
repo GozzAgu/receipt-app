@@ -25,16 +25,42 @@
         Get started, Please enter your credentials to get signed into your account.
       </p>
     </div>
+
+    <el-upload
+      class="avatar-uploader"
+      :show-file-list="false"
+      :on-success="handleAvatarSuccess"
+      :before-upload="beforeAvatarUpload"
+    >
+      <img v-if="imageUrl" :src="imageUrl" class="avatar w-[3em]" />
+      <el-icon v-else class="avatar-uploader-icon  border"><Plus /></el-icon>
+    </el-upload>
+
+    <div class="grid grid-cols-2 gap-x-[1rem]">
+      <el-form-item label="Company name" prop="name">
+        <el-input v-model="admin.name" />
+      </el-form-item>
+      <el-form-item label="Company email" prop="email">
+        <el-input v-model="admin.email" />
+      </el-form-item>
+    </div>
+    <div class="grid grid-cols-2 gap-x-[1rem]">
+      <el-form-item label="Company address" prop="address">
+        <el-input v-model="admin.address" />
+      </el-form-item>
+      <el-form-item label="Company phone no" prop="phone">
+        <el-input v-model="admin.phone" />
+      </el-form-item>
+    </div>
+    <div class="grid grid-cols-2 gap-x-[1rem]">
+      <el-form-item label="Password" prop="password">
+        <el-input type="password" v-model="admin.password" />
+      </el-form-item>
+      <el-form-item label="Confirm Password" prop="email">
+        <el-input type="password" v-model="admin.confirmPassword" />
+      </el-form-item>
+    </div>
     
-    <el-form-item label="Email" prop="email">
-      <el-input v-model="admin.email" />
-    </el-form-item>
-    <el-form-item label="Password" prop="password">
-      <el-input type="password" v-model="admin.password" />
-    </el-form-item>
-    <el-form-item label="Confirm Password" prop="email">
-      <el-input type="password" v-model="admin.confirmPassword" />
-    </el-form-item>
     <el-form-item class="mt-[2em]">
       <el-button class="flex m-auto w-full" type="primary" @click="submitForm(ruleFormRef)">
         <Icon v-if="loading" class="mr-2" name="svg-spinners:gooey-balls-1" />
@@ -60,12 +86,21 @@ import type { Container } from 'tsparticles-engine'
 import { AccountType } from '~/types/types';
 import { doc, setDoc } from "firebase/firestore"; 
 import { useAuthStore } from '~/store/users';
+import type { UploadProps } from 'element-plus'
+import { Plus } from '@element-plus/icons-vue'
 
 definePageMeta({
   layout:'auth'
 });
 
 const isLoading = ref(false)
+const router = useRouter()
+const loading = ref(false)
+const nuxtApp = useNuxtApp()
+const store = useAuthStore()
+const imageUrl = ref()
+const labelPosition = ref<FormProps['labelPosition']>('top')
+
 const options = {
   fullScreen: {
     enable: true,
@@ -98,16 +133,12 @@ const onLoad = (container: Container) => {
   setTimeout(() => container.play(), 500)
 }
 
-const router = useRouter()
-const loading = ref(false)
-const nuxtApp = useNuxtApp()
-const store = useAuthStore()
-
-const labelPosition = ref<FormProps['labelPosition']>('top')
-
 interface RuleForm {
   name: string,
+  address: string,
   email: string,
+  phone: string,
+  imageUrl: string,
   password: string,
   confirmPassword: string,
   accountType: AccountType
@@ -116,7 +147,10 @@ interface RuleForm {
 const ruleFormRef = ref<FormInstance>()
 const admin = reactive<RuleForm>({
   name: '',
+  address: '',
   email: '',
+  phone: '',
+  imageUrl: '',
   password: '',
   confirmPassword: '',
   accountType: AccountType.Admin,
@@ -134,11 +168,19 @@ const matchPassword = (rule: any, value: any, callback: any) => {
 
 const rules = reactive<FormRules<RuleForm>>({
   name: [
-    { required: true, message: 'Email required', trigger: 'blur' },
+    { required: true, message: 'Name required', trigger: 'blur' },
     { min: 3, max: 30, message: 'Length should be up to 3', trigger: 'blur' },
   ],
   email: [
     { required: true, message: 'Email required', trigger: 'blur' },
+    { min: 3, max: 30, message: 'Length should be up to 3', trigger: 'blur' },
+  ],
+  address: [
+    { required: true, message: 'Address required', trigger: 'blur' },
+    { min: 3, max: 30, message: 'Length should be up to 3', trigger: 'blur' },
+  ],
+  phone: [
+    { required: true, message: 'Phone number required', trigger: 'blur' },
     { min: 3, max: 30, message: 'Length should be up to 3', trigger: 'blur' },
   ],
   password: [
@@ -152,23 +194,33 @@ const rules = reactive<FormRules<RuleForm>>({
   ],
 })
 
-const setDisplayName = async() => {
-  const user = nuxtApp.$auth.currentUser;
-  try {
-    await updateProfile(nuxtApp.$auth.currentUser!, {
-      displayName: admin.name,
-    });
-
-    console.log('User profile updated:', user);
-  } catch (error) {
-    console.error('Error updating display name:', error);
-  }
-}
-
 const setUserAccountType = async (userId: string, admin: RuleForm) => {
   const userDocRef = doc(nuxtApp.$firestore, 'users', userId)
   await setDoc(userDocRef, { ...admin }, { merge: true })
 };
+
+const handleAvatarSuccess: UploadProps['onSuccess'] = (
+  response,
+  uploadFile
+) => {
+  if (uploadFile.raw) {
+    imageUrl.value = String(URL.createObjectURL(uploadFile.raw))
+    admin.imageUrl = imageUrl.value
+  } else {
+    console.error("Upload file raw is null")
+  }
+}
+
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+  if (rawFile.type !== 'image/jpeg') {
+    ElMessage.error('Avatar picture must be JPG format!')
+    return false
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error('Avatar picture size can not exceed 2MB!')
+    return false
+  }
+  return true
+}
 
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
@@ -176,10 +228,9 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       isLoading.value = true
       try {
-        const response = await store.signupAdmin(admin.email, admin.password, admin.accountType)
+        const response = await store.signupAdmin(admin.email, admin.password, admin.accountType, admin.imageUrl)
         if(response) {
           try {
-            setDisplayName()
             await setUserAccountType(response.user.uid, admin)
         } catch (error) {
             console.error(error)
@@ -215,3 +266,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   })
 }
 </script>
+
+<style scoped>
+
+</style>

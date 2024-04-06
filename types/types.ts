@@ -25,9 +25,10 @@ export interface Receipt {
 }
 
 export interface User {
-  email: string,
   name: string,
-  phone: string
+  address: string,
+  phone: string,
+  imageUrl: null | string
 }
 
 export interface ReceiptPasswordReset {
@@ -54,6 +55,7 @@ export interface Admin {
   name: string,
   email: string,
   password: string,
+  confirmPassword: string,
   accountType: AccountType.Admin
 }
 
@@ -64,6 +66,7 @@ export interface SigninUser {
 }
 
 export interface Inventory{
+  id: string,
   dateIn: string,
   supplier: string,
   grade: 'New' | 'Used',
@@ -74,5 +77,6 @@ export interface Inventory{
   cost: null | number,
   margin: null | number,
   swap: 'yes' | 'no',
-  dateOut: string
+  dateOut: string,
+  inventoryOf: string
 }

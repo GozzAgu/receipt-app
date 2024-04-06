@@ -1,75 +1,75 @@
 import type { Inventory } from "~/types/types"
+import { collection, addDoc, setDoc, doc, deleteDoc, where, query, onSnapshot, getDoc, getDocs } from "firebase/firestore"
+import { useAuthStore } from './users'
 
-export const useInventoryStore = defineStore('inventory', {
+export const useInventoryStore = defineStore('inventories', {
     state: () => ({
-      inventory: [
-        {
-            dateIn: '1/13/2024',
-            supplier: 'Hassan Mohuied',
-            grade: 'Used',
-            storage: '8GB/512GB',
-            imei: '5CG71657NK',
-            colour:'Silver',
-            amount: 50000,
-            cost: 250,
-            margin: 50000,
-            swap: 'no',
-            dateOut:'2/22/2024'
-        },
-        {
-            dateIn: '2/12/2024',
-            supplier: 'Hassan Mohuied',
-            grade: 'New',
-            storage: '8GB/512GB',
-            imei: '7CG716357QK',
-            colour:'Silver',
-            amount: 20000,
-            cost: 250,
-            margin: 50000,
-            swap: 'no',
-            dateOut:'2/22/2024'
-        },
-        {
-            dateIn: '3/10/2024',
-            supplier: 'Hassan Mohuied',
-            grade: 'New',
-            storage: '8GB/512GB',
-            imei: '3CE62657BK',
-            colour:'Silver',
-            amount: 50500,
-            cost: 250,
-            margin: 50000,
-            swap: 'yes',
-            dateOut:'2/22/2024'
-        },
-        {
-            dateIn: '2/12/2024',
-            supplier: 'Hassan Mohuied',
-            grade: 'Used',
-            storage: '8GB/512GB',
-            imei: '5AD71657PD',
-            colour:'Silver',
-            amount: 52000,
-            cost: 250,
-            margin: 50000,
-            swap: 'no',
-            dateOut:'2/22/2024'
-        }
-      ] as Inventory[]
+      inventories: [] as Inventory[]
     }),
   
     actions: {
-        addToInventory(entry:Inventory){
-            this.inventory.push(entry)
+        async addToInventory(entry:Inventory) {
+            const nuxtApp = useNuxtApp()
+            const authStore = useAuthStore()
+            if(authStore.currentUser?.accountType === 'admin') {
+              const inventoryOf = nuxtApp.$auth.currentUser?.uid
+              const docRef = await addDoc(collection(nuxtApp.$firestore, "inventories"), {
+                entry
+              })
+              entry.id = docRef.id
+              const newDocRef = await setDoc(doc(nuxtApp.$firestore, "inventories", docRef.id), {
+                ...entry,
+                id: docRef.id,
+                inventoryOf: inventoryOf
+              });
+              this.inventories.push(entry)
+              return docRef.id
+            } 
+            else if(authStore.currentUser?.accountType === 'manager') {
+              const manager = doc(nuxtApp.$firestore, "users", nuxtApp.$auth.currentUser?.uid)
+              const docSnap = await getDoc(manager) 
+              if(docSnap.exists()) {
+                const inventoryOf = docSnap.data().adminId
+                const docRef = await addDoc(collection(nuxtApp.$firestore, "inventories"), {
+                    entry
+                })
+                entry.id = docRef.id
+                const newDocRef = await setDoc(doc(nuxtApp.$firestore, "inventories", docRef.id), {
+                  ...entry,
+                  id: docRef.id,
+                  inventoryOf: inventoryOf
+                });
+                this.inventories.push(entry)
+                return docRef.id
+              }
+            }
+        },
+
+        async fetchInventories() {
+            const nuxtApp = useNuxtApp()
+            const authStore = useAuthStore()
+            const querySnapshot = collection(nuxtApp.$firestore, "inventories")
+            onSnapshot(querySnapshot, async(ReceiptsSnapshot) => {
+              const manager = doc(nuxtApp.$firestore, "users", authStore.currentUser?.uid)
+              const docSnap = await getDoc(manager) 
+              this.inventories = []
+              ReceiptsSnapshot.forEach((doc) => {
+                if(doc.data().inventoryOf === authStore.currentUser?.uid || doc.data().inventoryOf === docSnap.data()?.adminId) { 
+                  let inventoryData = doc.data() as Inventory
+                  inventoryData.inventoryOf = doc.data().inventoryOf
+                  this.inventories.push({...inventoryData} as Inventory)
+                }
+              })
+            })
         },
 
         editInventory(entry:Inventory){
-            const idx = this.inventory.findIndex(e => e.imei === entry.imei)
-            this.inventory[idx] = entry
+            const idx = this.inventories.findIndex(e => e.imei === entry.imei)
+            this.inventories[idx] = entry
         },
 
         searchInventoryByIMEI(imei: string){
-            return this.inventory.find(item => item.imei === imei)
+            return this.inventories.find(item => item.imei === imei)
         }
     }
 })

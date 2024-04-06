@@ -36,7 +36,7 @@
                   hover:shadow-lg rounded-lg flex justify-center 
                   items-center w-[10rem] text-white cursor-pointer py-[0.3em]"
               > 
-                <Icon name="heroicons:plus-solid" size="1.2em" class="mr-2" />
+                <Icon name="heroicons:plus-solid" :size="20" class="mr-2" />
                 Add Entry
               </NuxtLink> 
               
@@ -46,7 +46,7 @@
                   hover:shadow-lg rounded-lg flex justify-center 
                   items-center w-[10rem] text-white cursor-pointer py-[0.3em]"
               > 
-                <Icon name="heroicons:plus-solid" size="1.2em" class="mr-2" />
+                <Icon name="heroicons:plus-solid" :size="20" class="mr-2" />
                 Import Excel
               </NuxtLink> 
             </div>
@@ -121,7 +121,11 @@
                 <el-table-column v-if="columns.includes('Storage')" property="storage" width="100" label="Storage" show-overflow-tooltip />
                 <el-table-column v-if="columns.includes('IMEI')" property="imei" label="IMEI" width="140">
                     <template #default="scope">
-                        <p class="bg-gray-200 text-sky-600 rounded-md px-2">{{ scope.row.imei }}</p>
+                      <p :class="{ 'bg-red-400': isImeiInReceipts(scope.row.imei) }" 
+                        class="bg-gray-200 text-sky-600 rounded-md px-2"
+                      >
+                        {{ scope.row.imei }}
+                      </p>
                     </template>
                 </el-table-column>
                 <el-table-column v-if="columns.includes('Colour')" property="colour" label="Colour" show-overflow-tooltip />
@@ -163,12 +167,17 @@ definePageMeta({
   layout:'dashboard'
 })
 
+const isImeiInReceipts = (imei) => {
+  return store.receipts.find(receipt => receipt.imei === imei);
+}
+
 const inventoryStore = useInventoryStore();
-const { inventory } = toRefs(inventoryStore)
+const { inventories } = toRefs(inventoryStore)
   
 const showDropDown = ref(false)
 const parentBorder = ref(true)
 const store = useStore()
+const invStore = useInventoryStore()
 const isSigningout = ref(false)
 
 const tableRef = ref();
@@ -259,25 +268,25 @@ function filterByDate(data){
 }
 
 const filterTableData = computed(() =>
-  inventory.value.filter(
+  inventories.value.filter(
     (data) =>
     {
-        if (searchValue.value && dateRange.value.length > 1){
-            return data.imei.includes(searchValue.value) && filterByDate(data)
-        }
-        else if (searchValue.value && (!dateRange.value || dateRange.value?.length < 2)){
-            return data.imei.includes(searchValue.value)
-        }
-        else if (dateRange.value?.length > 1 && !searchValue.value){
-            return filterByDate(data)
-        }
-        else return data
+      if (searchValue.value && dateRange.value.length > 1){
+          return data.imei.includes(searchValue.value) && filterByDate(data)
+      }
+      else if (searchValue.value && (!dateRange.value || dateRange.value?.length < 2)){
+          return data.imei.includes(searchValue.value)
+      }
+      else if (dateRange.value?.length > 1 && !searchValue.value){
+          return filterByDate(data)
+      }
+      else return data
 
-        // return (
-        //     // (!searchValue.value || data.imei.includes(searchValue.value)) ||
-        //     (( !dateRange.value || dateRange.value.length === 0) || filterByDate(data))
-            
-        // );
+      // return (
+      //     // (!searchValue.value || data.imei.includes(searchValue.value)) ||
+      //     (( !dateRange.value || dateRange.value.length === 0) || filterByDate(data))
+          
+      // );
     }
     //   !searchValue.value ||
     //   data.imei.includes(searchValue.value)
@@ -293,6 +302,7 @@ const filterSwapTag = (value, row) => {
 
 onMounted(() => {
 store.fetchReceipts();
+invStore.fetchInventories();
 })
 </script>
 

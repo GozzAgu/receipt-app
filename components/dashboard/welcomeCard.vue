@@ -3,9 +3,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[3rem] gap-y-[1rem]">
       <div class="flex justify-center items-center px-[2rem] py-[1rem] rounded-2xl shadow-md bg-gradient-to-t from-sky-100 to-slate-100 ">
         <p class="text-base md:text-xl font-bold text-sky-400">
-          Welcome <span class="">{{ authStore.currentUser?.email }} </span> 
-          <!-- <span v-if="authStore.currentUser?.accountType === 'admin'"> you're an {{ authStore.currentUser?.accountType }}</span>
-          <span v-else> you're a staff</span> -->
+          <!-- Welcome to <span class="">{{ authStore.currentUser?.name }} </span> -->
         </p>
       </div>
 
@@ -30,7 +28,7 @@ const inventories = ref(0)
 
 watchEffect(() => {
   receipts.value = store.receipts.length
-  inventories.value = invStore.inventory.length
+  inventories.value = invStore.inventories.length
 })
 
 const outputValue = useTransition(receipts, {
