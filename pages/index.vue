@@ -15,16 +15,13 @@
       </div>
     
       <div class="flex justify-center md:mt-[3em] bg-white">
-        <p class="lg:w-[50%] text-center text-sm md:text-xl text-slate-500 font-semibold px-4 mt-4">
+        <p class="lg:w-[50%] text-center md:text-2xl text-slate-500 font-bold px-4 mt-4">
           Welcome to Snapbill, our Receipt and Inventory App!
-          From managing receipts to tracking inventory, we've got you covered. 
-          Say goodbye to manual paperwork and hello to efficiency!
-          Thank you for choosing our app!
         </p>
       </div>
         
-      <div class="bg-white flex justify-center mt-[3em]">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white mt-[3em] px-4">
+        <div class="">
           <NuxtLink to="/auth/signin">
             <el-button class="flex m-auto w-full" type="primary">
               Sign In
@@ -32,7 +29,7 @@
           </NuxtLink>
 
           <NuxtLink to="/auth/signup">
-            <el-button class="flex m-auto w-full" type="primary">
+            <el-button class="flex m-auto w-full mt-[1em]" type="primary">
               Sign Up
             </el-button>
           </NuxtLink>
@@ -77,3 +74,13 @@ const onLoad = (container: Container) => {
   setTimeout(() => container.play(), 500)
 }
 </script>
+
+<style scoped>
+::v-deep(.el-button) {
+  @apply bg-sky-600 text-white py-[1.5em] rounded-xl w-full
+}
+
+::v-deep(.el-button):hover {
+  @apply bg-sky-500 text-white py-[1.5em] rounded-xl 
+}
+</style>
