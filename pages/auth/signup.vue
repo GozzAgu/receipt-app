@@ -12,7 +12,7 @@
     :model="admin"
     :rules="rules"
     label-width="120px"
-    class="demo-ruleForm md:w-full px-[3em] md:p-[2em] md:py-[2em] md:px-[4em] md:shadow-md mt-[3em] bg-white"
+    class="demo-ruleForm md:w-full px-[2em] py-[2em] md:p-[2em] md:py-[2em] md:px-[4em] md:shadow-md mt-[3em] bg-white"
     status-icon
     :label-position="labelPosition"
     style="max-width: 500px"
@@ -36,7 +36,7 @@
       <el-icon v-else class="avatar-uploader-icon  border"><Plus /></el-icon>
     </el-upload>
 
-    <div class="grid grid-cols-2 gap-x-[1rem]">
+    <div class="md:grid grid-cols-2 gap-x-[1rem]">
       <el-form-item label="Company name" prop="name">
         <el-input v-model="admin.adminName" />
       </el-form-item>
@@ -44,7 +44,7 @@
         <el-input v-model="admin.email" />
       </el-form-item>
     </div>
-    <div class="grid grid-cols-2 gap-x-[1rem]">
+    <div class="md:grid grid-cols-2 gap-x-[1rem]">
       <el-form-item label="Company address" prop="address">
         <el-input v-model="admin.address" />
       </el-form-item>
@@ -52,7 +52,7 @@
         <el-input v-model="admin.phone" />
       </el-form-item>
     </div>
-    <div class="grid grid-cols-2 gap-x-[1rem]">
+    <div class="md:grid grid-cols-2 gap-x-[1rem]">
       <el-form-item label="Password" prop="password">
         <el-input type="password" v-model="admin.password" />
       </el-form-item>
@@ -224,7 +224,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate(async(valid, fields) => {
     if (valid) {
-      isLoading.value = true
+      loading.value = true
       try {
         const response = await store.signupAdmin(admin.email, admin.password, admin.accountType)
         if(response) {

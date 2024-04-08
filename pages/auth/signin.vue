@@ -59,7 +59,6 @@ import { updateProfile, signOut } from '@firebase/auth';
 import type { Container } from 'tsparticles-engine'
 import { AccountType } from '~/types/types';
 import { useAuthStore } from '~/store/users';
-import { doc, getDoc } from "firebase/firestore"
 
 definePageMeta({
   layout:'auth'
@@ -92,7 +91,6 @@ const options = {
   }
 }
 const onLoad = (container: Container) => {
-  // Do something with the container
   container.pause()
   setTimeout(() => container.play(), 500)
 }

@@ -6,7 +6,7 @@
         <p class="shrink-0 font-bold text-base md:text-lg text-sky-600 mt-[0.15rem]">snapB!LL</p>
       </NuxtLink>
 
-      <div class="flex gap-x-[0.4rem]">
+      <div class="flex gap-x-[0.4rem] z-10">
         <NuxtLink class="" to="">
           <Icon class="text-orange-300 mt-[0.3rem]" name="solar:bell-bing-bold-duotone" size="27" />
         </NuxtLink>
@@ -121,6 +121,7 @@ const emit = defineEmits(['signing-out'])
 const nuxtApp = useNuxtApp()
 const authStore = useAuthStore()
 const drawer = ref(false)
+const loading = false
 
 const isAdmin = computed(() => {
   return authStore.currentUser?.accountType === 'admin'
