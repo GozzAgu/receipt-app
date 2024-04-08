@@ -23,7 +23,7 @@
             <el-icon v-else class="avatar-uploader-icon  border"><Plus /></el-icon>
           </el-upload>
 
-          <div class="">
+          <div class="mt-[1.5em] md:mt-0">
             <el-form-item label="Company name" prop="name">
               <el-input v-model="user.name" placeholder="Company name" />
             </el-form-item>
