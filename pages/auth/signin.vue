@@ -150,12 +150,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
               })
               router.push('/dashboard')
             } else {
-              // try{
-              //   await store.fetchManagerAdmin()
-              // }
-              // catch(error){
-              //   console.log('cannot fetch admin')
-              // }
               ElNotification({
                 title: 'Error',
                 message: 'You are not authorized to sign in as an admin',

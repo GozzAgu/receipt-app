@@ -47,12 +47,8 @@ export const useAuthStore = defineStore('users', {
       try{
         const userDocRef = doc(nuxtApp.$firestore, 'users',id)
         const userDocSnapshot = await getDoc(userDocRef)
-        console.log(userDocSnapshot.data())
         this.currentUser = userDocSnapshot.data()
-
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
-        console.log(this.currentUser)
-
         return this.currentUser
       }
       catch(error){
@@ -65,7 +61,6 @@ export const useAuthStore = defineStore('users', {
         const userDocRef = doc(nuxtApp.$firestore, 'users', this.currentUser?.adminId)
         const userDocSnapshot = await getDoc(userDocRef)
         this.managerAdmin = userDocSnapshot.data()
-        console.log(userDocSnapshot.data())
     },
 
     fetchManagers() {

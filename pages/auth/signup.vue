@@ -239,9 +239,9 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             type: 'success',
           })
           if(admin.accountType === AccountType.Manager) {
-            router.push('/')
+            router.push('/signin')
           }else {
-            router.push('/dashboard')
+            router.push('/auth/signin')
           }
         }
       }
