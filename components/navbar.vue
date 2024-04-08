@@ -36,7 +36,7 @@
           <div v-show="drawer" 
             class="
               lg:hidden rounded-l-[1rem] p-[1rem] absolute
-              h-[100vh] right-0 top-0 bg-white shadow-lg z-20 w-[85%]"
+              h-[100vh] right-0 top-0 bg-white shadow-lg z-20 w-[80%]"
           >
             <div class="">
               <div @click="showDrawer" class="cursor-pointer p-[1.5rem]">

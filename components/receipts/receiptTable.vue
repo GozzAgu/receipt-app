@@ -245,6 +245,7 @@ const paginatedReceipts = computed(() => {
 })
 
 onMounted(() => {
+  store.fetchReceipts()
   authStore.loadCurrentUserFromStorage()
   if(paginatedReceipts) {
     loading.value = false

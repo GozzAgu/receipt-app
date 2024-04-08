@@ -1,6 +1,6 @@
 <template>
   <div class="">    
-    <div v-loading="loading" class=" bg-white py-[0.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
+    <div v-loading="loading" class="py-[0.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <el-divider content-position="left"><span class="text-lg text-sky-600">Edit Profile</span></el-divider>
 
       <el-form

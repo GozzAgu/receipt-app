@@ -1,35 +1,23 @@
 <template>
   <div class="px-[1em] pb-[3rem] sm:px-[5em] lg:px-[5em] mt-[3rem] relative">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-[3rem]">
-      <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white border-t p-[1rem] rounded-xl h-[25rem]">
+      <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[25rem]">
         <div class="flex gap-x-[0.5rem] mb-[1rem]">
           <Icon class="text-2xl text-sky-600" name="ic:sharp-swap-horiz" />
           <p class="font-semibold text-sky-600">Recent swaps</p>
         </div>
-        <el-table 
-          :default-sort="{ prop: 'date', order: 'descending' }" 
-          v-if="store.receipts.length > 0" 
-          :data="filteredReceipts" 
-          height="90%"
-          style="width: 100%; max-height: 100%;"
-        > 
-          <el-table-column prop="swapFrom" label="SWAP FROM" width="130"  show-overflow-tooltip>
-            <template #default="scope">
-              {{ scope.row.swapFrom }} 
-            </template>
-          </el-table-column>
-          <el-table-column prop="productName" label="TO" width="130" show-overflow-tooltip />
-          <el-table-column prop="customerName" label="CUSTOMER" width="130" show-overflow-tooltip />
-          <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
-        </el-table>
+        
+        <div>
+          {{ filteredPatrons }}
+        </div>
       </div>
 
-      <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white border-t p-[1rem] rounded-xl h-[25rem]">
+      <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[25rem]">
         <div class="flex gap-x-[0.5rem] mb-[1rem]">
           <Icon class="text-2xl text-green-500" name="ic:twotone-loyalty" />
           <p class="font-semibold text-green-500">Patrons <span class="text-xs">(Over ₦500,000)</span></p>
         </div>
-        <el-table 
+        <!-- <el-table 
           :default-sort="{ prop: 'date', order: 'descending' }" 
           v-if="store.receipts.length > 0" 
           :data="filteredPatrons" 
@@ -44,7 +32,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
-        </el-table>
+        </el-table> -->
       </div>
     </div>
   </div>
