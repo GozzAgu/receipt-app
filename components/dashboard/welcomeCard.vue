@@ -52,3 +52,13 @@ onMounted(async () => {
   }
 })
 </script>
+
+<style scoped>
+::v-deep(.el-statistic__head) {
+  @apply text-white text-sm font-semibold text-center
+}
+
+::v-deep(.el-statistic__content) {
+  @apply text-white text-3xl font-bold text-center
+}
+</style> 
