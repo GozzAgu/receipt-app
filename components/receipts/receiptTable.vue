@@ -58,7 +58,7 @@
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
         :border="parentBorder"
-        v-if="store.receipts.length > 0" 
+         
         :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
       > 
@@ -145,11 +145,7 @@
       </el-table>
       
   
-      <el-empty v-else>
-        <NuxtLink to="/addReceipts">
-          <el-button type="primary">Generate Receipt</el-button>
-        </NuxtLink>
-      </el-empty>
+     
 
       <div class="fixed bottom-3 mt-[1em] right-[1em] sm:right-[5em] lg:right-[15em] bg-white">
         <vue-awesome-paginate
