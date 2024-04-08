@@ -89,8 +89,9 @@ const success = () => {
 const setUserAccountType = async (adminId: string, manager: Manager) => {
   const userDocRef = doc(nuxtApp.$firestore, 'users', adminId)
   await setDoc(userDocRef, 
-  { ...manager },
-  { merge: true })
+    { ...manager },
+    { merge: true }
+  )
 }
 
 const addM = async (formEl: FormInstance | undefined) => {
@@ -121,9 +122,10 @@ const addM = async (formEl: FormInstance | undefined) => {
   });
 };
 
+
 onMounted(() => {
+  const store = useAuthStore()
   store.loadCurrentUserFromStorage()
-  console.log(store.currentUser)
 })
 
 </script>

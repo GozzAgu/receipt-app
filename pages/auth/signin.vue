@@ -141,12 +141,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         const response = await store.signin(admin.email, admin.password, admin.accountType,)
         if(response) {
           try {
-            const docRef = doc(nuxtApp.$firestore, "users", response.user.uid)
-            const docSnap = await getDoc(docRef)
-            if(docSnap.data()?.accountType === 'admin') {
-              // await updateProfile(nuxtApp.$auth.currentUser!, {
-              //   displayName: admin.email
-              // })
+            const currentUser = await store.fetchCurrentUser(response.user.uid)
+            if (currentUser?.accountType === 'admin'){
               ElNotification({
                 title: 'Success',
                 message: 'Sign in successful',
@@ -154,6 +150,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
               })
               router.push('/dashboard')
             } else {
+              // try{
+              //   await store.fetchManagerAdmin()
+              // }
+              // catch(error){
+              //   console.log('cannot fetch admin')
+              // }
               ElNotification({
                 title: 'Error',
                 message: 'You are not authorized to sign in as an admin',

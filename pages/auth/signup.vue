@@ -32,13 +32,13 @@
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload"
     >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar w-[3em]" />
+      <img v-if="admin.imageUrl" :src="admin.imageUrl" class="avatar w-[3em]" />
       <el-icon v-else class="avatar-uploader-icon  border"><Plus /></el-icon>
     </el-upload>
 
     <div class="grid grid-cols-2 gap-x-[1rem]">
       <el-form-item label="Company name" prop="name">
-        <el-input v-model="admin.name" />
+        <el-input v-model="admin.adminName" />
       </el-form-item>
       <el-form-item label="Company email" prop="email">
         <el-input v-model="admin.email" />
@@ -98,7 +98,6 @@ const router = useRouter()
 const loading = ref(false)
 const nuxtApp = useNuxtApp()
 const store = useAuthStore()
-const imageUrl = ref()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 
 const options = {
@@ -134,7 +133,7 @@ const onLoad = (container: Container) => {
 }
 
 interface RuleForm {
-  name: string,
+  adminName: string,
   address: string,
   email: string,
   phone: string,
@@ -146,7 +145,7 @@ interface RuleForm {
 
 const ruleFormRef = ref<FormInstance>()
 const admin = reactive<RuleForm>({
-  name: '',
+  adminName: '',
   address: '',
   email: '',
   phone: '',
@@ -167,7 +166,7 @@ const matchPassword = (rule: any, value: any, callback: any) => {
 }
 
 const rules = reactive<FormRules<RuleForm>>({
-  name: [
+  adminName: [
     { required: true, message: 'Name required', trigger: 'blur' },
     { min: 3, max: 30, message: 'Length should be up to 3', trigger: 'blur' },
   ],
@@ -204,8 +203,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
   uploadFile
 ) => {
   if (uploadFile.raw) {
-    imageUrl.value = String(URL.createObjectURL(uploadFile.raw))
-    admin.imageUrl = imageUrl.value
+    admin.imageUrl = String(URL.createObjectURL(uploadFile.raw))
   } else {
     console.error("Upload file raw is null")
   }
@@ -228,7 +226,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       isLoading.value = true
       try {
-        const response = await store.signupAdmin(admin.email, admin.password, admin.accountType, admin.imageUrl)
+        const response = await store.signupAdmin(admin.email, admin.password, admin.accountType)
         if(response) {
           try {
             await setUserAccountType(response.user.uid, admin)
@@ -265,6 +263,10 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     }
   })
 }
+
+onMounted(() => {
+  store.fetchManagers()
+})
 </script>
 
 <style scoped>

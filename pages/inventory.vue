@@ -104,9 +104,9 @@
                         </button>     
                     </template>
                 </el-table-column>
-                <el-table-column v-if="columns.includes('Date In')" label="Date In" property="dateIn" width="120" sortable/>
-                <el-table-column v-if="columns.includes('Supplier')" property="supplier" label="Supplier" width="120" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('Grade')" property="grade" width="100" label="Grade" show-overflow-tooltip :filters="[
+                <el-table-column v-if="columns.includes('dateIn')" label="Date In" property="dateIn" width="120" sortable/>
+                <el-table-column v-if="columns.includes('supplier')" property="supplier" label="Supplier" width="120" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('grade')" property="grade" width="100" label="Grade" show-overflow-tooltip :filters="[
                   { text: 'Used', value: 'Used' },
                   { text: 'New', value: 'New' },]"
                   :filter-method="filterGradeTag"
@@ -118,8 +118,8 @@
                         >{{ scope.row.grade }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column v-if="columns.includes('Storage')" property="storage" width="100" label="Storage" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('IMEI')" property="imei" label="IMEI" width="140">
+                <el-table-column v-if="columns.includes('storage')" property="storage" width="100" label="Storage" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('imei')" property="imei" label="IMEI" width="140">
                     <template #default="scope">
                       <p :class="{ 'bg-red-400': isImeiInReceipts(scope.row.imei) }" 
                         class="bg-gray-200 text-sky-600 rounded-md px-2"
@@ -128,11 +128,11 @@
                       </p>
                     </template>
                 </el-table-column>
-                <el-table-column v-if="columns.includes('Colour')" property="colour" label="Colour" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('Amount')" property="amount" label="Amount" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('Cost')" property="cost" label="Cost" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('Margin')" property="margin" label="Margin" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('Swap')" property="swap" label="Swap" show-overflow-tooltip :filters="[
+                <el-table-column v-if="columns.includes('colour')" property="colour" label="Colour" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('amount')" property="amount" label="Amount" show-overflow-tooltip sortable width="120"/>
+                <el-table-column v-if="columns.includes('cost')" property="cost" label="Cost" show-overflow-tooltip sortable width="120"/>
+                <el-table-column v-if="columns.includes('margin')" property="margin" label="Margin" show-overflow-tooltip sortable width="120"/>
+                <el-table-column v-if="columns.includes('swap')" property="swap" label="Swap" show-overflow-tooltip :filters="[
                     { text: 'no', value: 'no' },
                     { text: 'yes', value: 'yes' },]"
                 :filter-method="filterSwapTag"
@@ -144,11 +144,11 @@
                         >{{ scope.row.swap }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column v-if="columns.includes('Date Out')" property="dateOut" label="dateOut" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('Created By')" property="createdBy" label="Created By" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('Created At')" property="createdAt" label="Created At" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('Updated By')" property="updatedBy" label="Updated By" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('Updated At')" property="updatedAt" label="Updated At" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('dateOut')" property="dateOut" label="dateOut" show-overflow-tooltip sortable width="120"/>
+                <el-table-column v-if="columns.includes('createdBy')" property="createdBy" label="Created By" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('createdAt')" property="createdAt" label="Created At" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('updatedBy')" property="updatedBy" label="Updated By" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('updatedAt')" property="updatedAt" label="Updated At" show-overflow-tooltip />
             </el-table>
         </div>
     </div>
@@ -182,7 +182,7 @@ const isSigningout = ref(false)
 
 const tableRef = ref();
 
-const columns = ref(['Date In', 'Supplier', 'Grade', 'Storage', 'IMEI', 'Colour', 'Amount', 'Cost', 'Margin', 'Swap', 'Date Out']);
+const columns = ref(['dateIn', 'supplier', 'grade', 'storage', 'imei', 'colour', 'amount', 'cost', 'margin', 'swap', 'date Out']);
 
 //drawer function
 const showDrawer = ref(false);

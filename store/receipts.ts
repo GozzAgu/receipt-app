@@ -53,13 +53,12 @@ export const useStore = defineStore('receipts', {
       onSnapshot(querySnapshot, async(ReceiptsSnapshot) => {
         const manager = doc(nuxtApp.$firestore, "users", authStore.currentUser?.uid)
         const docSnap = await getDoc(manager) 
-        console.log(docSnap.data())
         this.receipts = []
         ReceiptsSnapshot.forEach((doc) => {
           if(doc.data().receiptOf === authStore.currentUser?.uid || doc.data().receiptOf === docSnap.data()?.adminId) { 
             let receiptData = doc.data() as Receipt
             receiptData.receiptOf = doc.data().receiptOf
-            this.receipts.unshift({...receiptData} as Receipt)
+            this.receipts.push({...receiptData} as Receipt)
           }
         })
       })

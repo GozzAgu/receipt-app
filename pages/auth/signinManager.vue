@@ -143,12 +143,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         const response = await store.signin(manager.email, manager.password, manager.accountType)
         if(response) {
           try {
-            const docRef = doc(nuxtApp.$firestore, "users", response.user.uid)
-            const docSnap = await getDoc(docRef)
-            if(docSnap.data()?.accountType === 'manager') {
-              // await updateProfile(nuxtApp.$auth.currentUser!, {
-              //   displayName: admin.email
-              // })
+            const currentUser = await store.fetchCurrentUser(response.user.uid)
+            if(currentUser?.accountType === 'manager') {
+              try{
+                await store.fetchManagerAdmin()
+              }
+              catch(error){
+                console.log('cannot fetch admin')
+              }
               ElNotification({
                 title: 'Success',
                 message: 'Sign in successful',
