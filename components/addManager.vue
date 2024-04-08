@@ -21,27 +21,10 @@
             <el-input v-model="manager.password" placeholder="" />
           </el-form-item>
         </div>
-        <NuxtLink 
-          class="
-            w-[100%]
-            md:w-[30%]
-            cursor-pointer
-            bg-sky-600 
-            hover:bg-sky-500 
-            transition 
-            duration-500 
-            hover:shadow-lg 
-            rounded-lg 
-            flex 
-            justify-center 
-            items-center
-            py-[0.3rem]
-            mt-[2rem]" 
-          @click="addM(ruleFormRef)"
-        > 
-        <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="15" />
-          <span class="ml-[0.2em] text-[0.3em] md:text-base text-white font-thin">Create</span>
-        </NuxtLink> 
+        <el-button @click="addM(ruleFormRef)"> 
+          <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="15" />
+          <span class="ml-[0.2em] text-white">Create</span>
+        </el-button> 
       </el-form>
     </div>
   </div>
@@ -131,5 +114,15 @@ onMounted(() => {
 </script>
 
 <style scoped>
+::v-deep(.el-input__wrapper) {
+  @apply py-[0.5em] rounded-xl 
+}
 
+::v-deep(.el-button) {
+  @apply bg-sky-600 text-white py-[1.5em] rounded-xl w-full md:w-1/3 mt-[1.5rem]
+}
+
+::v-deep(.el-button):hover {
+  @apply bg-sky-500 text-white py-[1.5em] rounded-xl 
+}
 </style>

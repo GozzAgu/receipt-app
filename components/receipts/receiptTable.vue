@@ -313,4 +313,8 @@ onMounted(() => {
   width: 3.3em;
   border-radius: 0.5em;
 }
+
+::v-deep(.el-input__wrapper) {
+  @apply py-[0.5em] rounded-xl 
+}
 </style>

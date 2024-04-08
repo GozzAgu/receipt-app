@@ -179,3 +179,21 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   })
 }
 </script>
+
+<style scoped>
+::v-deep(.el-button) {
+  @apply bg-sky-600 text-white py-[1.5em] rounded-xl 
+}
+
+::v-deep(.el-button):hover {
+  @apply bg-sky-500 text-white py-[1.5em] rounded-xl 
+}
+
+::v-deep(.el-input__wrapper) {
+  @apply py-[0.5em] rounded-xl 
+}
+
+::v-deep(.el-input__wrapper):focus {
+  @apply bg-gray-200 text-white py-[0.5em] rounded-xl 
+}
+</style>

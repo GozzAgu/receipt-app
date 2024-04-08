@@ -12,7 +12,7 @@
     :model="admin"
     :rules="rules"
     label-width="120px"
-    class="demo-ruleForm md:w-full px-[2em] py-[2em] md:p-[2em] md:py-[2em] md:px-[4em] md:shadow-md mt-[3em] bg-white"
+    class="demo-ruleForm md:w-full px-[2em] py-[2em] md:py-[2em] md:px-[3em] md:shadow-md mt-[3em] bg-white"
     status-icon
     :label-position="labelPosition"
     style="max-width: 500px"
@@ -36,7 +36,7 @@
       <el-icon v-else class="avatar-uploader-icon  border"><Plus /></el-icon>
     </el-upload>
 
-    <div class="md:grid grid-cols-2 gap-x-[1rem]">
+    <div class="md:grid grid-cols-2 gap-x-[1.5rem]">
       <el-form-item label="Company name" prop="name">
         <el-input v-model="admin.adminName" />
       </el-form-item>
@@ -44,7 +44,7 @@
         <el-input v-model="admin.email" />
       </el-form-item>
     </div>
-    <div class="md:grid grid-cols-2 gap-x-[1rem]">
+    <div class="md:grid grid-cols-2 gap-x-[1.5rem]">
       <el-form-item label="Company address" prop="address">
         <el-input v-model="admin.address" />
       </el-form-item>
@@ -52,7 +52,7 @@
         <el-input v-model="admin.phone" />
       </el-form-item>
     </div>
-    <div class="md:grid grid-cols-2 gap-x-[1rem]">
+    <div class="md:grid grid-cols-2 gap-x-[1.5rem]">
       <el-form-item label="Password" prop="password">
         <el-input type="password" v-model="admin.password" />
       </el-form-item>
@@ -62,7 +62,7 @@
     </div>
     
     <el-form-item class="mt-[2em]">
-      <el-button class="flex m-auto w-full" type="primary" @click="submitForm(ruleFormRef)">
+      <el-button class="flex m-auto w-full" @click="submitForm(ruleFormRef)">
         <Icon v-if="loading" class="mr-2" name="svg-spinners:gooey-balls-1" />
         Sign Up
       </el-button>
@@ -270,5 +270,19 @@ onMounted(() => {
 </script>
 
 <style scoped>
+::v-deep(.el-button) {
+  @apply bg-sky-600 text-white py-[1.5em] rounded-xl 
+}
 
+::v-deep(.el-button):hover {
+  @apply bg-sky-500 text-white py-[1.5em] rounded-xl 
+}
+
+::v-deep(.el-input__wrapper) {
+  @apply py-[0.5em] rounded-xl 
+}
+
+::v-deep(.el-input__wrapper):focus {
+  @apply bg-gray-200 text-white py-[0.5em] rounded-xl 
+}
 </style>

@@ -33,29 +33,13 @@
             <el-form-item label="Company phone no" prop="phone">
               <el-input v-model="user.phone" placeholder="Company phone no" />
             </el-form-item>
+
+            <el-button @click="update(ruleFormRef)"> 
+              <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="15" />
+              <span class="ml-[0.2em] text-white">Update</span>
+            </el-button> 
           </div>
         </div>
-        <NuxtLink 
-          class="
-            w-[100%]
-            md:w-[30%]
-            cursor-pointer
-            bg-sky-600 
-            hover:bg-sky-500 
-            transition 
-            duration-500 
-            hover:shadow-lg 
-            rounded-lg 
-            flex 
-            justify-center 
-            items-center
-            py-[0.3rem]
-            mt-[2rem]" 
-          @click="update(ruleFormRef)"
-        > 
-          <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="15" />
-          <span class="ml-[0.2em] text-[0.3em] md:text-base text-white font-thin">Update</span>
-        </NuxtLink> 
       </el-form>
     </div>
   </div>
@@ -161,5 +145,17 @@ const update = async (formEl: FormInstance | undefined) => {
   width: 178px;
   height: 178px;
   text-align: center;
+}
+
+::v-deep(.el-input__wrapper) {
+  @apply py-[0.5em] rounded-xl 
+}
+
+::v-deep(.el-button) {
+  @apply bg-sky-600 text-white py-[1.5em] rounded-xl w-full mt-[1.5rem]
+}
+
+::v-deep(.el-button):hover {
+  @apply bg-sky-500 text-white py-[1.5em] rounded-xl 
 }
 </style>

@@ -94,25 +94,9 @@
         </div>
       </el-form>
 
-      <NuxtLink 
-        class="
-          cursor-pointer
-          p-[0.5rem]
-          my-[1rem]
-          bg-sky-600 
-          hover:bg-sky-500 
-          transition 
-          duration-500 
-          hover:shadow-lg 
-          rounded-lg 
-          flex 
-          justify-center 
-          items-center 
-          w-[100%]" 
-          @click="addR(ruleFormRef)"
-      > 
+      <el-button @click="addR(ruleFormRef)"> 
         <span class="ml-[1em] text-[0.7em] md:text-base text-white">Generate Receipt</span>
-      </NuxtLink> 
+      </el-button> 
     </div>
   </div>
 </template>
@@ -308,5 +292,23 @@ const addR = async (formEl: FormInstance | undefined) => {
 </script>
 
 <style scoped>
+::v-deep(.el-button) {
+  @apply bg-sky-600 text-white py-[1.5em] rounded-xl 
+}
 
+::v-deep(.el-button):hover {
+  @apply bg-sky-500 text-white py-[1.5em] rounded-xl 
+}
+
+::v-deep(.el-input__wrapper) {
+  @apply py-[0.5em] rounded-xl h-[3rem]
+}
+
+::v-deep(.el-textarea__inner) {
+  @apply py-[0.5em] rounded-xl h-[3rem]
+}
+
+::v-deep(.el-select__wrapper) {
+  @apply py-[0.5em] rounded-xl h-[3rem]
+}
 </style>
