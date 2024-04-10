@@ -8,8 +8,8 @@ export interface Receipt {
   customerName: string
   customerAddress: string
   customerNumber: string
-  name: string
-  address: string
+  // name: string
+  // address: string
   productName: string
   productDescription: string
   productQuantity: number

@@ -7,9 +7,23 @@
           <p class="font-semibold text-sky-600">Recent swaps</p>
         </div>
         
-        <div>
-          {{ filteredPatrons }}
-        </div>
+        <el-table 
+          :default-sort="{ prop: 'date', order: 'descending' }" 
+          v-if="store.receipts.length > 0" 
+          :data="filteredReceipts" 
+          height="90%"
+          style="width: 100%; max-height: 100%;"
+        > 
+          <el-table-column prop="customerName" label="CUSTOMER" width="100" show-overflow-tooltip />
+          <el-table-column prop="productName" label="PRODUCT" width="100" show-overflow-tooltip />
+          <el-table-column prop="swapFrom" label="SWAP FROM" width="100" show-overflow-tooltip />
+          <el-table-column prop="newPrice" label="PRICE" width="100" show-overflow-tooltip>
+            <template #default="scope">
+              ₦{{ scope.row.newPrice }} 
+            </template>
+          </el-table-column>
+          <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
+        </el-table>
       </div>
 
       <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[25rem]">
@@ -17,22 +31,23 @@
           <Icon class="text-2xl text-green-500" name="ic:twotone-loyalty" />
           <p class="font-semibold text-green-500">Patrons <span class="text-xs">(Over ₦500,000)</span></p>
         </div>
-        <!-- <el-table 
+        <el-table 
           :default-sort="{ prop: 'date', order: 'descending' }" 
           v-if="store.receipts.length > 0" 
           :data="filteredPatrons" 
           height="90%"
           style="width: 100%; max-height: 100%;"
         > 
-          <el-table-column prop="customerName" label="CUSTOMER" width="130" show-overflow-tooltip />
-          <el-table-column prop="productName" label="PRODUCT" width="130" show-overflow-tooltip />
-          <el-table-column prop="newPrice" label="PRICE" width="130" show-overflow-tooltip>
+          <el-table-column prop="customerName" label="CUSTOMER" width="100" show-overflow-tooltip />
+          <el-table-column prop="productName" label="PRODUCT" width="100" show-overflow-tooltip />
+          <el-table-column prop="productDescription" label="DESCRIPTION" width="100" show-overflow-tooltip />
+          <el-table-column prop="newPrice" label="PRICE" width="100" show-overflow-tooltip>
             <template #default="scope">
               ₦{{ scope.row.newPrice }} 
             </template>
           </el-table-column>
           <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
-        </el-table> -->
+        </el-table>
       </div>
     </div>
   </div>
@@ -60,6 +75,10 @@ onMounted(() =>{
 </script>
 
 <style scoped>
+::v-deep(.cell) {
+  @apply text-[0.8em]
+}
+
 ::v-deep(.el-table__header th) {
   color: #4b5563;
   font-weight: semibold;

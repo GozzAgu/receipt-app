@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div v-loading="loading" class="mt-[3em] z-0">
+    <div v-loading="loading" class="mt-[3em] z-0 bg-white">
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
         :border="parentBorder"
@@ -97,7 +97,8 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="productDescription" width="300" label="DESCRIPTION"  show-overflow-tooltip />
+        <el-table-column prop="imei" width="150" label="IMEI" show-overflow-tooltip />
+        <el-table-column prop="productDescription" width="200" label="DESCRIPTION"  show-overflow-tooltip />
         <el-table-column prop="paidVia" width="90" label="PAID VIA"  show-overflow-tooltip>
           <template #default="{ row }">
             <div
@@ -143,7 +144,7 @@
         </el-table-column>
       </el-table>
 
-      <div class="fixed bottom-3 mt-[1em] right-[1em] sm:right-[5em] lg:right-[15em] bg-white">
+      <div class="fixed bottom-3 mt-[1em] right-[1em] sm:right-[5em] lg:right-[5em] bg-white">
         <vue-awesome-paginate
           v-model="currentPage"
           :total-items="store.receipts.length"

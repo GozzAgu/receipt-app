@@ -36,7 +36,6 @@
         :label-position="labelPosition"
       >
         <div class="md:grid grid-cols-3 gap-[1em]">
-
           <el-form-item label="Customer name" prop="customerName">
             <el-input v-model="companyDetails.customerName" placeholder="" />
           </el-form-item>
@@ -45,12 +44,6 @@
           </el-form-item>
           <el-form-item label="Customer number" prop="customerNumber">
             <el-input v-model="companyDetails.customerNumber" placeholder="" />
-          </el-form-item>
-          <el-form-item label="Company name" prop="name">
-            <el-input v-model="companyDetails.name" placeholder="" />
-          </el-form-item>
-          <el-form-item label="Company address" prop="address">
-            <el-input v-model="companyDetails.address" placeholder="" />
           </el-form-item>
           <el-form-item label="Product name" prop="productName">
             <el-input v-model="companyDetails.productName" placeholder="" />
@@ -103,28 +96,25 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store/receipts"
-import { useInventoryStore } from "@/store/inventory"
 import { useAuthStore } from "@/store/users"
+import { useInventoryStore } from "@/store/inventory"
 import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { Receipt } from '@/types/types'
 
 const store = useStore()
+const authStore = useAuthStore()
 const invStore = useInventoryStore()
-const usersStore = useAuthStore()
 const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
-const nuxtApp = useNuxtApp()
 
 let companyDetails = reactive<Receipt>({
   id: '',
   customerName: '',
   customerAddress: '',
   customerNumber: '',
-  name: '',
-  address: '',
   productName: '',
   productDescription: '',
   productQuantity: 0,
@@ -185,12 +175,6 @@ const rules = reactive<FormRules<Receipt>>({
   ],
   customerNumber: [
     { required: true, message: 'Please input Customer number', trigger: 'blur' },
-  ],
-  name: [
-    { required: true, message: 'Please input Company name', trigger: 'blur' },
-  ],
-  address: [
-    { required: true, message: 'Please input Company address', trigger: 'blur' },
   ],
   productName: [
     { required: true, message: 'Please input Product name', trigger: 'blur' },

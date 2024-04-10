@@ -45,12 +45,6 @@
           <el-form-item label="Customer number" prop="customerNumber">
             <el-input v-model="duplicate!.customerNumber" placeholder="" />
           </el-form-item>
-          <el-form-item label="Company name" prop="name">
-            <el-input disabled v-model="duplicate!.name" placeholder="" />
-          </el-form-item>
-          <el-form-item label="Company address" prop="address">
-            <el-input disabled v-model="duplicate!.address" placeholder="" />
-          </el-form-item>
           <el-form-item label="Product name" prop="productName">
             <el-input v-model="duplicate!.productName" placeholder="" />
           </el-form-item>
@@ -123,12 +117,6 @@ const rules = reactive<FormRules<Receipt>>({
   ],
   customerNumber: [
     { required: true, message: 'Please input Customer number', trigger: 'blur' },
-  ],
-  name: [
-    { required: true, message: 'Please input Company name', trigger: 'blur' },
-  ],
-  address: [
-    { required: true, message: 'Please input Company address', trigger: 'blur' },
   ],
   productName: [
     { required: true, message: 'Please input Product name', trigger: 'blur' },

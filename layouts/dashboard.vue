@@ -9,7 +9,7 @@
     <div class="flex">
       <Sidenav class="hidden lg:block w-[15%]" />
 
-      <div class="w-full lg:w-[85%] mt-[2em] bg-gray-50 h-screen">
+      <div class="w-full lg:w-[85%] mt-[2em] bg-gray-50 min-h-screen">
         <slot />
       </div>
     </div>

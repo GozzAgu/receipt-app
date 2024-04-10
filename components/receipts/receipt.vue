@@ -26,7 +26,7 @@
         </el-button>
       </div>
 
-      <div ref="pdfSection" v-loading="loading" class="border rounded-lg shadow-lg bg-white">
+      <div ref="pdfSection" v-loading="loading" class="shadow-lg rounded-lg bg-white">
         <div class="flex justify-between items-center px-4 py-2 bg-sky-100 rounded-t-lg">
           <div class="flex items-center">
             <img v-if="authStore.currentUser?.imageUrl" :src="authStore.currentUser.imageUrl" class="w-4 h-4 mr-1" />
@@ -39,21 +39,21 @@
           <el-divider content-position="left"><span class="text-base">Transaction Receipt</span></el-divider>
 
           <div class="font-light mt-4 text-xs md:text-base">
-            <p>Dear {{ rpt?.customerName }},</p>
-            <p>Below are your purchase details from <span class="font-semibold">{{ rpt?.name }}</span></p>
+            <p class="text-xs">Dear {{ rpt?.customerName }},</p>
+            <p class="text-xs">Below are your purchase details from <span class="font-semibold">{{ authStore.currentUser?.adminName || authStore.managerAdmin?.adminName }}</span></p>
           </div>
 
-          <div class="text-xs md:text-base grid md:grid-cols-2 gap-2 mt-4">
-            <div class="bg-gray-100 rounded-lg p-2">
+          <div class="text-xs font-light grid md:grid-cols-2 gap-2 mt-4">
+            <div class="bg-gray-50 rounded-lg p-2">
               <p class="font-semibold">Customer Name</p>
               <p>{{ rpt?.customerName }}</p>
             </div>
-            <div class="bg-gray-100 rounded-lg p-2">
+            <div class="bg-gray-50 rounded-lg p-2">
               <p class="font-semibold">Customer Address</p>
               <p>{{ rpt?.customerAddress }}</p>
             </div>
             <div class="grid grid-cols-2 gap-2">
-              <div class="bg-gray-100 rounded-lg p-2">
+              <div class="bg-gray-50 rounded-lg p-2">
                 <p class="font-semibold">Product</p>
                 <p>{{ rpt?.productName }}</p>
               </div>
@@ -62,24 +62,24 @@
                 <p>{{ rpt?.swapFrom }}</p>
               </div>
             </div>
-            <div class="bg-gray-100 rounded-lg p-2">
+            <div class="bg-gray-50 rounded-lg p-2">
               <p class="font-semibold">Description</p>
               <p>{{ rpt?.productDescription }}</p>
             </div>
             <div class="grid grid-cols-2 gap-[0.2em]">
-              <div class="bg-gray-100 rounded-lg p-2">
+              <div class="bg-gray-50 rounded-lg p-2">
                 <p class="font-semibold">Quantity</p>
                 <p>{{ rpt?.productQuantity }}</p>
               </div>
-              <div class="bg-gray-100 rounded-lg p-2">
+              <div class="bg-gray-50 rounded-lg p-2">
                 <p class="font-semibold">Unit price</p>
                 <p>{{ rpt?.productPrice }}</p>
               </div>
-              <div class="bg-gray-100 rounded-lg p-2">
+              <div class="bg-gray-50 rounded-lg p-2">
                 <p class="font-semibold">Paid via</p>
                 <p>{{ rpt?.paidVia }}</p>
               </div>
-              <div class="bg-gray-100 rounded-lg p-2">
+              <div class="bg-gray-50 rounded-lg p-2">
                 <p class="font-bold">Total Price</p>
                 <p>{{ rpt?.newPrice }}</p>
               </div>
@@ -118,8 +118,8 @@ const rpt = computed(() => {
 })
 
 onMounted(async () => {
+  await store.fetchReceipts()
   isShown()
-  store.fetchReceipts()
 })
 
 const exportToPDF = async (filename: string, element: HTMLElement | null) => {
