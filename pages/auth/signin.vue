@@ -139,7 +139,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         const response = await store.signin(admin.email, admin.password, admin.accountType,)
         if(response) {
           try {
-            const currentUser = await store.fetchCurrentUser(response.user.uid)
+            const currentUser = await store.fetchCurrentUser(response.uid)
             if (currentUser?.accountType === 'admin'){
               ElNotification({
                 title: 'Success',

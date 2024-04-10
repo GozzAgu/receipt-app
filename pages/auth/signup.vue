@@ -140,7 +140,8 @@ interface RuleForm {
   imageUrl: string,
   password: string,
   confirmPassword: string,
-  accountType: AccountType
+  accountType: AccountType,
+  id: string
 }
 
 const ruleFormRef = ref<FormInstance>()
@@ -153,6 +154,7 @@ const admin = reactive<RuleForm>({
   password: '',
   confirmPassword: '',
   accountType: AccountType.Admin,
+  id: ''
 })
 
 const matchPassword = (rule: any, value: any, callback: any) => {
@@ -195,7 +197,7 @@ const rules = reactive<FormRules<RuleForm>>({
 
 const setUserAccountType = async (userId: string, admin: RuleForm) => {
   const userDocRef = doc(nuxtApp.$firestore, 'users', userId)
-  await setDoc(userDocRef, { ...admin }, { merge: true })
+  await setDoc(userDocRef, { ...admin, id:userId }, { merge: true })
 };
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = (

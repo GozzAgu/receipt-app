@@ -9,7 +9,7 @@ export const useAuthStore = defineStore('users', {
     managers: [] as Manager[],
     managerAdmin: null as null | Admin,
     admins: [] as Admin[],
-    currentUser: null as null | User & { password: string, accountType: string },
+    currentUser: null as null | User & { password: string, accountType: string, id: string },
   }),
 
   actions: {
@@ -18,7 +18,7 @@ export const useAuthStore = defineStore('users', {
       const response = await createUserWithEmailAndPassword(nuxtApp.$auth, email, password)
       const user = response.user
       if (user) {
-        this.currentUser = {...user, password: password, accountType: accountType }
+        this.currentUser = {...user, password: password, accountType: accountType, id: response.user.uid }
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
       }
       return response
@@ -29,10 +29,10 @@ export const useAuthStore = defineStore('users', {
       const response = await signInWithEmailAndPassword(nuxtApp.$auth, email, password)
       const user = response.user
       if (user) {
-        this.currentUser = {...user, password: password, accountType: accountType }
+        this.currentUser = {...user, password: password, accountType: accountType, id: response.user.uid }
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
       }
-      return response
+      return user
     },
 
     loadCurrentUserFromStorage() {
@@ -45,8 +45,12 @@ export const useAuthStore = defineStore('users', {
     async fetchCurrentUser(id:string) {
       const nuxtApp = useNuxtApp()
       try{
+        if (!id) {
+          throw new Error("Invalid user ID")
+        }
         const userDocRef = doc(nuxtApp.$firestore, 'users',id)
         const userDocSnapshot = await getDoc(userDocRef)
+        console.log(userDocSnapshot.data())
         this.currentUser = userDocSnapshot.data()
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
         return this.currentUser
@@ -71,7 +75,9 @@ export const useAuthStore = defineStore('users', {
         UsersSnapshot.forEach((doc) => {
           let userData = doc.data() as Manager;
           userData.id = doc.id;
-          if (userData.accountType === "manager" && userData.adminId === this.currentUser?.uid) {
+          console.log(userData)
+          if (userData.accountType === "manager" && userData.adminId === this.currentUser?.id) {
+            console.log(userData)
             this.managers.unshift(userData as Manager)
           }
         });

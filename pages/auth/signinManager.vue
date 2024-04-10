@@ -143,7 +143,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         const response = await store.signin(manager.email, manager.password, manager.accountType)
         if(response) {
           try {
-            const currentUser = await store.fetchCurrentUser(response.user.uid)
+            const currentUser = await store.fetchCurrentUser(response.uid)
             if(currentUser?.accountType === 'manager') {
               try{
                 await store.fetchManagerAdmin()

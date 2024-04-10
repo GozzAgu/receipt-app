@@ -58,7 +58,6 @@
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
         :border="parentBorder"
-         
         :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
       > 
@@ -143,9 +142,6 @@
           </template>
         </el-table-column>
       </el-table>
-      
-  
-     
 
       <div class="fixed bottom-3 mt-[1em] right-[1em] sm:right-[5em] lg:right-[15em] bg-white">
         <vue-awesome-paginate
@@ -246,6 +242,7 @@ const paginatedReceipts = computed(() => {
 
 onMounted(() => {
   store.fetchReceipts()
+  console.log(store.receipts)
   authStore.loadCurrentUserFromStorage()
   if(paginatedReceipts) {
     loading.value = false

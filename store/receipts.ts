@@ -46,21 +46,51 @@ export const useStore = defineStore('receipts', {
       }
     },
     
+    // async fetchReceipts() {
+    //   const nuxtApp = useNuxtApp()
+    //   const authStore = useAuthStore()
+    //   const querySnapshot = collection(nuxtApp.$firestore, "receipts")
+    //   onSnapshot(querySnapshot, async(ReceiptsSnapshot) => {
+    //     const receipt = doc(nuxtApp.$firestore, "users", authStore.currentUser?.uid)
+    //     const docSnap = await getDoc(receipt)
+    //     this.receipts = []
+    //     ReceiptsSnapshot.forEach((doc) => {
+    //       if(doc.data().receiptOf === authStore.currentUser?.uid || doc.data().receiptOf === docSnap.data()?.adminId) { 
+    //         let receiptData = doc.data() as Receipt
+    //         receiptData.receiptOf = doc.data().receiptOf
+    //         this.receipts.push({...receiptData} as Receipt)
+    //       }
+    //     })
+    //   })
+    // },
+
     async fetchReceipts() {
       const nuxtApp = useNuxtApp()
       const authStore = useAuthStore()
+      if (!authStore.currentUser) return
       const querySnapshot = collection(nuxtApp.$firestore, "receipts")
-      onSnapshot(querySnapshot, async(ReceiptsSnapshot) => {
-        const manager = doc(nuxtApp.$firestore, "users", authStore.currentUser?.uid)
-        const docSnap = await getDoc(manager) 
+      onSnapshot(querySnapshot, async (ReceiptsSnapshot) => {
         this.receipts = []
-        ReceiptsSnapshot.forEach((doc) => {
-          if(doc.data().receiptOf === authStore.currentUser?.uid || doc.data().receiptOf === docSnap.data()?.adminId) { 
-            let receiptData = doc.data() as Receipt
-            receiptData.receiptOf = doc.data().receiptOf
-            this.receipts.push({...receiptData} as Receipt)
-          }
-        })
+        if (authStore.currentUser?.accountType === 'admin') {
+          ReceiptsSnapshot.forEach((doc) => {
+            const receiptData = doc.data() as Receipt
+            if(receiptData.receiptOf === authStore.currentUser?.id) { 
+              receiptData.receiptOf = doc.data().receiptOf
+              this.receipts.push(receiptData as Receipt)
+            }
+          })
+        } else if (authStore.currentUser?.accountType === 'manager') {
+          const managerDocRef = doc(nuxtApp.$firestore, 'users', authStore.currentUser?.uid)
+          const managerDocSnapshot = await getDoc(managerDocRef)
+          const adminId = managerDocSnapshot.data()?.adminId
+          if (!adminId) return
+          ReceiptsSnapshot.forEach((doc) => {
+            const receiptData = doc.data() as Receipt
+            if (receiptData.receiptOf === authStore.currentUser?.uid || receiptData.receiptOf === adminId) {
+              this.receipts.push({ ...receiptData, id: doc.id } as Receipt)
+            }
+          })
+        }
       })
     },
 

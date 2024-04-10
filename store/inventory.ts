@@ -46,22 +46,52 @@ export const useInventoryStore = defineStore('inventories', {
         },
 
         async fetchInventories() {
-            const nuxtApp = useNuxtApp()
-            const authStore = useAuthStore()
-            const querySnapshot = collection(nuxtApp.$firestore, "inventories")
-            onSnapshot(querySnapshot, async(ReceiptsSnapshot) => {
-              const manager = doc(nuxtApp.$firestore, "users", authStore.currentUser?.uid)
-              const docSnap = await getDoc(manager) 
-              this.inventories = []
+          const nuxtApp = useNuxtApp()
+          const authStore = useAuthStore()
+          if (!authStore.currentUser) return
+          const querySnapshot = collection(nuxtApp.$firestore, "inventories")
+          onSnapshot(querySnapshot, async (ReceiptsSnapshot) => {
+            this.inventories = []
+            if (authStore.currentUser?.accountType === 'admin') {
               ReceiptsSnapshot.forEach((doc) => {
-                if(doc.data().inventoryOf === authStore.currentUser?.uid || doc.data().inventoryOf === docSnap.data()?.adminId) { 
-                  let inventoryData = doc.data() as Inventory
+                const inventoryData = doc.data() as Inventory
+                if(inventoryData.inventoryOf === authStore.currentUser?.id) { 
                   inventoryData.inventoryOf = doc.data().inventoryOf
-                  this.inventories.push({...inventoryData} as Inventory)
+                  this.inventories.push(inventoryData as Inventory)
                 }
               })
-            })
+            } else if (authStore.currentUser?.accountType === 'manager') {
+              const managerDocRef = doc(nuxtApp.$firestore, 'users', authStore.currentUser?.uid)
+              const managerDocSnapshot = await getDoc(managerDocRef)
+              const adminId = managerDocSnapshot.data()?.adminId
+              if (!adminId) return
+              ReceiptsSnapshot.forEach((doc) => {
+                const inventoryData = doc.data() as Inventory
+                if (inventoryData.inventoryOf === authStore.currentUser?.uid || inventoryData.inventoryOf === adminId) {
+                  this.inventories.push({ ...inventoryData, id: doc.id } as Inventory)
+                }
+              })
+            }
+          })
         },
+
+        // async fetchInventories() {
+        //     const nuxtApp = useNuxtApp()
+        //     const authStore = useAuthStore()
+        //     const querySnapshot = collection(nuxtApp.$firestore, "inventories")
+        //     onSnapshot(querySnapshot, async(ReceiptsSnapshot) => {
+        //       const manager = doc(nuxtApp.$firestore, "users", authStore.currentUser?.uid)
+        //       const docSnap = await getDoc(manager) 
+        //       this.inventories = []
+        //       ReceiptsSnapshot.forEach((doc) => {
+        //         if(doc.data().inventoryOf === authStore.currentUser?.uid || doc.data().inventoryOf === docSnap.data()?.adminId) { 
+        //           let inventoryData = doc.data() as Inventory
+        //           inventoryData.inventoryOf = doc.data().inventoryOf
+        //           this.inventories.push({...inventoryData} as Inventory)
+        //         }
+        //       })
+        //     })
+        // },
 
         editInventory(entry:Inventory){
             const idx = this.inventories.findIndex(e => e.imei === entry.imei)
