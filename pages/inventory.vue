@@ -121,8 +121,8 @@
                 <el-table-column v-if="columns.includes('storage')" property="storage" width="100" label="Storage" show-overflow-tooltip />
                 <el-table-column v-if="columns.includes('imei')" property="imei" label="IMEI" width="140">
                     <template #default="scope">
-                      <p :class="{ 'bg-red-400': isImeiInReceipts(scope.row.imei) }" 
-                        class="bg-gray-200 text-sky-600 rounded-md px-2"
+                      <p :class="{ 'border border-red-400 text-red-400': isImeiInReceipts(scope.row.imei) }" 
+                        class="border shadow-md rounded-md px-2"
                       >
                         {{ scope.row.imei }}
                       </p>
