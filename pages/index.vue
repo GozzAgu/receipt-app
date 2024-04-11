@@ -6,7 +6,7 @@
   >  
   </NuxtParticles>
 
-  <div class="flex items-center h-screen">
+  <div class="flex justify-center items-center h-screen">
     <div class="">  
       <div class="flex justify-center items-center">
         <div class="bg-white rounded-b-[5em]">
