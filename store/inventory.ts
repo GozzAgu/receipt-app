@@ -61,10 +61,11 @@ export const useInventoryStore = defineStore('inventories', {
                 }
               })
             } else if (authStore.currentUser?.accountType === 'manager') {
-              const managerDocRef = doc(nuxtApp.$firestore, 'users', authStore.currentUser?.uid)
+              const managerDocRef = doc(nuxtApp.$firestore, 'users', authStore.currentUser?.adminId)
               const managerDocSnapshot = await getDoc(managerDocRef)
-              const adminId = managerDocSnapshot.data()?.adminId
+              const adminId = managerDocSnapshot.data()?.id
               if (!adminId) return
+              this.inventories = []
               ReceiptsSnapshot.forEach((doc) => {
                 const inventoryData = doc.data() as Inventory
                 if (inventoryData.inventoryOf === authStore.currentUser?.uid || inventoryData.inventoryOf === adminId) {
