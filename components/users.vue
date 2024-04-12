@@ -43,9 +43,9 @@
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item>
-                    <NuxtLink to="">
+                    <NuxtLink>
                       <Icon name="material-symbols:accessibility" color="" size="15" /> 
-                      <span class="text-xs ml-[1em]">Permission to delete</span>
+                      <span class="text-xs ml-[1em]">Permission</span>
                     </NuxtLink> 
                   </el-dropdown-item>
                   <el-dropdown-item>
@@ -102,11 +102,19 @@
 <script setup>
 import { useAuthStore } from '~/store/users'
 import { Search } from '@element-plus/icons-vue'
+import { doc, setDoc } from "firebase/firestore"; 
 
 const loading = ref(true)
 const search = ref('')
 const authStore = useAuthStore()
 const currentPage = ref(1)
+const nuxtApp = useNuxtApp()
+
+// const grantPermission = async (manager) => {
+//   manager.accountType = 'admin'
+//   const userDocRef = doc(nuxtApp.$firestore, 'users', manager.id)
+//   await setDoc(userDocRef, { ...manager, accountType: manager.accountType  }, { merge: true })
+// }
 
 const searchR = computed(() => {
   return authStore.managers.filter(m => {

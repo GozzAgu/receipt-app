@@ -47,7 +47,7 @@
             <div class="px-[1.5rem] mt-[2rem]">
               <div v-for="route in routes" :key="route.name">
                 <div :class="{ 'active-tab': $route.path === route.link }" 
-                  v-if="isAdmin || route.name !== 'Staff'" 
+                  v-if="isAdmin || route.name !== 'Staff' && route.name !== 'Inventory'"
                   class="
                     flex my-[0.5rem] p-[0.7rem] rounded-xl cursor-pointer 
                     hover:bg-blue-50 transition duration-300"
@@ -151,11 +151,11 @@ const routes = ref([
     icon: 'material-symbols:inventory-rounded',
     link: '/inventory'
   },
-  {
-    name: 'Returns',
-    icon: 'heroicons:receipt-refund',
-    link: '/returns'
-  },
+  // {
+  //   name: 'Returns',
+  //   icon: 'heroicons:receipt-refund',
+  //   link: '/returns'
+  // },
   {
     name: 'Staff',
     icon: 'ph:users-three-bold',

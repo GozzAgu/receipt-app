@@ -2,7 +2,7 @@
   <div class="border-r h-[100vh] pt-[7rem] px-[1rem]">
     <div v-for="route in routes" :key="route.name">
       <div :class="{ 'active-tab': $route.path === route.link }" 
-        v-if="isAdmin || route.name !== 'Staff'" 
+        v-if="isAdmin || route.name !== 'Staff' && route.name !== 'Inventory'" 
         class="my-[0.5rem] p-[0.7rem] rounded-xl cursor-pointer hover:bg-sky-50 transition duration-300"
       >
         <NuxtLink class="flex gap-x-[0.5rem]" :to="route.link">
@@ -35,11 +35,11 @@ const routes = ref([
     icon: 'material-symbols:inventory-rounded',
     link: '/inventory'
   },
-  {
-    name: 'Returns',
-    icon: 'heroicons:receipt-refund',
-    link: '/returns'
-  },
+  // {
+  //   name: 'Returns',
+  //   icon: 'heroicons:receipt-refund',
+  //   link: '/returns'
+  // },
   {
     name: 'Staff',
     icon: 'ph:users-three-bold',
