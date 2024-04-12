@@ -9,4 +9,8 @@ definePageMeta({
   layout:'dashboard'
 })
 
+onMounted(() => {
+  authStore.authenticated()
+})
+
 </script>

@@ -161,6 +161,7 @@
 <script setup>
 import { useInventoryStore } from "~/store/inventory";
 import { useStore } from "../store/receipts"
+import { useAuthStore } from "~/store/users";
 import { Search } from '@element-plus/icons-vue'
 
 definePageMeta({
@@ -177,6 +178,7 @@ const { inventories } = toRefs(inventoryStore)
 const showDropDown = ref(false)
 const parentBorder = ref(true)
 const store = useStore()
+const authStore = useAuthStore()
 const invStore = useInventoryStore()
 const isSigningout = ref(false)
 
@@ -301,8 +303,9 @@ const filterSwapTag = (value, row) => {
 }
 
 onMounted(() => {
-store.fetchReceipts();
-invStore.fetchInventories();
+  store.fetchReceipts();
+  invStore.fetchInventories();
+  authStore.authenticated()
 })
 </script>
 

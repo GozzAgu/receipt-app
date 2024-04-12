@@ -21,5 +21,6 @@ const isSigningout = ref(false)
 onMounted(() => {
   authStore.loadCurrentUserFromStorage()
   store.fetchReceipts()
+  authStore.authenticated()
 })
 </script>

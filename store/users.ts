@@ -13,6 +13,13 @@ export const useAuthStore = defineStore('users', {
   }),
 
   actions: {
+    authenticated() {
+      const router = useRouter()
+      if(!this.currentUser) {
+        router.push('/auth/signin')
+      }
+    },
+
     async signupAdmin(email:string, password:string, accountType:string) {
       const nuxtApp = useNuxtApp()
       const response = await createUserWithEmailAndPassword(nuxtApp.$auth, email, password)

@@ -8,11 +8,14 @@
 
 <script setup>
 import { useStore } from "../store/receipts"
+import { useAuthStore } from "~/store/users";
 
 const store = useStore()
+const authStore = useAuthStore()
 const isSigningout = ref(false)
 
 onMounted(() => {
   store.fetchReceipts();
+  authStore.authenticated()
 })
 </script>

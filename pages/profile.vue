@@ -6,10 +6,16 @@
 </template>
 
 <script setup>
-import { useStore } from "../store/receipts"
+import { useAuthStore } from "../store/users"
 
 definePageMeta({
   layout:'dashboard'
+})
+
+const authStore = useAuthStore()
+
+onMounted(() => {
+  authStore.authenticated()
 })
 
 </script>
