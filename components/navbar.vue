@@ -171,6 +171,8 @@ const routes = ref([
 const logout = () => {
   setTimeout(function(){
     signOut(nuxtApp.$auth)
+    authStore.currentUser = null
+    localStorage.removeItem('currentUser')
     router.push('/auth/signin')
   }, 3000);
   emit('signing-out')

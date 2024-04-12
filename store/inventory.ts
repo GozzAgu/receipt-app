@@ -76,24 +76,6 @@ export const useInventoryStore = defineStore('inventories', {
           })
         },
 
-        // async fetchInventories() {
-        //     const nuxtApp = useNuxtApp()
-        //     const authStore = useAuthStore()
-        //     const querySnapshot = collection(nuxtApp.$firestore, "inventories")
-        //     onSnapshot(querySnapshot, async(ReceiptsSnapshot) => {
-        //       const manager = doc(nuxtApp.$firestore, "users", authStore.currentUser?.uid)
-        //       const docSnap = await getDoc(manager) 
-        //       this.inventories = []
-        //       ReceiptsSnapshot.forEach((doc) => {
-        //         if(doc.data().inventoryOf === authStore.currentUser?.uid || doc.data().inventoryOf === docSnap.data()?.adminId) { 
-        //           let inventoryData = doc.data() as Inventory
-        //           inventoryData.inventoryOf = doc.data().inventoryOf
-        //           this.inventories.push({...inventoryData} as Inventory)
-        //         }
-        //       })
-        //     })
-        // },
-
         editInventory(entry:Inventory){
             const idx = this.inventories.findIndex(e => e.imei === entry.imei)
             this.inventories[idx] = entry
