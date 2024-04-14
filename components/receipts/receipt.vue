@@ -69,11 +69,11 @@
             <div class="grid grid-cols-2 gap-[0.2em]">
               <div class="bg-gray-50 rounded-lg p-2">
                 <p class="font-semibold">Quantity</p>
-                <p>{{ rpt?.productQuantity }}</p>
+                <p class="font-mono">{{ rpt?.productQuantity }}</p>
               </div>
               <div class="bg-gray-50 rounded-lg p-2">
                 <p class="font-semibold">Unit price</p>
-                <p>{{ rpt?.productPrice }}</p>
+                <p class="font-mono">{{ rpt?.productPrice }}</p>
               </div>
               <div class="bg-gray-50 rounded-lg p-2">
                 <p class="font-semibold">Paid via</p>
@@ -81,7 +81,7 @@
               </div>
               <div class="bg-gray-50 rounded-lg p-2">
                 <p class="font-bold">Total Price</p>
-                <p>{{ rpt?.newPrice }}</p>
+                <p class="font-mono">{{ rpt?.newPrice }}</p>
               </div>
             </div>
           </div>

@@ -30,14 +30,14 @@
     <el-form-item class="mt-[2em]">
       <el-button class="flex m-auto w-full" type="primary" @click="submitForm(ruleFormRef)">
         <Icon v-if="loading" class="mr-2" name="svg-spinners:gooey-balls-1" />
-        Sign In
+        Send Link
       </el-button>
     </el-form-item>
     <div class="flex justify-between">
       <NuxtLink to="/auth/signup">
         <p class="hover:underline text-xs text-gray-500 mt-[3em]">Don't have an account?</p>
       </NuxtLink>
-      <NuxtLink to="/auth/forgot">
+      <NuxtLink to="/auth/signin">
         <p class="hover:underline text-xs text-gray-500 mt-[3em]">Already have an account?</p>
       </NuxtLink>
     </div>

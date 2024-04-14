@@ -2,7 +2,7 @@
   <div>
     <div class="loader"></div>
     <p class="p-[0.5em] my-[1em] text-center text-red-300 font-thin">
-      app in progress...
+      page in progress...
     </p>
   </div>
 </template>

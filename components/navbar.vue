@@ -7,7 +7,7 @@
       </NuxtLink>
 
       <div class="flex gap-x-[0.4rem] z-10">
-        <NuxtLink class="" to="">
+        <NuxtLink class="" to="/notifications">
           <Icon class="text-orange-300 mt-[0.3rem]" name="solar:bell-bing-bold-duotone" size="27" />
         </NuxtLink>
 

@@ -23,7 +23,7 @@
       Provide your Transaction details and company Info below to generate a virtual Receipt.
     </p>
 
-    <div v-loading="loading" class=" bg-white shadow-lg px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
+    <div v-loading="loading" class="bg-white shadow-lg px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <el-divider content-position="left"><span class="text-lg text-sky-600">Receipt Form</span></el-divider>
 
       <el-form
