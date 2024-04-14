@@ -3,7 +3,7 @@
     <div class="grid grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="fa6-solid:users" color="gray" size="25" />
-        <span class="text-sm md:text-base"> Staff ({{ authStore.managers.length }}) </span>
+        <span class="text-sm md:text-base"> Staff </span>
       </h1>
 
       <div class="flex">
@@ -43,7 +43,76 @@
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item>
-                    <NuxtLink>
+                    <NuxtLink @click="grantPermission(manager)">
+                      <Icon name="material-symbols:accessibility" color="" size="15" /> 
+                      <span class="text-xs ml-[1em]">Permission</span>
+                    </NuxtLink> 
+                  </el-dropdown-item>
+                  <el-dropdown-item>
+                    <NuxtLink to="">
+                      <Icon name="ic:baseline-block" color="" size="15" /> 
+                      <span class="text-xs ml-[1em]">Deactivate staff</span>
+                    </NuxtLink> 
+                  </el-dropdown-item>
+                  <el-dropdown-item>
+                    <NuxtLink to="">
+                      <Icon name="ic:twotone-delete" color="red" size="15" />
+                      <span class="text-xs ml-[1em]">Delete Staff account</span>
+                    </NuxtLink> 
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
+
+          <div class=
+            "my-[1em] 
+            border 
+            rounded-full 
+            text-white 
+            bg-sky-600 
+            text-xl 
+            font-bold 
+            w-12 
+            h-12 
+            flex 
+            items-center 
+            m-auto 
+            justify-center"
+          >
+            {{ manager.email.charAt(0).toUpperCase() }}
+          </div>
+          <p class="text-xs text-center">{{ manager.email }}</p>
+          <p class="text-xs text-center">{{ manager.accountType }}</p>
+        </div>
+      </div>
+
+      <div v-if="authStore.midAdmins.length > 0" v-for="manager in paginatedMidAdmins">
+        <div class=
+          "hover:scale-105 
+          transition-transform 
+          duration-300 
+          cursor-pointer 
+          font-mono 
+          bg-gradient-to-t 
+          from-sky-100 
+          to-slate-100 
+          shadow-lg 
+          spiral-gradient
+          rounded-xl 
+          p-[1em]"
+        >
+          <div class="flex justify-between">
+            <!-- <Icon name="jam:padlock-open-f" size="20" color="gray" /> -->
+            <Icon name="jam:padlock-f" size="15" color="gray" />
+            <el-dropdown trigger="click">
+              <span class="el-dropdown-link">
+                <Icon name="mdi:dots-horizontal" size="20" color="gray" />
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item>
+                    <NuxtLink @click="grantPermission(manager)">
                       <Icon name="material-symbols:accessibility" color="" size="15" /> 
                       <span class="text-xs ml-[1em]">Permission</span>
                     </NuxtLink> 
@@ -102,7 +171,7 @@
 <script setup>
 import { useAuthStore } from '~/store/users'
 import { Search } from '@element-plus/icons-vue'
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc, getDoc } from "firebase/firestore"; 
 
 const loading = ref(true)
 const search = ref('')
@@ -110,14 +179,29 @@ const authStore = useAuthStore()
 const currentPage = ref(1)
 const nuxtApp = useNuxtApp()
 
-// const grantPermission = async (manager) => {
-//   manager.accountType = 'admin'
-//   const userDocRef = doc(nuxtApp.$firestore, 'users', manager.id)
-//   await setDoc(userDocRef, { ...manager, accountType: manager.accountType  }, { merge: true })
-// }
+const grantPermission = async (manager) => {
+  try {
+    const userDocRef = doc(nuxtApp.$firestore, 'users', manager.id)
+    const userSnapshot = await getDoc(userDocRef)
+    const userData = userSnapshot.data()
+    const updatedData = {
+      ...userData,
+      accountType: 'midAdmin'
+    }
+    await setDoc(userDocRef, updatedData)
+  } catch (error) {
+    console.error('Error updating user permissions:', error)
+  }
+}
 
 const searchR = computed(() => {
   return authStore.managers.filter(m => {
+    return m.email.toLowerCase().includes(search.value.toLowerCase());
+  })
+})
+
+const searchMidAdmins = computed(() => {
+  return authStore.midAdmins.filter(m => {
     return m.email.toLowerCase().includes(search.value.toLowerCase());
   })
 })
@@ -128,9 +212,19 @@ const paginatedManagers = computed(() => {
   return searchR.value.slice(start, end)
 })
 
+const paginatedMidAdmins = computed(() => {
+  const start = (currentPage.value - 1) * 10
+  const end = start + 10
+  return searchMidAdmins.value.slice(start, end)
+})
+
 onMounted(() => {
   authStore.loadCurrentUserFromStorage()
-  authStore.fetchManagers()
+  if(authStore.currentUser.accountType === 'admin') {
+    authStore.fetchManagers()
+    // authStore.fetchMidAdmins()
+  }
+
   if(paginatedManagers) {
     loading.value = false
   }

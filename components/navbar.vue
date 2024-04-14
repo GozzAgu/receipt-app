@@ -43,6 +43,15 @@
                 <Icon class="text-sky-600" name="material-symbols:close" color="" size="25" />
               </div>
             </div>
+            <div class="flex items-center gap-x-[0.3rem] px-[1.5rem] mb-[2rem]">
+              <img class="w-[2rem] h-[2rem] rounded-md" :src="authStore.currentUser?.imageUrl" />
+              <span class="font-semibold text-sky-600" v-if="authStore.currentUser?.accountType === 'admin'">
+                {{ authStore.currentUser?.adminName }}
+              </span>
+              <span class="font-semibold text-sky-600" v-else>
+                {{ authStore.managerAdmin?.adminName }}
+              </span>
+            </div>
             <hr>
             <div class="px-[1.5rem] mt-[2rem]">
               <div v-for="route in routes" :key="route.name">

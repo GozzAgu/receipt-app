@@ -120,7 +120,7 @@ const manager = reactive<RuleForm>({
   email: '',
   password: '',
   confirmPassword: '',
-  accountType: AccountType.Manager,
+  accountType: AccountType.Manager || AccountType.MidAdmin,
 })
 
 const rules = reactive<FormRules<RuleForm>>({
@@ -144,7 +144,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         if(response) {
           try {
             const currentUser = await store.fetchCurrentUser(response.uid)
-            if(currentUser?.accountType === 'manager') {
+            if(currentUser?.accountType === 'manager' || currentUser?.accountType === 'midAdmin') {
               try{
                 await store.fetchManagerAdmin()
               }

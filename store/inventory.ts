@@ -1,3 +1,4 @@
+import { defineStore } from 'pinia'
 import type { Inventory } from "~/types/types"
 import { collection, addDoc, setDoc, doc, deleteDoc, where, query, onSnapshot, getDoc, getDocs } from "firebase/firestore"
 import { useAuthStore } from './users'
@@ -25,7 +26,7 @@ export const useInventoryStore = defineStore('inventories', {
               this.inventories.push(entry)
               return docRef.id
             } 
-            else if(authStore.currentUser?.accountType === 'manager') {
+            else if(authStore.currentUser?.accountType === 'manager' || authStore.currentUser?.accountType === 'midAdmin') {
               const manager = doc(nuxtApp.$firestore, "users", nuxtApp.$auth.currentUser?.uid)
               const docSnap = await getDoc(manager) 
               if(docSnap.exists()) {
@@ -60,7 +61,7 @@ export const useInventoryStore = defineStore('inventories', {
                   this.inventories.push(inventoryData as Inventory)
                 }
               })
-            } else if (authStore.currentUser?.accountType === 'manager') {
+            } else if (authStore.currentUser?.accountType === 'manager' || authStore.currentUser?.accountType === 'midAdmin') {
               const managerDocRef = doc(nuxtApp.$firestore, 'users', authStore.currentUser?.adminId)
               const managerDocSnapshot = await getDoc(managerDocRef)
               const adminId = managerDocSnapshot.data()?.id

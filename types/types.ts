@@ -1,5 +1,6 @@
 export enum AccountType {
   Admin = 'admin',
+  MidAdmin = 'midAdmin',
   Manager = 'manager'
 }
 
@@ -38,6 +39,14 @@ export interface ReceiptPasswordReset {
 }
 
 export interface Manager {
+  id: string,
+  adminId: string | undefined,
+  email: string,
+  password: string,
+  accountType: AccountType.Manager
+}
+
+export interface MidAdmin {
   id: string,
   adminId: string | undefined,
   email: string,

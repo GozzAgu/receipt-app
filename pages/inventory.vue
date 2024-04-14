@@ -40,7 +40,7 @@
                 Add Entry
               </NuxtLink> 
               
-              <NuxtLink 
+              <!-- <NuxtLink 
                 class="
                   bg-sky-600 hover:bg-sky-500 transition duration-500 
                   hover:shadow-lg rounded-lg flex justify-center 
@@ -48,7 +48,7 @@
               > 
                 <Icon name="heroicons:plus-solid" :size="20" class="mr-2" />
                 Import Excel
-              </NuxtLink> 
+              </NuxtLink>  -->
             </div>
         </div>
         <div class="flex justify-between items-center font-light py-2 text-gray-500 text-xs sm:text-sm lg:px-3">

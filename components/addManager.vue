@@ -50,7 +50,7 @@ let manager = reactive<Manager>({
   adminId: '',
   email: '',
   password: '',
-  accountType: AccountType.Manager,
+  accountType: AccountType.Manager || AccountType.MidAdmin,
 })
 
 const passwordRules = reactive<FormRules<Manager>>({
@@ -71,10 +71,7 @@ const success = () => {
 
 const setUserAccountType = async (adminId: string, manager: Manager) => {
   const userDocRef = doc(nuxtApp.$firestore, 'users', adminId)
-  await setDoc(userDocRef, 
-    { ...manager },
-    { merge: true }
-  )
+  await setDoc(userDocRef, manager, { merge: true })
 }
 
 const addM = async (formEl: FormInstance | undefined) => {
@@ -87,7 +84,7 @@ const addM = async (formEl: FormInstance | undefined) => {
         const response = await createUserWithEmailAndPassword(nuxtApp.$auth, manager.email, manager.password)
         await setUserAccountType(response.user.uid, manager)
         if(response)  {
-          await signOut(nuxtApp.$auth);
+          await signOut(nuxtApp.$auth)
           await signInWithEmailAndPassword(nuxtApp.$auth, store.currentUser!.email!, store.currentUser!.password)
         }
       } catch (e) {

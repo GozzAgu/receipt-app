@@ -3,12 +3,9 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-[3rem] gap-y-[1rem]">
       <div class="flex justify-center items-center px-[2rem] py-[1rem] rounded-2xl shadow-md bg-sky-600">
         <p class="text-base md:text-xl font-bold text-sky-100">
-          Welcome to 
-          <span v-if="authStore.currentUser?.accountType === 'admin'">
-            {{ authStore.currentUser?.adminName }}
-          </span>
-          <span v-else>
-            {{ authStore.managerAdmin?.adminName }}
+          Welcome
+          <span>
+            {{ authStore.currentUser?.email }}
           </span>
         </p>
       </div>
@@ -47,7 +44,7 @@ const outputValue2 = useTransition(inventories, {
 
 onMounted(async () => {
   // await authStore.fetchCurrentUser()
-  if (authStore.currentUser?.accountType === 'manager') {
+  if (authStore.currentUser?.accountType === 'manager' || authStore.currentUser?.accountType === 'midAdmin') {
     authStore.fetchManagerAdmin()
   }
 })

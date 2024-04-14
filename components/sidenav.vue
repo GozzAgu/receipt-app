@@ -1,14 +1,26 @@
 <template>
   <div class="border-r h-[100vh] pt-[7rem] px-[1rem]">
-    <div v-for="route in routes" :key="route.name">
-      <div :class="{ 'active-tab': $route.path === route.link }" 
-        v-if="isAdmin || route.name !== 'Staff' && route.name !== 'Inventory'" 
-        class="my-[0.5rem] p-[0.7rem] rounded-xl cursor-pointer hover:bg-sky-50 transition duration-300"
-      >
-        <NuxtLink class="flex gap-x-[0.5rem]" :to="route.link">
-          <Icon class="mt-[0.3rem] " :name="route.icon" />
-          <p class="">{{ route.name }}</p>
-        </NuxtLink>
+    <div class="flex items-center gap-x-[0.3rem] p-[0.5rem] mb-[2rem]">
+      <img class="w-[2rem] h-[2rem] rounded-md" :src="authStore.currentUser?.imageUrl" />
+      <span class="font-semibold text-sky-600" v-if="authStore.currentUser?.accountType === 'admin'">
+        {{ authStore.currentUser?.adminName }}
+      </span>
+      <span class="font-semibold text-sky-600" v-else>
+        {{ authStore.managerAdmin?.adminName }}
+      </span>
+    </div>
+    <hr>
+    <div class="mt-[1rem]">
+      <div v-for="route in routes" :key="route.name">
+        <div :class="{ 'active-tab': $route.path === route.link }" 
+          v-if="(isAdmin || isMidAdmin) || route.name !== 'Staff' && route.name !== 'Inventory'" 
+          class="my-[0.5rem] p-[0.7rem] rounded-r-xl cursor-pointer hover:bg-sky-50 transition duration-300"
+        >
+          <NuxtLink class="flex gap-x-[0.5rem]" :to="route.link">
+            <Icon class="mt-[0.3rem] " :name="route.icon" />
+            <p class="">{{ route.name }}</p>
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>
@@ -56,10 +68,21 @@ const isAdmin = computed(() => {
   return authStore.currentUser?.accountType === 'admin'
 })
 
+const isMidAdmin = computed(() => {
+  return authStore.currentUser?.accountType === 'midAdmin'
+})
+
+onMounted(async () => {
+  // await authStore.fetchCurrentUser()
+  if (authStore.currentUser?.accountType === 'manager' || authStore.currentUser?.accountType === 'midAdmin') {
+    authStore.fetchManagerAdmin()
+  }
+})
+
 </script>
 
 <style scoped>
 .active-tab {
-  @apply bg-sky-600 text-white
+  @apply bg-sky-600 text-white shadow-lg
 }
 </style>

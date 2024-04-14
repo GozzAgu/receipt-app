@@ -26,7 +26,7 @@ export const useStore = defineStore('receipts', {
         this.receipts.push(newCompanyDetails)
         return docRef.id
       } 
-      else if(authStore.currentUser?.accountType === 'manager') {
+      else if(authStore.currentUser?.accountType === 'manager' || authStore.currentUser?.accountType === 'midAdmin') {
         const manager = doc(nuxtApp.$firestore, "users", nuxtApp.$auth.currentUser?.uid)
         const docSnap = await getDoc(manager) 
         if(docSnap.exists()) {
@@ -61,7 +61,7 @@ export const useStore = defineStore('receipts', {
               this.receipts.push(receiptData as Receipt)
             }
           })
-        } else if (authStore.currentUser?.accountType === 'manager') {
+        } else if (authStore.currentUser?.accountType === 'manager' || authStore.currentUser?.accountType === 'midAdmin') {
           const managerDocRef = doc(nuxtApp.$firestore, 'users', authStore.currentUser?.adminId)
           const managerDocSnapshot = await getDoc(managerDocRef)
           const adminId = managerDocSnapshot.data()?.id
@@ -71,7 +71,6 @@ export const useStore = defineStore('receipts', {
             const receiptData = doc.data() as Receipt
             if (receiptData.receiptOf === authStore.currentUser?.uid || receiptData.receiptOf === adminId) {
               this.receipts.push({ ...receiptData, id: doc.id } as Receipt)
-              console.log(this.receipts)
             }
           })
         }
