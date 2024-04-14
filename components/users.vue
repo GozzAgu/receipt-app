@@ -42,16 +42,16 @@
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item>
+                  <el-dropdown-item v-if="manager.accountType === 'manager'">
                     <NuxtLink @click="grantPermission(manager)">
                       <Icon name="material-symbols:accessibility" color="" size="15" /> 
                       <span class="text-xs ml-[1em]">Permission</span>
                     </NuxtLink> 
                   </el-dropdown-item>
-                  <el-dropdown-item>
-                    <NuxtLink to="">
-                      <Icon name="ic:baseline-block" color="" size="15" /> 
-                      <span class="text-xs ml-[1em]">Deactivate staff</span>
+                  <el-dropdown-item v-if="manager.accountType === 'midAdmin'">
+                    <NuxtLink @click="revertPermission(manager)">
+                      <Icon name="material-symbols:accessibility" color="" size="15" /> 
+                      <span class="text-xs ml-[1em]">Revert permission</span>
                     </NuxtLink> 
                   </el-dropdown-item>
                   <el-dropdown-item>
@@ -87,7 +87,7 @@
         </div>
       </div>
 
-      <div v-if="authStore.midAdmins.length > 0" v-for="manager in paginatedMidAdmins">
+      <!-- <div v-if="authStore.midAdmins.length > 0" v-for="manager in paginatedMidAdmins">
         <div class=
           "hover:scale-105 
           transition-transform 
@@ -103,7 +103,6 @@
           p-[1em]"
         >
           <div class="flex justify-between">
-            <!-- <Icon name="jam:padlock-open-f" size="20" color="gray" /> -->
             <Icon name="jam:padlock-f" size="15" color="gray" />
             <el-dropdown trigger="click">
               <span class="el-dropdown-link">
@@ -111,10 +110,16 @@
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item>
+                  <el-dropdown-item v-if="manager.accountType === 'manager'">
                     <NuxtLink @click="grantPermission(manager)">
                       <Icon name="material-symbols:accessibility" color="" size="15" /> 
                       <span class="text-xs ml-[1em]">Permission</span>
+                    </NuxtLink> 
+                  </el-dropdown-item>
+                  <el-dropdown-item v-if="manager.accountType === 'midAdmin'">
+                    <NuxtLink @click="revertPermission(manager)">
+                      <Icon name="material-symbols:accessibility" color="" size="15" /> 
+                      <span class="text-xs ml-[1em]">Revert permission</span>
                     </NuxtLink> 
                   </el-dropdown-item>
                   <el-dropdown-item>
@@ -154,7 +159,7 @@
           <p class="text-xs text-center">{{ manager.email }}</p>
           <p class="text-xs text-center">{{ manager.accountType }}</p>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="fixed bottom-3 mt-[1em] right-[1em] md:right-[5em] lg:right-[15em] bg-white">
@@ -187,6 +192,21 @@ const grantPermission = async (manager) => {
     const updatedData = {
       ...userData,
       accountType: 'midAdmin'
+    }
+    await setDoc(userDocRef, updatedData)
+  } catch (error) {
+    console.error('Error updating user permissions:', error)
+  }
+}
+
+const revertPermission = async (manager) => {
+  try {
+    const userDocRef = doc(nuxtApp.$firestore, 'users', manager.id)
+    const userSnapshot = await getDoc(userDocRef)
+    const userData = userSnapshot.data()
+    const updatedData = {
+      ...userData,
+      accountType: 'manager'
     }
     await setDoc(userDocRef, updatedData)
   } catch (error) {
