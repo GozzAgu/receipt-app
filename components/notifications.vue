@@ -21,7 +21,7 @@
          <Icon class="text-white" name="solar:arrow-left-line-duotone" size="20" />
       </NuxtLink> 
 
-      <div v-for="receipt in store.receipts" class="py-[2.5em] rounded-lg grid grid-cols-1 gap-y-[1em]">
+      <div v-for="receipt in store.receipts" class="py-[0.3em] rounded-lg grid grid-cols-1">
          <div class=
             "hover:scale-105 
             transition-transform 

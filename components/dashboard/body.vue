@@ -11,8 +11,9 @@
           <div class="flex justify-center">
             <el-progress type="dashboard" :percentage="inventorySoldPercentage" :status="getStatusColor">
               <template #default="{ percentage }">
-                <span class="percentage-value text-sky-500">{{ percentage }}%</span>
-                <span class="percentage-label text-sky-500">Inventory sold</span>
+                <span v-if="inventorySoldPercentage || inventorySoldPercentage === 0" class="percentage-value text-sky-500">{{ percentage }}%</span>
+                <span v-else class="percentage-label text-sky-500">Loading...</span>
+                <span class="percentage-label text-sky-500">Inventories sold</span>
               </template>
             </el-progress>
           </div>
