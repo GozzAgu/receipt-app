@@ -120,7 +120,7 @@ const filteredPatrons = computed(() => {
 })
 
 const inventorySoldPercentage = computed(() => {
-  return (store.receipts.length / invStore.inventories.length) * 100;
+  return Math.ceil((store.receipts.length / invStore.inventories.length) * 100)
 })
 
 const getStatusColor = (percentage: number) => {
