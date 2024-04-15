@@ -172,7 +172,7 @@ onMounted(() =>{
 ::v-deep(.el-table__header th) {
   color: #4b5563;
   font-weight: semibold;
-  font-size: 1em
+  font-size: 0.85em
 }
 
 ::v-deep(.el-table__header-wrapper) {
