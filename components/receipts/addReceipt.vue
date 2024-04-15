@@ -195,13 +195,13 @@ const rules = reactive<FormRules<Receipt>>({
     { required: true, message: 'Please select a payment method', trigger: 'blur' },
   ],
   swap: [
-    { required: true, message: 'Please input Product price', trigger: 'blur' },
+    { required: true, message: 'Please select', trigger: 'blur' },
   ],
   swapFrom: [
-    { required: true, message: 'Please input Product price', trigger: 'blur' },
+    { required: true, message: 'Please input Product', trigger: 'blur' },
   ],
   grade: [
-    { required: true, message: 'Please input Product price', trigger: 'blur' },
+    { required: true, message: 'Please select', trigger: 'blur' },
   ],
 })
 

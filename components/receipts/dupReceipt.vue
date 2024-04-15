@@ -48,8 +48,8 @@
           <el-form-item label="Product name" prop="productName">
             <el-input v-model="duplicate!.productName" placeholder="" />
           </el-form-item>
-          <el-form-item label="Imei" prop="imei">
-            <el-input v-model="duplicate!.imei" placeholder="" />
+          <el-form-item label="Imei" prop="newimei">
+            <el-input v-model="newImei" placeholder="" />
           </el-form-item>
           <el-form-item label="Product description" prop="productDescription">
             <el-input v-model="duplicate!.productDescription" placeholder="" type="textarea"/>
@@ -107,6 +107,7 @@ const route = useRoute()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
+const newImei = ref('')
 
 const rules = reactive<FormRules<Receipt>>({
   customerName: [
@@ -133,14 +134,17 @@ const rules = reactive<FormRules<Receipt>>({
   productPrice: [
     { required: true, message: 'Please input Product price', trigger: 'blur' },
   ],
+  paidVia: [
+    { required: true, message: 'Please select a payment method', trigger: 'blur' },
+  ],
   swap: [
-    { required: true, message: 'Please input Product price', trigger: 'blur' },
+    { required: true, message: 'Please select', trigger: 'blur' },
   ],
   swapFrom: [
-    { required: true, message: 'Please input Product price', trigger: 'blur' },
+    { required: true, message: 'Please input Product', trigger: 'blur' },
   ],
   grade: [
-    { required: true, message: 'Please input Product price', trigger: 'blur' },
+    { required: true, message: 'Please select', trigger: 'blur' },
   ],
 })
 
@@ -211,8 +215,8 @@ const addR = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true;
       try {
-        if (duplicate.value?.imei) {
-          const inventoryItem = invStore.searchInventoryByIMEI(duplicate.value?.imei);
+        if (newImei.value) {
+          const inventoryItem = invStore.searchInventoryByIMEI(newImei.value);
           if (!inventoryItem) {
             ElMessage({
               message: 'Inventory item with provided IMEI does not exist',
@@ -222,7 +226,7 @@ const addR = async (formEl: FormInstance | undefined) => {
             return;
           }
 
-          const isImeiInReceipts = store.receipts.some(receipt => receipt.imei === duplicate.value?.imei);
+          const isImeiInReceipts = store.receipts.some(receipt => receipt.imei === newImei.value)
           if (isImeiInReceipts) {
             ElMessage({
               message: 'This product has been sold',
@@ -232,7 +236,7 @@ const addR = async (formEl: FormInstance | undefined) => {
             return;
           }
 
-          let newCompanyDetails = { ...duplicate.value, date: currentDate.value } as Receipt;
+          let newCompanyDetails = { ...duplicate.value, date: currentDate.value, imei: newImei.value } as Receipt;
           if (newCompanyDetails.productQuantity > 1) {
             let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice;
             newCompanyDetails.newPrice = newPrice;

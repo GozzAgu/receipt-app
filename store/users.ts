@@ -84,7 +84,7 @@ export const useAuthStore = defineStore('users', {
           let userData = doc.data() as Manager;
           userData.id = doc.id;
           console.log(userData)
-          if (userData.accountType === "manager" && userData.adminId === this.currentUser?.id 
+          if (userData.accountType === 'manager' && userData.adminId === this.currentUser?.id 
           || userData.accountType === 'midAdmin' && userData.adminId === this.currentUser?.id) 
           {
             this.managers.unshift(userData as Manager)

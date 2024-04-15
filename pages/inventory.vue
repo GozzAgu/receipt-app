@@ -91,7 +91,7 @@
             <el-table
                 ref="tableRef"
                 :data="filterTableData"
-                style="width: 100%"
+                style="width: 100%; max-height: 100%;"
                 @selection-change="handleSelectionChange"
                 highlight-current-row
                 :border="parentBorder"
@@ -99,9 +99,12 @@
                 <el-table-column fixed type="selection" width="40" />
                 <el-table-column fixed width="60" align="center">
                     <template #default="scope">
-                        <button class=" cursor-pointer px-2 py-1 rounded hover:bg-sky-600/10" @click="handleEdit(scope.$index, scope.row)">
-                            <Icon class="text-sky-600" name="heroicons:pencil"  size="1.2em" />
-                        </button>     
+                      <Icon @click="handleEdit(scope.$index, scope.row)" class="text-sky-600 cursor-pointer" name="heroicons:pencil"  size="20" />
+                    </template>
+                </el-table-column>
+                <el-table-column fixed width="60" align="center">
+                    <template #default="scope">
+                      <Icon @click="handleDuplicate(scope.$index, scope.row)" class="text-sky-600 cursor-pointer" name="solar:copy-bold"  size="20" />
                     </template>
                 </el-table-column>
                 <el-table-column v-if="columns.includes('dateIn')" label="Date In" property="dateIn" width="120" sortable/>
@@ -155,6 +158,7 @@
     <el-drawer v-model="showDrawer" title="I am the title" :with-header="false" :size="largerThanXl? '40%' :largerThanlg? '50%':largerThanSm? '70%': '100%'" @closed="closeDrawer">
       <InventoryAddDrawer v-if="showAddDrawer" @close-drawer="closeDrawer"/>
       <InventoryEditDrawer v-if="showEditDrawer" @close-drawer="closeDrawer" :entry="selectedEntry"/>
+      <InventoryDuplicateDrawer v-if="showDuplicateDrawer" @close-drawer="closeDrawer" :entry="selectedEntry"/>
     </el-drawer>
 </template>
   
@@ -187,25 +191,36 @@ const tableRef = ref();
 const columns = ref(['dateIn', 'supplier', 'grade', 'storage', 'imei', 'colour', 'amount', 'cost', 'margin', 'swap', 'date Out']);
 
 //drawer function
-const showDrawer = ref(false);
+const showDrawer = ref(false)
 const showAddDrawer = ref(false)
 const showEditDrawer = ref(false)
+const showDuplicateDrawer = ref(false)
 
 function openAddDrawer(){
     showDrawer.value = true;
     showAddDrawer.value = true;
     showEditDrawer.value = false;
+    showDuplicateDrawer.value = false;
 }
 
 function openEditDrawer(){
     showDrawer.value = true;
     showAddDrawer.value = false;
     showEditDrawer.value = true;
+    showDuplicateDrawer.value = false;
+}
+
+function openDuplicateDrawer(){
+    showDrawer.value = true;
+    showAddDrawer.value = false;
+    showEditDrawer.value = false;
+    showDuplicateDrawer.value = true;
 }
 
 function closeDrawer(){
     showDrawer.value = false;
     showAddDrawer.value = false;
+    showDuplicateDrawer.value = false;
 }
 
 //edit functions
@@ -213,6 +228,11 @@ const selectedEntry = ref();
 const handleEdit = (index, row) => {
   selectedEntry.value = row
   openEditDrawer()
+}
+
+const handleDuplicate = (index, row) => {
+  selectedEntry.value = row
+  openDuplicateDrawer()
 }
 
 //select functions

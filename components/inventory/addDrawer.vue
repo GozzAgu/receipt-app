@@ -287,17 +287,17 @@ const year = ref(today.getFullYear());
 const formattedDate = computed<string>(()=> `${month.value}/${day.value}/${year.value}`) ;
 
 const newInventoryData = ref({
-    dateIn: formattedDate.value,
-    supplier: '',
-    grade: '',
-    storage: '',
-    imei: '',
-    colour:'',
-    amount: null,
-    cost: null,
-    margin: null,
-    swap: '',
-    dateOut:''
+  dateIn: formattedDate.value,
+  supplier: '',
+  grade: '',
+  storage: '',
+  imei: '',
+  colour:'',
+  amount: null,
+  cost: null,
+  margin: null,
+  swap: '',
+  dateOut:''
 })
 
 const grade = ['New', 'Used']
