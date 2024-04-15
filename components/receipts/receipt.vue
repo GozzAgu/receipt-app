@@ -29,8 +29,8 @@
       <div ref="pdfSection" v-loading="loading" class="shadow-lg rounded-lg bg-white">
         <div class="flex justify-between items-center px-4 py-2 bg-sky-100 rounded-t-lg">
           <div class="flex items-center">
-            <img v-if="authStore.currentUser?.imageUrl" :src="authStore.currentUser.imageUrl" class="w-4 h-4 mr-1" />
-            <p class="font-bold text-xs text-sky-600">{{ authStore.currentUser?.adminName }}</p>
+            <img v-if="authStore.currentUser?.imageUrl || authStore.managerAdmin?.imageUrl" :src="authStore.currentUser?.imageUrl || authStore.managerAdmin?.imageUrl" class="w-4 h-4 mr-1" />
+            <p class="font-bold text-xs text-sky-600">{{ authStore.currentUser?.adminName || authStore.managerAdmin?.adminName }}</p>
           </div>
           <p class="text-xs text-sky-600">{{ rpt?.date }}</p>
         </div>

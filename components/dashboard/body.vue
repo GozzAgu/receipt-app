@@ -1,17 +1,57 @@
 <template>
-  <div class="px-[1em] pb-[3rem] sm:px-[5em] lg:px-[5em] mt-[3rem] relative">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-[3rem]">
-      <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[25rem]">
+  <div class="px-[1em] pb-[3rem] sm:px-[5em] lg:px-[5em] mt-[2rem] relative">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-[2rem] gap-x-[3rem]">
+
+      <div class="lg:grid grid-cols-2">
+        <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[13rem]">
+          <div class="flex gap-x-[0.5rem] mb-[1rem]">
+            <Icon class="text-2xl text-sky-500" name="solar:list-heart-minimalistic-bold-duotone" />
+            <p class="font-semibold text-sky-400">Statistic</p>
+          </div>
+          <div class="flex justify-center">
+            <el-progress type="dashboard" :percentage="inventorySoldPercentage" :status="getStatusColor">
+              <template #default="{ percentage }">
+                <span class="percentage-value text-sky-500">{{ percentage }}%</span>
+                <span class="percentage-label text-sky-500">Inventory sold</span>
+              </template>
+            </el-progress>
+          </div>
+        </div>
+      </div>
+
+      <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[13rem]">
+        <div class="flex gap-x-[0.5rem] mb-[1rem]">
+          <Icon class="text-2xl text-orange-500" name="solar:smartphone-update-bold-duotone" />
+          <p class="font-semibold text-orange-400">Receipts generated today</p>
+        </div>
+        <el-table 
+          :default-sort="{ prop: 'date', order: 'descending' }" 
+          v-if="store.receipts.length > 0" 
+          :data="todayReceipts" 
+          style="width: 100%; max-height: 100%;"
+        > 
+          <el-table-column prop="customerName" label="CUSTOMER" width="100" show-overflow-tooltip />
+          <el-table-column prop="productName" label="PRODUCT" width="100" show-overflow-tooltip />
+          <el-table-column prop="productDescription" label="DESCRIPTION" width="100" show-overflow-tooltip />
+          <el-table-column prop="newPrice" label="PRICE" width="100" show-overflow-tooltip>
+            <template #default="scope">
+              ₦{{ scope.row.newPrice }} 
+            </template>
+          </el-table-column>
+          <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
+        </el-table>
+      </div>
+
+      <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[13rem]">
         <div class="flex gap-x-[0.5rem] mb-[1rem]">
           <Icon class="text-2xl text-sky-600" name="ic:sharp-swap-horiz" />
-          <p class="font-semibold text-sky-600">Recent swaps</p>
+          <p class="font-semibold text-sky-600">Most recent swaps</p>
         </div>
         
         <el-table 
           :default-sort="{ prop: 'date', order: 'descending' }" 
           v-if="store.receipts.length > 0" 
           :data="filteredReceipts" 
-          height="90%"
           style="width: 100%; max-height: 100%;"
         > 
           <el-table-column prop="customerName" label="CUSTOMER" width="100" show-overflow-tooltip />
@@ -26,7 +66,7 @@
         </el-table>
       </div>
 
-      <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[25rem]">
+      <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[13rem]">
         <div class="flex gap-x-[0.5rem] mb-[1rem]">
           <Icon class="text-2xl text-green-500" name="ic:twotone-loyalty" />
           <p class="font-semibold text-green-500">Patrons <span class="text-xs">(Over ₦500,000)</span></p>
@@ -35,7 +75,6 @@
           :default-sort="{ prop: 'date', order: 'descending' }" 
           v-if="store.receipts.length > 0" 
           :data="filteredPatrons" 
-          height="90%"
           style="width: 100%; max-height: 100%;"
         > 
           <el-table-column prop="customerName" label="CUSTOMER" width="100" show-overflow-tooltip />
@@ -55,8 +94,19 @@
 
 <script setup lang="ts">
 import { useStore } from "@/store/receipts"
+import { useInventoryStore } from "@/store/inventory"
 
 const store = useStore()
+const invStore = useInventoryStore()
+const today = ref(new Date())
+
+const todayReceipts = computed(() => {
+  const todayDate = today.value.toISOString().split('T')[0]
+  return store.receipts.filter(receipt => {
+    const receiptDate = new Date(receipt.date).toISOString().split('T')[0]
+    return receiptDate === todayDate
+  }).slice(0, 6)
+})
 
 const filteredReceipts = computed(() => {
   return store.receipts.filter(receipt => receipt.swap === "Yes").slice(0, 6)
@@ -69,12 +119,44 @@ const filteredPatrons = computed(() => {
   return sorted
 })
 
+const inventorySoldPercentage = computed(() => {
+  return (store.receipts.length / invStore.inventories.length) * 100;
+})
+
+const getStatusColor = (percentage: number) => {
+  if (percentage >= 100) {
+    return 'success';
+  } else if (percentage >= 50) {
+    return 'warning';
+  } else {
+    return 'exception';
+  }
+}
+
 onMounted(() =>{
   store.fetchReceipts()
 })
 </script>
 
 <style scoped>
+.percentage-value {
+  display: block;
+  margin-top: 10px;
+  font-size: 28px;
+}
+.percentage-label {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+}
+.demo-progress .el-progress--line {
+  margin-bottom: 15px;
+  max-width: 600px;
+}
+.demo-progress .el-progress--circle {
+  margin-right: 15px;
+}
+
 ::v-deep(.cell) {
   @apply text-[0.8em]
 }
