@@ -12,7 +12,7 @@
     <div>
       <div class="body">
         <el-form
-          ref="editEntryRef"
+          ref="duplicateEntryRef"
           label-width="auto"
           label-position="top"
           :model="duplicateInventoryData"
@@ -274,7 +274,7 @@ const { entry } = defineProps<{
   entry:Inventory
 }>()
 
-const inventoryStore = useInventoryStore();
+const inventoryStore = useInventoryStore()
 const { addToInventory } = inventoryStore
 
 const duplicateEntryRef = ref()
@@ -301,12 +301,9 @@ function duplicateEntry(formInput: FormInstance | undefined) {
   if (!formInput)
     return
 
-    console.log(newImei.value)
-
   formInput.validate((valid: boolean) => {
     if (valid) {
       loading.value = true
-      console.log(newImei.value)
       addToInventory({...duplicateInventoryData.value, imei: newImei.value} as Inventory)
       loading.value = false
   }})
