@@ -1,6 +1,6 @@
 <template>
     <SignoutLoader v-if="isSigningout" />
-    <div class="mt-[4rem] px-[1em] md:px-[5em] lg:px-[5em] mx-auto">
+    <div class="py-[4.5em] mb-[4rem] px-[1em] md:px-[5em] lg:px-[5em] mx-auto">
         <div class="flex flex-col md:flex-row justify-between mb-8 gap-8">
             <div class="flex flex-col sm:flex-row gap-4">
                 <el-input
@@ -39,16 +39,6 @@
                 <Icon name="heroicons:plus-solid" :size="20" class="mr-2" />
                 Add Entry
               </NuxtLink> 
-              
-              <!-- <NuxtLink 
-                class="
-                  bg-sky-600 hover:bg-sky-500 transition duration-500 
-                  hover:shadow-lg rounded-lg flex justify-center 
-                  items-center w-[10rem] text-white cursor-pointer py-[0.3em]"
-              > 
-                <Icon name="heroicons:plus-solid" :size="20" class="mr-2" />
-                Import Excel
-              </NuxtLink>  -->
             </div>
         </div>
         <div class="flex justify-between items-center font-light py-2 text-gray-500 text-xs sm:text-sm lg:px-3">
