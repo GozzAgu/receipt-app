@@ -42,8 +42,9 @@ const outputValue2 = useTransition(inventories, {
   duration: 1500,
 })
 
-onMounted(async () => {
-  // await authStore.fetchCurrentUser()
+onMounted(() => {
+  invStore.fetchInventories()
+  store.fetchReceipts()
   if (authStore.currentUser?.accountType === 'manager' || authStore.currentUser?.accountType === 'midAdmin') {
     authStore.fetchManagerAdmin()
   }
