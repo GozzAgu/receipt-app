@@ -78,6 +78,7 @@ export interface Inventory{
   id: string,
   dateIn: string,
   supplier: string,
+  product: string,
   grade: 'New' | 'Used',
   storage: string,
   imei: string,

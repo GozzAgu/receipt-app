@@ -86,83 +86,9 @@
           <p class="text-xs text-center">{{ manager.accountType }}</p>
         </div>
       </div>
-
-      <!-- <div v-if="authStore.midAdmins.length > 0" v-for="manager in paginatedMidAdmins">
-        <div class=
-          "hover:scale-105 
-          transition-transform 
-          duration-300 
-          cursor-pointer 
-          font-mono 
-          bg-gradient-to-t 
-          from-sky-100 
-          to-slate-100 
-          shadow-lg 
-          spiral-gradient
-          rounded-xl 
-          p-[1em]"
-        >
-          <div class="flex justify-between">
-            <Icon name="jam:padlock-f" size="15" color="gray" />
-            <el-dropdown trigger="click">
-              <span class="el-dropdown-link">
-                <Icon name="mdi:dots-horizontal" size="20" color="gray" />
-              </span>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item v-if="manager.accountType === 'manager'">
-                    <NuxtLink @click="grantPermission(manager)">
-                      <Icon name="material-symbols:accessibility" color="" size="15" /> 
-                      <span class="text-xs ml-[1em]">Permission</span>
-                    </NuxtLink> 
-                  </el-dropdown-item>
-                  <el-dropdown-item v-if="manager.accountType === 'midAdmin'">
-                    <NuxtLink @click="revertPermission(manager)">
-                      <Icon name="material-symbols:accessibility" color="" size="15" /> 
-                      <span class="text-xs ml-[1em]">Revert permission</span>
-                    </NuxtLink> 
-                  </el-dropdown-item>
-                  <el-dropdown-item>
-                    <NuxtLink to="">
-                      <Icon name="ic:baseline-block" color="" size="15" /> 
-                      <span class="text-xs ml-[1em]">Deactivate staff</span>
-                    </NuxtLink> 
-                  </el-dropdown-item>
-                  <el-dropdown-item>
-                    <NuxtLink to="">
-                      <Icon name="ic:twotone-delete" color="red" size="15" />
-                      <span class="text-xs ml-[1em]">Delete Staff account</span>
-                    </NuxtLink> 
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-          </div>
-
-          <div class=
-            "my-[1em] 
-            border 
-            rounded-full 
-            text-white 
-            bg-sky-600 
-            text-xl 
-            font-bold 
-            w-12 
-            h-12 
-            flex 
-            items-center 
-            m-auto 
-            justify-center"
-          >
-            {{ manager.email.charAt(0).toUpperCase() }}
-          </div>
-          <p class="text-xs text-center">{{ manager.email }}</p>
-          <p class="text-xs text-center">{{ manager.accountType }}</p>
-        </div>
-      </div> -->
     </div>
 
-    <div class="fixed bottom-3 mt-[1em] right-[1em] md:right-[5em] lg:right-[15em] bg-white">
+    <div class="fixed bottom-3 mt-[1em] right-[1em] sm:right-[5em] lg:right-[5em] bg-gray-50 z-10 px-[1rem] rounded-xl">
       <vue-awesome-paginate
         v-model="currentPage"
         :total-items="authStore.managers.length"

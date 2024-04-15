@@ -21,23 +21,39 @@
           :hide-required-asterisk="true"
         >
           <div>
-          <div class="px-2">
+          <div class="flex gap-x-8 w-full px-2">
               <el-form-item
-              prop="supplier"
-              class="w-full"
-              :rules="addInventoryRules.supplier"
-              >
-                  <template #label>
-                  <p class=" -mb-1.5 font-light">
-                      Supplier Name
-                  </p>
-                  </template>
-                  <el-input
-                  v-model="duplicateInventoryData.supplier"
-                  type="text"
-                  placeholder="Supplier"
+                prop="supplier"
+                class="w-full"
+                :rules="addInventoryRules.supplier"
+                >
+                    <template #label>
+                    <p class=" -mb-1.5 font-light">
+                        Supplier Name
+                    </p>
+                    </template>
+                    <el-input
+                    v-model="duplicateInventoryData.supplier"
+                    type="text"
+                    placeholder="Supplier"
                   />
               </el-form-item>
+              <el-form-item
+                    prop="product"
+                    class="w-full"
+                    :rules="addInventoryRules.product"
+                    >
+                        <template #label>
+                        <p class=" -mb-1.5 font-light">
+                            Product Name
+                        </p>
+                        </template>
+                        <el-input
+                        v-model="duplicateInventoryData.product"
+                        type="text"
+                        placeholder="Product"
+                      />
+                  </el-form-item>
           </div>
             <div class="flex gap-x-8 w-full px-2">
               <el-form-item
@@ -283,6 +299,7 @@ const loading = ref(false)
 const duplicateInventoryData = ref({
   dateIn: entry.dateIn,
   supplier: entry.supplier,
+  product: entry.product,
   grade: entry.grade,
   storage: entry.storage,
   imei: entry.imei,

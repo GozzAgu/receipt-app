@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[5.5em] px-[1em] sm:px-[5em] lg:px-[5em] relative">
+  <div class="py-[4.5em] px-[1em] sm:px-[5em] lg:px-[5em] relative">
     <div class="grid grid-cols-1 md:grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
@@ -54,10 +54,9 @@
       </div>
     </div>
 
-    <div v-loading="loading" class="mt-[3em] z-0 bg-white">
+    <div v-loading="loading" class="mt-[2em] z-0 bg-white min-h-[30rem] rounded-2xl p-[0.5rem]">
       <el-table 
         :default-sort="{ prop: 'date', order: 'descending' }" 
-        :border="parentBorder"
         :data="paginatedReceipts" 
         style="width: 100%; max-height: 100%;"
       > 
@@ -144,7 +143,7 @@
         </el-table-column>
       </el-table>
 
-      <div class="fixed bottom-3 mt-[1em] right-[1em] sm:right-[5em] lg:right-[5em] bg-white">
+      <div class="fixed bottom-3 mt-[1em] right-[1em] sm:right-[5em] lg:right-[5em] bg-gray-50 z-10 px-[1rem] rounded-xl">
         <vue-awesome-paginate
           v-model="currentPage"
           :total-items="store.receipts.length"

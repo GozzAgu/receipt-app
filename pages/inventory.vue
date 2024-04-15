@@ -1,6 +1,6 @@
 <template>
     <SignoutLoader v-if="isSigningout" />
-    <div class="mt-24 px-[1em] md:px-[5em] lg:px-[5em] mx-auto">
+    <div class="mt-[4rem] px-[1em] md:px-[5em] lg:px-[5em] mx-auto">
         <div class="flex flex-col md:flex-row justify-between mb-8 gap-8">
             <div class="flex flex-col sm:flex-row gap-4">
                 <el-input
@@ -87,27 +87,17 @@
             </div>
             
         </div>
-        <div class="border-t border-gray-100">
+        <div class="bg-white p-[0.5rem] rounded-2xl">
             <el-table
                 ref="tableRef"
                 :data="filterTableData"
                 style="width: 100%; max-height: 100%;"
                 @selection-change="handleSelectionChange"
                 highlight-current-row
-                :border="parentBorder"
             >
                 <el-table-column fixed type="selection" width="40" />
-                <el-table-column fixed width="60" align="center">
-                    <template #default="scope">
-                      <Icon @click="handleEdit(scope.$index, scope.row)" class="text-sky-600 cursor-pointer" name="heroicons:pencil"  size="20" />
-                    </template>
-                </el-table-column>
-                <el-table-column fixed width="60" align="center">
-                    <template #default="scope">
-                      <Icon @click="handleDuplicate(scope.$index, scope.row)" class="text-sky-600 cursor-pointer" name="solar:copy-bold"  size="20" />
-                    </template>
-                </el-table-column>
                 <el-table-column v-if="columns.includes('dateIn')" label="Date In" property="dateIn" width="120" sortable/>
+                <el-table-column v-if="columns.includes('product')" property="product" label="Product" width="120" show-overflow-tooltip />
                 <el-table-column v-if="columns.includes('supplier')" property="supplier" label="Supplier" width="120" show-overflow-tooltip />
                 <el-table-column v-if="columns.includes('grade')" property="grade" width="100" label="Grade" show-overflow-tooltip :filters="[
                   { text: 'Used', value: 'Used' },
@@ -152,7 +142,25 @@
                 <el-table-column v-if="columns.includes('createdAt')" property="createdAt" label="Created At" show-overflow-tooltip />
                 <el-table-column v-if="columns.includes('updatedBy')" property="updatedBy" label="Updated By" show-overflow-tooltip />
                 <el-table-column v-if="columns.includes('updatedAt')" property="updatedAt" label="Updated At" show-overflow-tooltip />
+                <el-table-column fixed="right" width="48" align="center">
+                    <template #default="scope">
+                      <Icon @click="handleEdit(scope.$index, scope.row)" class="text-sky-600 cursor-pointer" name="heroicons:pencil"  size="20" />
+                    </template>
+                </el-table-column>
+                <el-table-column fixed="right" width="48" align="center">
+                    <template #default="scope">
+                      <Icon @click="handleDuplicate(scope.$index, scope.row)" class="text-sky-600 cursor-pointer" name="solar:copy-bold"  size="20" />
+                    </template>
+                </el-table-column>
             </el-table>
+        </div>
+        <div class="fixed bottom-3 mt-[1em] right-[1em] sm:right-[5em] lg:right-[5em] bg-gray-50 z-10 px-[1rem] rounded-xl">
+          <vue-awesome-paginate
+            v-model="currentPage"
+            :total-items="inventories.length"
+            :items-per-page="10"
+            :max-pages-shown="5"
+          />
         </div>
     </div>
     <el-drawer v-model="showDrawer" title="I am the title" :with-header="false" :size="largerThanXl? '40%' :largerThanlg? '50%':largerThanSm? '70%': '100%'" @closed="closeDrawer">
@@ -176,11 +184,13 @@ const isImeiInReceipts = (imei) => {
   return store.receipts.find(receipt => receipt.imei === imei);
 }
 
+const currentPage = ref(1)
 const inventoryStore = useInventoryStore();
 const { inventories } = toRefs(inventoryStore)
   
 const showDropDown = ref(false)
 const parentBorder = ref(true)
+const loading = ref(false)
 const store = useStore()
 const authStore = useAuthStore()
 const invStore = useInventoryStore()
@@ -188,7 +198,7 @@ const isSigningout = ref(false)
 
 const tableRef = ref();
 
-const columns = ref(['dateIn', 'supplier', 'grade', 'storage', 'imei', 'colour', 'amount', 'cost', 'margin', 'swap', 'date Out']);
+const columns = ref(['dateIn', 'product', 'supplier', 'grade', 'storage', 'imei', 'colour', 'amount', 'cost', 'margin', 'swap', 'date Out']);
 
 //drawer function
 const showDrawer = ref(false)
@@ -289,10 +299,11 @@ function filterByDate(data){
     return currentDate >= startDate && currentDate <= endDate
 }
 
-const filterTableData = computed(() =>
-  inventories.value.filter(
-    (data) =>
-    {
+const filterTableData = computed(() => {
+  const startIndex = (currentPage.value - 1) * 10;
+  const endIndex = startIndex + 10;
+  return inventories.value
+    .filter((data) => {
       if (searchValue.value && dateRange.value.length > 1){
           return data.imei.includes(searchValue.value) && filterByDate(data)
       }
@@ -303,17 +314,9 @@ const filterTableData = computed(() =>
           return filterByDate(data)
       }
       else return data
-
-      // return (
-      //     // (!searchValue.value || data.imei.includes(searchValue.value)) ||
-      //     (( !dateRange.value || dateRange.value.length === 0) || filterByDate(data))
-          
-      // );
-    }
-    //   !searchValue.value ||
-    //   data.imei.includes(searchValue.value)
-  )
-)
+    })
+    .slice(startIndex, endIndex)
+})
 
 const filterGradeTag = (value, row) => {
   return row.grade === value
@@ -323,15 +326,50 @@ const filterSwapTag = (value, row) => {
 }
 
 onMounted(() => {
-  store.fetchReceipts();
-  invStore.fetchInventories();
+  store.fetchReceipts()
+  invStore.fetchInventories()
+  authStore.loadCurrentUserFromStorage()
   authStore.authenticated()
 })
 </script>
 
 <style scoped>
+.pagination-container {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 2em;
+  font-size: 0.7em;
+}
+
+::v-deep(.paginate-buttons){
+  border: 1px solid #E2E8F0;
+  padding: 0.5rem;
+  height: 3em;
+  width: 3em;
+  border-radius: 0.5em;
+}
+
+::v-deep(.paginate-buttons:hover){
+  @apply bg-sky-600;
+  color: white;
+  border: none;
+  border-radius: 0.5em;
+  transition: background-color 300ms;
+}
+
+::v-deep(.active-page){
+  @apply bg-sky-600;
+  color: white;
+  height: 3.3em;
+  width: 3.3em;
+  border-radius: 0.5em;
+}
+
+::v-deep(.el-input__wrapper) {
+  @apply rounded-xl 
+}
+
 .date-picker-input{
-    
     ::v-deep(.el-date-range-picker.has-sidebar){
         width:200px;
         font-weight: 200;
