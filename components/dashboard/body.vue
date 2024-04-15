@@ -24,22 +24,24 @@
           <Icon class="text-2xl text-orange-500" name="solar:smartphone-update-bold-duotone" />
           <p class="font-semibold text-orange-400">Receipts generated today</p>
         </div>
-        <el-table 
-          :default-sort="{ prop: 'date', order: 'descending' }" 
-          v-if="store.receipts.length > 0" 
-          :data="todayReceipts" 
-          style="width: 100%; max-height: 100%;"
-        > 
-          <el-table-column prop="customerName" label="CUSTOMER" width="100" show-overflow-tooltip />
-          <el-table-column prop="productName" label="PRODUCT" width="100" show-overflow-tooltip />
-          <el-table-column prop="productDescription" label="DESCRIPTION" width="100" show-overflow-tooltip />
-          <el-table-column prop="newPrice" label="PRICE" width="100" show-overflow-tooltip>
-            <template #default="scope">
-              ₦{{ scope.row.newPrice }} 
-            </template>
-          </el-table-column>
-          <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
-        </el-table>
+        <div class="overflow-y-scroll max-h-[8.5rem]">
+          <el-table 
+            :default-sort="{ prop: 'date', order: 'descending' }" 
+            v-if="store.receipts.length > 0" 
+            :data="todayReceipts" 
+            style="width: 100%; max-height: 100%;"
+          > 
+            <el-table-column prop="customerName" label="CUSTOMER" width="100" show-overflow-tooltip />
+            <el-table-column prop="productName" label="PRODUCT" width="100" show-overflow-tooltip />
+            <el-table-column prop="productDescription" label="DESCRIPTION" width="100" show-overflow-tooltip />
+            <el-table-column prop="newPrice" label="PRICE" width="100" show-overflow-tooltip>
+              <template #default="scope">
+                ₦{{ scope.row.newPrice }} 
+              </template>
+            </el-table-column>
+            <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
+          </el-table>
+        </div>
       </div>
 
       <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[13rem]">
@@ -47,23 +49,25 @@
           <Icon class="text-2xl text-sky-600" name="ic:sharp-swap-horiz" />
           <p class="font-semibold text-sky-600">Most recent swaps</p>
         </div>
-        
-        <el-table 
-          :default-sort="{ prop: 'date', order: 'descending' }" 
-          v-if="store.receipts.length > 0" 
-          :data="filteredReceipts" 
-          style="width: 100%; max-height: 100%;"
-        > 
-          <el-table-column prop="customerName" label="CUSTOMER" width="100" show-overflow-tooltip />
-          <el-table-column prop="productName" label="PRODUCT" width="100" show-overflow-tooltip />
-          <el-table-column prop="swapFrom" label="SWAP FROM" width="100" show-overflow-tooltip />
-          <el-table-column prop="newPrice" label="PRICE" width="100" show-overflow-tooltip>
-            <template #default="scope">
-              ₦{{ scope.row.newPrice }} 
-            </template>
-          </el-table-column>
-          <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
-        </el-table>
+
+        <div class="overflow-y-scroll max-h-[8.5rem]">
+          <el-table 
+            :default-sort="{ prop: 'date', order: 'descending' }" 
+            v-if="store.receipts.length > 0" 
+            :data="filteredReceipts" 
+            style="width: 100%; max-height: 100%;"
+          > 
+            <el-table-column prop="customerName" label="CUSTOMER" width="100" show-overflow-tooltip />
+            <el-table-column prop="productName" label="PRODUCT" width="100" show-overflow-tooltip />
+            <el-table-column prop="swapFrom" label="SWAP FROM" width="100" show-overflow-tooltip />
+            <el-table-column prop="newPrice" label="PRICE" width="100" show-overflow-tooltip>
+              <template #default="scope">
+                ₦{{ scope.row.newPrice }} 
+              </template>
+            </el-table-column>
+            <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
+          </el-table>
+        </div>
       </div>
 
       <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[13rem]">
@@ -71,22 +75,25 @@
           <Icon class="text-2xl text-green-500" name="ic:twotone-loyalty" />
           <p class="font-semibold text-green-500">Patrons <span class="text-xs">(Over ₦500,000)</span></p>
         </div>
-        <el-table 
-          :default-sort="{ prop: 'date', order: 'descending' }" 
-          v-if="store.receipts.length > 0" 
-          :data="filteredPatrons" 
-          style="width: 100%; max-height: 100%;"
-        > 
-          <el-table-column prop="customerName" label="CUSTOMER" width="100" show-overflow-tooltip />
-          <el-table-column prop="productName" label="PRODUCT" width="100" show-overflow-tooltip />
-          <el-table-column prop="productDescription" label="DESCRIPTION" width="100" show-overflow-tooltip />
-          <el-table-column prop="newPrice" label="PRICE" width="100" show-overflow-tooltip>
-            <template #default="scope">
-              ₦{{ scope.row.newPrice }} 
-            </template>
-          </el-table-column>
-          <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
-        </el-table>
+
+        <div class="overflow-y-scroll max-h-[8.5rem]">
+          <el-table 
+            :default-sort="{ prop: 'date', order: 'descending' }" 
+            v-if="store.receipts.length > 0" 
+            :data="filteredPatrons" 
+            style="width: 100%; max-height: 100%;"
+          > 
+            <el-table-column prop="customerName" label="CUSTOMER" width="100" show-overflow-tooltip />
+            <el-table-column prop="productName" label="PRODUCT" width="100" show-overflow-tooltip />
+            <el-table-column prop="productDescription" label="DESCRIPTION" width="100" show-overflow-tooltip />
+            <el-table-column prop="newPrice" label="PRICE" width="100" show-overflow-tooltip>
+              <template #default="scope">
+                ₦{{ scope.row.newPrice }} 
+              </template>
+            </el-table-column>
+            <el-table-column prop="date" sortable label="DATE" width="100"  show-overflow-tooltip />
+          </el-table>
+        </div>
       </div>
     </div>
   </div>

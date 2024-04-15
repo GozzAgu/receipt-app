@@ -26,12 +26,9 @@
     <div v-loading="loading" class="shadow-lg bg-white px-[1.5em] py-[2.5em] rounded-b-lg grid grid-cols-1 gap-y-[1em]">
       <el-divider content-position="left"><span class="text-lg text-sky-600">Receipt Form</span></el-divider>
 
-      <pre>{{ dups }}</pre>
-      <pre>{{ duplicate }}</pre>
-
       <el-form
         ref="ruleFormRef"
-        :model="duplicate"
+        :model="dup"
         status-icon
         :rules="rules"
         label-width="120px"
@@ -40,51 +37,51 @@
       >
         <div class="md:grid grid-cols-3 gap-[1em]">
           <el-form-item label="Customer name" prop="customerName">
-            <el-input v-model="dup.customerName" placeholder="" />
+            <el-input v-model="dup!.customerName" placeholder="" />
           </el-form-item>
           <el-form-item label="Customer address" prop="customerAddress">
-            <el-input v-model="dup.customerAddress" placeholder="" />
+            <el-input v-model="dup!.customerAddress" placeholder="" />
           </el-form-item>
           <el-form-item label="Customer number" prop="customerNumber">
-            <el-input v-model="dup.customerNumber" placeholder="" />
+            <el-input v-model="dup!.customerNumber" placeholder="" />
           </el-form-item>
           <el-form-item label="Product name" prop="productName">
-            <el-input v-model="dup.productName" placeholder="" />
+            <el-input v-model="dup!.productName" placeholder="" />
           </el-form-item>
           <el-form-item label="Imei" prop="newimei">
             <el-input v-model="newImei" placeholder="" />
           </el-form-item>
           <el-form-item label="Product description" prop="productDescription">
-            <el-input v-model="dup.productDescription" placeholder="" type="textarea"/>
+            <el-input v-model="dup!.productDescription" placeholder="" type="textarea"/>
           </el-form-item>
           <el-form-item label="Payment Mode" prop="paidVia">
-            <el-select v-model="dup.paidVia" placeholder="select">
+            <el-select v-model="dup!.paidVia" placeholder="select">
               <el-option v-for="item in paymentMethods" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item> 
           <el-form-item label="Grade" prop="grade">
-            <el-select v-model="dup.grade" placeholder="select">
+            <el-select v-model="dup!.grade" placeholder="select">
               <el-option v-for="item in grades" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item> 
           <el-form-item label="Swap ?">
-            <el-select v-model="dup.swap" placeholder="select">
+            <el-select v-model="dup!.swap" placeholder="select">
               <el-option v-for="item in swap" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>  
-          <el-form-item v-if="dup.swap == 'Yes'" label="Swap from" prop="swapFrom">
-            <el-input v-model="dup.swapFrom" placeholder="" />
+          <el-form-item v-if="dup!.swap == 'Yes'" label="Swap from" prop="swapFrom">
+            <el-input v-model="dup!.swapFrom" placeholder="" />
           </el-form-item> 
-          <el-form-item v-if="dup.swap == 'Yes'" label="Swap to" prop="productName">
-            <el-input disabled v-model="dup.productName" placeholder="" />
+          <el-form-item v-if="dup!.swap == 'Yes'" label="Swap to" prop="productName">
+            <el-input disabled v-model="dup!.productName" placeholder="" />
           </el-form-item> 
         </div>
         <div class="grid grid-cols-2 md:grid-cols-6 gap-x-[1em]">
           <el-form-item label="Product quantity" prop="productQuantity">
-            <el-input v-model="dup.productQuantity" placeholder="" />
+            <el-input v-model="dup!.productQuantity" placeholder="" />
           </el-form-item>
           <el-form-item label="Product price" prop="productPrice">
-            <el-input v-model="dup.productPrice" placeholder="" />
+            <el-input v-model="dup!.productPrice" placeholder="" />
           </el-form-item>
         </div>
       </el-form>
@@ -260,7 +257,7 @@ const addR = async (formEl: FormInstance | undefined) => {
             return;
           }
 
-          let newCompanyDetails = { ...duplicate.value, date: currentDate.value, imei: newImei.value } as Receipt;
+          let newCompanyDetails = { ...dup.value, date: currentDate.value, imei: newImei.value } as Receipt;
           if (newCompanyDetails.productQuantity > 1) {
             let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice;
             newCompanyDetails.newPrice = newPrice;
