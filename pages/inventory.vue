@@ -86,10 +86,18 @@
                 highlight-current-row
             >
                 <el-table-column fixed type="selection" width="40" />
-                <el-table-column v-if="columns.includes('dateIn')" label="Date In" property="dateIn" width="120" sortable/>
-                <el-table-column v-if="columns.includes('product')" property="product" label="Product" width="120" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('supplier')" property="supplier" label="Supplier" width="120" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('grade')" property="grade" width="100" label="Grade" show-overflow-tooltip :filters="[
+                <el-table-column v-if="columns.includes('dateIn')" label="DATE IN" property="dateIn" width="120" sortable/>
+                <el-table-column v-if="columns.includes('product')" property="product" label="PRODUCT" width="120" show-overflow-tooltip :filters="[
+                  { text: 'IPhone', value: 'IPhone' },
+                  { text: 'Samsung', value: 'Samsung' },]"
+                  :filter-method="filterProductTag"
+                  filter-placement="bottom-end">
+                    <template #default="scope">
+                       <div>{{ scope.row.product }}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column v-if="columns.includes('supplier')" property="supplier" label="SUPPLIER" width="120" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('grade')" property="grade" width="100" label="GRADE" show-overflow-tooltip :filters="[
                   { text: 'Used', value: 'Used' },
                   { text: 'New', value: 'New' },]"
                   :filter-method="filterGradeTag"
@@ -101,7 +109,7 @@
                         >{{ scope.row.grade }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column v-if="columns.includes('storage')" property="storage" width="100" label="Storage" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('storage')" property="storage" width="100" label="STORAGE" show-overflow-tooltip />
                 <el-table-column v-if="columns.includes('imei')" property="imei" label="IMEI" width="140">
                     <template #default="scope">
                       <p :class="{ 'border border-red-400 text-red-400 bg-red-100': isImeiInReceipts(scope.row.imei) }" 
@@ -111,11 +119,11 @@
                       </p>
                     </template>
                 </el-table-column>
-                <el-table-column v-if="columns.includes('colour')" property="colour" label="Colour" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('amount')" property="amount" label="Amount" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('cost')" property="cost" label="Cost" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('margin')" property="margin" label="Margin" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('swap')" property="swap" label="Swap" show-overflow-tooltip :filters="[
+                <el-table-column v-if="columns.includes('colour')" property="colour" label="COLOUR" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('amount')" property="amount" label="AMOUNT" show-overflow-tooltip sortable width="120"/>
+                <el-table-column v-if="columns.includes('cost')" property="cost" label="COST" show-overflow-tooltip sortable width="120"/>
+                <el-table-column v-if="columns.includes('margin')" property="margin" label="MARGIN" show-overflow-tooltip sortable width="120"/>
+                <el-table-column v-if="columns.includes('swap')" property="swap" label="SWAP" show-overflow-tooltip :filters="[
                     { text: 'no', value: 'no' },
                     { text: 'yes', value: 'yes' },]"
                 :filter-method="filterSwapTag"
@@ -127,11 +135,11 @@
                         >{{ scope.row.swap }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column v-if="columns.includes('dateOut')" property="dateOut" label="dateOut" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('createdBy')" property="createdBy" label="Created By" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('createdAt')" property="createdAt" label="Created At" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('updatedBy')" property="updatedBy" label="Updated By" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('updatedAt')" property="updatedAt" label="Updated At" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('dateOut')" property="dateOut" label="DATE OUT" show-overflow-tooltip sortable width="120"/>
+                <el-table-column v-if="columns.includes('createdBy')" property="createdBy" label="CREATED BY" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('createdAt')" property="createdAt" label="CREATED AT" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('updatedBy')" property="updatedBy" label="UPDATED BY" show-overflow-tooltip />
+                <el-table-column v-if="columns.includes('updatedAt')" property="updatedAt" label="UPDATED AT" show-overflow-tooltip />
                 <el-table-column fixed="right" width="48" align="center">
                     <template #default="scope">
                       <Icon @click="handleEdit(scope.$index, scope.row)" class="text-sky-600 cursor-pointer" name="heroicons:pencil"  size="20" />
@@ -310,6 +318,9 @@ const filterTableData = computed(() => {
 
 const filterGradeTag = (value, row) => {
   return row.grade === value
+}
+const filterProductTag = (value, row) => {
+  return row.product === value
 }
 const filterSwapTag = (value, row) => {
   return row.swap === value

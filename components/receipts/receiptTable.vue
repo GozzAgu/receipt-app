@@ -68,8 +68,16 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="productName" label="PRODUCT" width="150" show-overflow-tooltip />
-        <el-table-column property="grade" width="90" label="Grade" show-overflow-tooltip :filters="[
+        <el-table-column property="productName" label="PRODUCT" width="120" show-overflow-tooltip :filters="[
+          { text: 'IPhone', value: 'IPhone' },
+          { text: 'Samsung', value: 'Samsung' },]"
+          :filter-method="filterProductTag"
+          filter-placement="bottom-end">
+            <template #default="scope">
+                <div>{{ scope.row.productName }}</div>
+            </template>
+        </el-table-column>
+        <el-table-column property="grade" width="90" label="GRADE" show-overflow-tooltip :filters="[
           { text: 'Used', value: 'Used' },
           { text: 'New', value: 'New' },]"
           :filter-method="filterGradeTag"
@@ -181,6 +189,10 @@ const deleteSuccess = () => {
 
 const filterGradeTag = (value:string, row:any) => {
   return row.grade === value
+}
+
+const filterProductTag = (value:string, row:any) => {
+  return row.product === value
 }
 
 const isAdmin = computed(() => {
