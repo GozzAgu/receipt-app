@@ -74,7 +74,7 @@
       <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[13rem]">
         <div class="flex gap-x-[0.5rem] mb-[1rem]">
           <Icon class="text-2xl text-green-500" name="ic:twotone-loyalty" />
-          <p class="font-semibold text-green-500">Patrons <span class="text-xs">(Over ₦500,000)</span></p>
+          <p class="font-semibold text-green-500">Patrons</p>
         </div>
 
         <div class="overflow-y-scroll max-h-[8.5rem]">
