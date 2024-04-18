@@ -17,7 +17,7 @@
     :label-position="labelPosition"
     style="max-width: 500px"
   >
-    <div v-if="signedIn">
+    <div class="flex items-center justify-center" v-if="!signedIn">
       <iframe src="https://lottie.host/embed/4841451c-cd7e-4f24-bb57-6d1d98242c01/QWAzQNcJAk.lottie"></iframe>
     </div>
 
