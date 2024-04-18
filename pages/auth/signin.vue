@@ -156,8 +156,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
               //   type: 'success',
               // })
               setTimeout(() => {
-                router.push('/dashboard') // Redirect to dashboard after 3 seconds
-              }, 3000)
+                router.push('/dashboard')
+              }, 4000)
             } else {
               ElNotification({
                 title: 'Error',
