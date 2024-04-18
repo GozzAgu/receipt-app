@@ -225,23 +225,6 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   return true
 }
 
-// const uploadImage = (event) => {
-//   const file = event.target.files[0];
-//   const storageRef = firebase.storage().ref();
-//   const imageRef = storageRef.child(`images/${file.name}`);
-  
-//   try {
-//     const snapshot = await imageRef.put(file);
-//     console.log('Image uploaded successfully');
-//     // You can get the URL of the uploaded image
-//     const downloadURL = await snapshot.ref.getDownloadURL();
-//     console.log('Download URL:', downloadURL);
-//     // You can save this URL to a database if needed
-//   } catch (error) {
-//     console.error('Error uploading image:', error);
-//   }
-// }
-
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate(async(valid, fields) => {

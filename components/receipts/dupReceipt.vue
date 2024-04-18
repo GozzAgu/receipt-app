@@ -84,11 +84,10 @@
             <el-input v-model="dup!.productPrice" placeholder="" />
           </el-form-item>
         </div>
+        <el-button class="w-full mt-[2rem]" @click="addR(ruleFormRef)"> 
+          <span class="ml-[1em] text-[0.7em] md:text-base text-white">Generate Receipt</span>
+        </el-button> 
       </el-form>
-
-      <el-button @click="addR(ruleFormRef)"> 
-        <span class="ml-[1em] text-[0.7em] md:text-base text-white">Generate Receipt</span>
-      </el-button> 
     </div>
   </div>
 </template>

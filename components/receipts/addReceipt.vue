@@ -85,11 +85,10 @@
             <el-input v-model="companyDetails.productPrice" placeholder="" />
           </el-form-item>
         </div>
+        <el-button class="w-full mt-[2rem]" @click="addR(ruleFormRef)"> 
+          <span class="ml-[1em] text-[0.7em] md:text-base text-white">Generate Receipt</span>
+        </el-button> 
       </el-form>
-
-      <el-button @click="addR(ruleFormRef)"> 
-        <span class="ml-[1em] text-[0.7em] md:text-base text-white">Generate Receipt</span>
-      </el-button> 
     </div>
   </div>
 </template>
@@ -103,7 +102,6 @@ import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { Receipt } from '@/types/types'
 
 const store = useStore()
-const authStore = useAuthStore()
 const invStore = useInventoryStore()
 const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('top')
@@ -256,8 +254,11 @@ const addR = async (formEl: FormInstance | undefined) => {
             newCompanyDetails.newPrice = newCompanyDetails.productPrice;
           }
 
-          const res = await store.addReceipt(newCompanyDetails);       
-          router.push({ path: `/receipt/${res}` });
+          const res = await store.addReceipt(newCompanyDetails)
+          isGenerated.value = true
+          setTimeout(() => {
+            router.push({ path: `/receipt/${res}` })
+          }, 3000)
           newCompanyDetails = {} as Receipt;
           loading.value = false;
           success();

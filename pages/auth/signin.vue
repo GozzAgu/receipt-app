@@ -150,11 +150,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             const currentUser = await store.fetchCurrentUser(response.uid)
             if (currentUser?.accountType === 'admin'){
               signedIn.value = true
-              // ElNotification({
-              //   title: 'Success',
-              //   message: 'Sign in successful',
-              //   type: 'success',
-              // })
               setTimeout(() => {
                 router.push('/dashboard')
               }, 3000)

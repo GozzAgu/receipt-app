@@ -63,17 +63,15 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules, FormProps } from 'element-plus'
-import { updateProfile, signOut } from '@firebase/auth';
+import { signOut } from '@firebase/auth';
 import type { Container } from 'tsparticles-engine'
 import { AccountType } from '~/types/types';
 import { useAuthStore } from '~/store/users';
-import { doc, getDoc } from "firebase/firestore"
 
 definePageMeta({
   layout:'auth'
 });
 
-// const isLoading = ref(false)
 const options = {
   fullScreen: {
     enable: true,
@@ -160,11 +158,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
                 console.log('cannot fetch admin')
               }
               signedIn.value = true
-              // ElNotification({
-              //   title: 'Success',
-              //   message: 'Sign in successful',
-              //   type: 'success',
-              // })
               setTimeout(() => {
                 router.push('/dashboard')
               }, 3000)
