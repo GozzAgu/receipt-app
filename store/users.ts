@@ -47,7 +47,6 @@ export const useAuthStore = defineStore('users', {
       const storedUser = localStorage.getItem('currentUser')
       if (storedUser) {
         this.currentUser = JSON.parse(storedUser)
-        console.log(this.currentUser)
       }
     },
 
@@ -83,7 +82,6 @@ export const useAuthStore = defineStore('users', {
         UsersSnapshot.forEach((doc) => {
           let userData = doc.data() as Manager;
           userData.id = doc.id;
-          console.log(userData)
           if (userData.accountType === 'manager' && userData.adminId === this.currentUser?.id 
           || userData.accountType === 'midAdmin' && userData.adminId === this.currentUser?.id) 
           {

@@ -69,6 +69,7 @@
         Sign Up
       </el-button>
     </el-form-item>
+
     <div class="flex justify-between">
       <NuxtLink to="/auth/signin">
         <p class="hover:underline text-xs text-gray-500 mt-[3em]">Already have an account?</p>
@@ -93,7 +94,7 @@ import { Plus } from '@element-plus/icons-vue'
 
 definePageMeta({
   layout:'auth'
-});
+})
 
 const isLoading = ref(false)
 const router = useRouter()

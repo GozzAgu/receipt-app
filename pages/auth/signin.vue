@@ -17,37 +17,43 @@
     :label-position="labelPosition"
     style="max-width: 500px"
   >
-    <img class="lg:hidden w-[3em] m-auto mb-8" src="/snapbill-logo.png"/>
-    
-    <div>
-      <h2 class="text-center lg:text-left text-gray-500 text-[1.5em] md:text-[2.5em] mb-[0.5em]">Sign In</h2>
-      <p class="text-sm text-gray-500 mb-[1em]">
-        Welcome back, Please enter your credentials to get signed into your account.
-      </p>
+    <div v-if="signedIn">
+      <iframe src="https://lottie.host/embed/4841451c-cd7e-4f24-bb57-6d1d98242c01/QWAzQNcJAk.lottie"></iframe>
     </div>
-    
-    <el-form-item label="Email" prop="email">
-      <el-input v-model="admin.email" />
-    </el-form-item>
-    <el-form-item label="Password" prop="password">
-      <el-input type="password" v-model="admin.password" />
-    </el-form-item>
-    <el-form-item class="mt-[2em]">
-      <el-button class="flex m-auto w-full" type="primary" @click="submitForm(ruleFormRef)">
-        <Icon v-if="loading" class="mr-2" name="svg-spinners:gooey-balls-1" />
-        Sign In
-      </el-button>
-    </el-form-item>
-    <NuxtLink to="/auth/signinManager">
-      <span class="text-xs text-gray-500 hover:underline hover:text-blue-400 cursor-pointer">If you're not an admin, click here</span>
-    </NuxtLink>
-    <div class="flex justify-between">
-      <NuxtLink to="/auth/signup">
-        <p class="hover:underline text-xs text-gray-500 mt-[3em]">Don't have an account?</p>
+
+    <div v-else>
+      <img class="lg:hidden w-[3em] m-auto mb-8" src="/snapbill-logo.png"/>
+      
+      <div>
+        <h2 class="text-center lg:text-left text-gray-500 text-[1.5em] md:text-[2.5em] mb-[0.5em]">Sign In</h2>
+        <p class="text-sm text-gray-500 mb-[1em]">
+          Welcome back, Please enter your credentials to get signed into your account.
+        </p>
+      </div>
+      
+      <el-form-item label="Email" prop="email">
+        <el-input v-model="admin.email" />
+      </el-form-item>
+      <el-form-item label="Password" prop="password">
+        <el-input type="password" v-model="admin.password" />
+      </el-form-item>
+      <el-form-item class="mt-[2em]">
+        <el-button class="flex m-auto w-full" type="primary" @click="submitForm(ruleFormRef)">
+          <Icon v-if="loading" class="mr-2" name="svg-spinners:gooey-balls-1" />
+          Sign In
+        </el-button>
+      </el-form-item>
+      <NuxtLink to="/auth/signinManager">
+        <span class="text-xs text-gray-500 hover:underline hover:text-blue-400 cursor-pointer">If you're not an admin, click here</span>
       </NuxtLink>
-      <NuxtLink to="/auth/forgot">
-        <p class="hover:underline text-xs text-gray-500 mt-[3em]">Forgot password?</p>
-      </NuxtLink>
+      <div class="flex justify-between">
+        <NuxtLink to="/auth/signup">
+          <p class="hover:underline text-xs text-gray-500 mt-[3em]">Don't have an account?</p>
+        </NuxtLink>
+        <NuxtLink to="/auth/forgot">
+          <p class="hover:underline text-xs text-gray-500 mt-[3em]">Forgot password?</p>
+        </NuxtLink>
+      </div>
     </div>
   </el-form>
 </template>
@@ -99,6 +105,7 @@ const nuxtApp = useNuxtApp()
 const router = useRouter()
 const loading = ref(false)
 const store = useAuthStore()
+const signedIn = ref(false)
 
 const labelPosition = ref<FormProps['labelPosition']>('top')
 
@@ -141,12 +148,15 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           try {
             const currentUser = await store.fetchCurrentUser(response.uid)
             if (currentUser?.accountType === 'admin'){
+              signedIn.value = true
               ElNotification({
                 title: 'Success',
                 message: 'Sign in successful',
                 type: 'success',
               })
-              router.push('/dashboard')
+              setTimeout(() => {
+                router.push('/dashboard') // Redirect to dashboard after 3 seconds
+              }, 3000)
             } else {
               ElNotification({
                 title: 'Error',
