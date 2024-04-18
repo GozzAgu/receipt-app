@@ -17,8 +17,9 @@
     :label-position="labelPosition"
     style="max-width: 500px"
   >
-    <div v-if="signedIn">
+    <div class="mt-[15rem] md:mt-0" v-if="signedIn">
       <iframe src="https://lottie.host/embed/4841451c-cd7e-4f24-bb57-6d1d98242c01/QWAzQNcJAk.lottie"></iframe>
+      <p class="text-center text-gray-500 font-semibold text-xl">Staff sign in successful</p>
     </div>
 
     <div v-else>
@@ -159,11 +160,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
                 console.log('cannot fetch admin')
               }
               signedIn.value = true
-              ElNotification({
-                title: 'Success',
-                message: 'Sign in successful',
-                type: 'success',
-              })
+              // ElNotification({
+              //   title: 'Success',
+              //   message: 'Sign in successful',
+              //   type: 'success',
+              // })
               setTimeout(() => {
                 router.push('/dashboard') // Redirect to dashboard after 3 seconds
               }, 3000)
