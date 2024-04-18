@@ -18,7 +18,7 @@
     style="max-width: 500px"
   >
     <div class="mt-[15rem] md:mt-0" v-if="signedIn">
-      <iframe src="https://lottie.host/embed/4841451c-cd7e-4f24-bb57-6d1d98242c01/QWAzQNcJAk.lottie"></iframe>
+      <iframe src="https://lottie.host/embed/9a17bc17-7601-456c-a6b5-e6d582eed5c7/jW0yGQSbAJ.json"></iframe>
       <p class="text-center text-gray-500 font-semibold text-xl">Admin sign in successful</p>
     </div>
 
@@ -157,7 +157,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
               // })
               setTimeout(() => {
                 router.push('/dashboard')
-              }, 4000)
+              }, 3000)
             } else {
               ElNotification({
                 title: 'Error',
