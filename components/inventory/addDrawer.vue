@@ -300,7 +300,7 @@ const day = ref(today.getDate());
 const year = ref(today.getFullYear());
 
 // Format the date as "m/dd/yyyy"
-const formattedDate = computed<string>(()=> `${month.value}/${day.value}/${year.value}`) ;
+const formattedDate = computed<string>(()=> `${month.value}/${day.value}/${year.value}`)
 
 const newInventoryData = ref({
   dateIn: formattedDate.value,

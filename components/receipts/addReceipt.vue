@@ -207,10 +207,12 @@ onMounted(() => {
   store.fetchReceipts()
 })
 
-const currentDate = computed(() => {
-  const date = new Date().toJSON().slice(0,10).replace(/-/g,'/')
-  return date
-})
+const today = new Date()
+const month = ref(today.getMonth() + 1)
+const day = ref(today.getDate())
+const year = ref(today.getFullYear())
+
+const currentDate = computed<string>(()=> `${month.value}/${day.value}/${year.value}`)
 
 const success = () => {
   ElMessage({
@@ -255,10 +257,7 @@ const addR = async (formEl: FormInstance | undefined) => {
           }
 
           const res = await store.addReceipt(newCompanyDetails)
-          isGenerated.value = true
-          setTimeout(() => {
-            router.push({ path: `/receipt/${res}` })
-          }, 3000)
+          router.push({ path: `/receipt/${res}` })
           newCompanyDetails = {} as Receipt;
           loading.value = false;
           success();

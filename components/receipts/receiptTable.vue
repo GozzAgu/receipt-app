@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
-        <span class="text-sm md:text-base"> Receipts ({{ store.receipts.length }})</span>
+        <span class="text-base md:text-lg"> Receipts ({{ store.receipts.length }})</span>
       </h1>
       <div class="flex gap-x-[1em] mt-[1em] md:mt-0">
         <el-input
@@ -61,14 +61,15 @@
         style="width: 100%; max-height: 100%;"
       > 
         <el-table-column fixed type="selection" width="40" />
-        <el-table-column width="130" prop="customerName" label="CUSTOMER"  show-overflow-tooltip>
+        <el-table-column width="150" prop="customerName" label="CUSTOMER"  show-overflow-tooltip>
           <template #default="scope">
             <span class="cursor-pointer" @click="viewR(scope.row.id)">
-              {{ scope.row.customerName }}
+              <Icon class="text-sky-600 opacity-40 mr-[0.2rem] -mt-[0.2rem]" name="material-symbols:receipt-long-outline" />
+              <span>{{ scope.row.customerName }}</span>
             </span>
           </template>
         </el-table-column>
-        <el-table-column property="productName" label="PRODUCT" width="120" show-overflow-tooltip :filters="[
+        <el-table-column property="productName" label="PRODUCT" width="150" show-overflow-tooltip :filters="[
           { text: 'IPhone', value: 'IPhone' },
           { text: 'Samsung', value: 'Samsung' },]"
           :filter-method="filterProductTag"
@@ -77,6 +78,8 @@
                 <div>{{ scope.row.productName }}</div>
             </template>
         </el-table-column>
+        <el-table-column prop="productDescription" width="180" label="DESCRIPTION"  show-overflow-tooltip />
+        <el-table-column prop="imei" width="150" label="IMEI" show-overflow-tooltip />
         <el-table-column property="grade" width="90" label="GRADE" show-overflow-tooltip :filters="[
           { text: 'Used', value: 'Used' },
           { text: 'New', value: 'New' },]"
@@ -104,8 +107,6 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="imei" width="150" label="IMEI" show-overflow-tooltip />
-        <el-table-column prop="productDescription" width="200" label="DESCRIPTION"  show-overflow-tooltip />
         <el-table-column prop="paidVia" width="90" label="PAID VIA"  show-overflow-tooltip>
           <template #default="{ row }">
             <div

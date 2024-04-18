@@ -3,7 +3,7 @@
     <div class="grid grid-cols-2">
       <h1 class="font-semibold text-xl text-gray-500">
         <Icon name="fa6-solid:users" color="gray" size="25" />
-        <span class="text-sm md:text-base"> Staff </span>
+        <span class="text-base md:text-lg"> Staff </span>
       </h1>
 
       <div class="flex">
@@ -34,8 +34,8 @@
           p-[1em]"
         >
           <div class="flex justify-between">
-            <!-- <Icon name="jam:padlock-open-f" size="20" color="gray" /> -->
-            <Icon name="jam:padlock-f" size="15" color="gray" />
+            <Icon v-if="manager.accountType === 'midAdmin'" name="jam:padlock-open-f" size="15" class="text-green-500" />
+            <Icon v-if="manager.accountType === 'manager'" name="jam:padlock-f" size="15" color="gray" />
             <el-dropdown trigger="click">
               <span class="el-dropdown-link">
                 <Icon name="mdi:dots-horizontal" size="20" color="gray" />
