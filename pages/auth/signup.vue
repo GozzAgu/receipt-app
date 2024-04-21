@@ -26,16 +26,16 @@
       </p>
     </div>
 
-    <input type="file" />
+    <!-- <input type="file" /> -->
 
     <el-upload
-      class="avatar-uploader"
+      class="avatar-uploader mb-[1.5em]"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload"
     >
-      <img v-if="admin.imageUrl" :src="admin.imageUrl" class="avatar w-[3em]" />
-      <el-icon v-else class="avatar-uploader-icon  border"><Plus /></el-icon>
+      <img v-if="admin.imageUrl" :src="admin.imageUrl" class="avatar w-[5em]" />
+      <el-icon v-else class="avatar-uploader-icon rounded-xl p-[1em] border">+</el-icon>
     </el-upload>
 
     <div class="md:grid grid-cols-2 gap-x-[1.5rem]">
@@ -84,13 +84,11 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules, FormProps } from 'element-plus'
-import { updateProfile } from '@firebase/auth';
 import type { Container } from 'tsparticles-engine'
 import { AccountType } from '~/types/types';
 import { doc, setDoc } from "firebase/firestore"; 
 import { useAuthStore } from '~/store/users';
 import type { UploadProps } from 'element-plus'
-import { Plus } from '@element-plus/icons-vue'
 
 definePageMeta({
   layout:'auth'
@@ -271,6 +269,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
 onMounted(() => {
   store.fetchManagers()
+  nuxtApp.$saveFile('', admin.imageUrl)
 })
 </script>
 

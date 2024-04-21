@@ -1,9 +1,11 @@
 <template>
   <div class="py-[4.5em] px-[1em] sm:px-[5em] lg:px-[5em] relative">
     <div class="grid grid-cols-1 md:grid-cols-2">
-      <h1 class="font-semibold text-xl text-gray-500">
+      <h1 class="text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
-        <span class="text-base md:text-lg"> Receipts ({{ store.receipts.length }})</span>
+        <span class="text-base md:text-lg font-semibold"> Receipts</span>
+        <br>
+        <span class="text-xs md:text-sm text-gray-400"> There are {{ store.receipts.length }} total receipts</span>
       </h1>
       <div class="flex gap-x-[1em] mt-[1em] md:mt-0">
         <el-input

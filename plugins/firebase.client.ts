@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import 'firebase/storage'
-import { getStorage } from 'firebase/storage'
+import { getStorage, ref, uploadString } from 'firebase/storage'
 
 export default defineNuxtPlugin(nuxtApp => {
   const config = useRuntimeConfig()
@@ -19,18 +19,24 @@ export default defineNuxtPlugin(nuxtApp => {
 
   const app = initializeApp(firebaseConfig)
 
-  console.log(app)
   const firestore = getFirestore(app)
   const auth = getAuth(app)
   const storage = getStorage(app)
 
-  // nuxtApp.vueApp.provide('firestore', firestore)
-  // nuxtApp.provide('firestore', firestore)
+  const saveFile = (fullPath:any, file:any) => {
+    const imagesRef = ref(storage, fullPath)
+    const storageRef = ref(storage, 'image.txt')
+    const message4 = 'data:text/plain;base64,5b6p5Y+344GX44G+44GX44Gf77yB44GK44KB44Gn44Go44GG77yB';
+    uploadString(storageRef, message4, 'data_url').then((snapshot) => {
+      console.log('Uploaded a data_url string!')
+    })
+  }
+
   return {
     provide: {
       firestore,
       auth,
-      storage
+      saveFile
     }
   }
 })
