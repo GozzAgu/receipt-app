@@ -1,5 +1,4 @@
 <template>
-  <!-- <LoadersSignoutLoader v-if="isLoading" /> -->
   <NuxtParticles
     id="tsparticles"
     :options="options"
@@ -25,18 +24,6 @@
         Get started, Please enter your credentials to get signed into your account.
       </p>
     </div>
-
-    <!-- <input type="file" /> -->
-
-    <el-upload
-      class="avatar-uploader mb-[1.5em]"
-      :show-file-list="false"
-      :on-success="handleAvatarSuccess"
-      :before-upload="beforeAvatarUpload"
-    >
-      <img v-if="admin.imageUrl" :src="admin.imageUrl" class="avatar w-[5em]" />
-      <el-icon v-else class="avatar-uploader-icon rounded-xl p-[1em] border">+</el-icon>
-    </el-upload>
 
     <div class="md:grid grid-cols-2 gap-x-[1.5rem]">
       <el-form-item label="Company name" prop="name">
@@ -88,7 +75,8 @@ import type { Container } from 'tsparticles-engine'
 import { AccountType } from '~/types/types';
 import { doc, setDoc } from "firebase/firestore"; 
 import { useAuthStore } from '~/store/users';
-import type { UploadProps } from 'element-plus'
+import type { UploadProps, UploadFile } from 'element-plus'
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage'
 
 definePageMeta({
   layout:'auth'
@@ -199,28 +187,6 @@ const rules = reactive<FormRules<RuleForm>>({
 const setUserAccountType = async (userId: string, admin: RuleForm) => {
   const userDocRef = doc(nuxtApp.$firestore, 'users', userId)
   await setDoc(userDocRef, { ...admin, id:userId }, { merge: true })
-};
-
-const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response,
-  uploadFile
-) => {
-  if (uploadFile.raw) {
-    admin.imageUrl = String(URL.createObjectURL(uploadFile.raw))
-  } else {
-    console.error("Upload file raw is null")
-  }
-}
-
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
-  if (rawFile.type !== 'image/jpeg') {
-    ElMessage.error('Avatar picture must be JPG format!')
-    return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('Avatar picture size can not exceed 2MB!')
-    return false
-  }
-  return true
 }
 
 const submitForm = async (formEl: FormInstance | undefined) => {
@@ -269,7 +235,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
 onMounted(() => {
   store.fetchManagers()
-  nuxtApp.$saveFile('', admin.imageUrl)
 })
 </script>
 

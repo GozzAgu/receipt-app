@@ -182,6 +182,7 @@ const incorrectPassword = ref(false);
 let deleteId = ref('')
 const currentPage = ref(1)
 const search = ref('')
+const nuxtApp = useNuxtApp()
 
 const deleteSuccess = () => {
   ElMessage({

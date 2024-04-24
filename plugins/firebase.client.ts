@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import 'firebase/storage'
-import { getStorage, ref, uploadString } from 'firebase/storage'
+import { getStorage, ref, getDownloadURL, uploadBytes } from 'firebase/storage'
 
 export default defineNuxtPlugin(nuxtApp => {
   const config = useRuntimeConfig()
@@ -23,20 +23,22 @@ export default defineNuxtPlugin(nuxtApp => {
   const auth = getAuth(app)
   const storage = getStorage(app)
 
-  const saveFile = (fullPath:any, file:any) => {
-    const imagesRef = ref(storage, fullPath)
-    const storageRef = ref(storage, 'image.txt')
-    const message4 = 'data:text/plain;base64,5b6p5Y+344GX44G+44GX44Gf77yB44GK44KB44Gn44Go44GG77yB';
-    uploadString(storageRef, message4, 'data_url').then((snapshot) => {
-      console.log('Uploaded a data_url string!')
-    })
+  const saveFile = (name:string, file:any) => {
+    console.log(file)
+    const storageRef = ref(storage, 'images/' + name)
+    uploadBytes(storageRef, file).then((snapshot) => {
+      console.log('Uploaded blob', snapshot.metadata.fullPath, storageRef, file.name)
+    }).catch((error) => {
+      console.error('Error uploading file:', error);
+    });
   }
 
   return {
     provide: {
       firestore,
       auth,
-      saveFile
+      storage,
+      saveFile,
     }
   }
 })

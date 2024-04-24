@@ -14,14 +14,19 @@
       >
         <div class="md:grid grid-cols-2 gap-[1em]">
           <el-upload
-            class="avatar-uploader"
+            class="avatar-uploader mb-[1.5em]"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
+            ref="uploadRef"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-            <el-icon v-else class="avatar-uploader-icon  border"><Plus /></el-icon>
+            <img v-if="imageUrl" :src="imageUrl" class="avatar w-[5em]" />
+            <el-icon v-else class="avatar-uploader-icon rounded-xl p-[1em] border">+</el-icon>
           </el-upload>
+
+          <el-button @click="uploadImg">
+            Save
+          </el-button>
 
           <div class="mt-[1.5em] md:mt-0">
             <el-form-item label="Company name" prop="name">
@@ -52,13 +57,13 @@ import { ref, reactive } from 'vue'
 import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { User } from '@/types/types'
 import { ElMessage } from 'element-plus'
-import { Plus } from '@element-plus/icons-vue'
-import type { UploadProps } from 'element-plus'
-import { updateProfile } from '@firebase/auth';
+import type { UploadProps, UploadFile } from 'element-plus'
+import { ref as storageRef, getDownloadURL } from 'firebase/storage'
 
 const usersStore = useAuthStore()
-const imageUrl = ref()
-
+let imageUrl = ref()
+const imageBlob = ref<File|string>('')
+const uploadRef = ref<UploadFile>()
 const store = useStore()
 const labelPosition = ref<FormProps['labelPosition']>('top')
 const ruleFormRef = ref<FormInstance>()
@@ -80,21 +85,30 @@ const passwordRules = reactive<FormRules<User>>({
 
 onMounted(() => {
   store.fetchReceipts()
+  // fetchImage()
 })
+
+const uploadImg = () => {
+  console.log(uploadRef.value)
+  nuxtApp.$saveFile(imageBlob.value.name, imageBlob.value)
+}
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
   response,
   uploadFile
 ) => {
   if (uploadFile.raw) {
-    imageUrl.value = String(URL.createObjectURL(uploadFile.raw))
-    user.imageUrl = imageUrl.value
+    console.log(uploadFile.raw)
+    imageBlob.value = uploadFile.raw
+    imageUrl.value = URL.createObjectURL(uploadFile.raw)
+    console.log(imageBlob.value, imageUrl.value)
   } else {
     console.error("Upload file raw is null")
   }
 }
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+  console.log(rawFile)
   if (rawFile.type !== 'image/jpeg') {
     ElMessage.error('Avatar picture must be JPG format!')
     return false
@@ -104,6 +118,16 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   }
   return true
 }
+
+// const fetchImage = async () => {
+//   try {
+//     const storageReference = storageRef(nuxtApp.$storage, `images/sph-logo.jpeg`)
+//     const url = await getDownloadURL(storageReference)
+//     imageUrl = url
+//   } catch (error) {
+//     console.error('Error fetching image:', error)
+//   }
+// }
 
 const update = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
