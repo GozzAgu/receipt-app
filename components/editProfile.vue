@@ -60,7 +60,7 @@ import { ElMessage } from 'element-plus'
 import type { UploadProps, UploadFile } from 'element-plus'
 import { ref as storageRef, getDownloadURL } from 'firebase/storage'
 
-const usersStore = useAuthStore()
+const authStore = useAuthStore()
 let imageUrl = ref()
 const imageBlob = ref<File|string>('')
 const uploadRef = ref<UploadFile>()
@@ -90,8 +90,20 @@ onMounted(() => {
 
 const uploadImg = () => {
   console.log(uploadRef.value)
-  nuxtApp.$saveFile(imageBlob.value.name, imageBlob.value)
+  if (authStore.currentUser) {
+    const userId = authStore.currentUser?.id
+    if (imageBlob.value instanceof File) {
+      const imageWithUserId = new File([imageBlob.value], userId, { type: imageBlob.value.type })
+      nuxtApp.$saveFile(userId, imageWithUserId)
+    } else {
+      console.error("imageBlob.value is not a File object.")
+    }
+  } else {
+    console.error("Current user not available.")
+  }
 }
+
+
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
   response,
