@@ -85,7 +85,7 @@ const passwordRules = reactive<FormRules<User>>({
 
 onMounted(() => {
   store.fetchReceipts()
-  // fetchImage()
+  fetchImage()
 })
 
 const uploadImg = () => {
@@ -102,8 +102,6 @@ const uploadImg = () => {
     console.error("Current user not available.")
   }
 }
-
-
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
   response,
@@ -131,15 +129,19 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   return true
 }
 
-// const fetchImage = async () => {
-//   try {
-//     const storageReference = storageRef(nuxtApp.$storage, `images/sph-logo.jpeg`)
-//     const url = await getDownloadURL(storageReference)
-//     imageUrl = url
-//   } catch (error) {
-//     console.error('Error fetching image:', error)
-//   }
-// }
+const fetchImage = async () => {
+  try {
+    if (authStore.currentUser) {
+      const storageReference = storageRef(nuxtApp.$storage, `images/sph-logo.jpeg`)
+      const url = await getDownloadURL(storageReference)
+      imageUrl.value = url
+    } else {
+      console.error("Current user not available.")
+    }
+  } catch (error) {
+    console.error('Error fetching image:', error)
+  }
+}
 
 const update = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;

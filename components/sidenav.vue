@@ -1,7 +1,7 @@
 <template>
   <div class="border-r h-[100vh] pt-[7rem] px-[1rem]">
     <div class="flex items-center gap-x-[0.3rem] p-[0.5rem] mb-[2rem]">
-      <img class="w-[2rem] h-[2rem] rounded-md" :src="authStore.currentUser?.imageUrl" />
+      <img class="w-[2rem] h-[2rem] rounded-md" :src="imageUrl" />
       <span class="font-semibold text-sky-600" v-if="authStore.currentUser?.accountType === 'admin'">
         {{ authStore.currentUser?.adminName }}
       </span>
@@ -28,8 +28,11 @@
 
 <script setup lang="ts">
 import { useAuthStore } from '~/store/users'
+import { ref as storageRef, getDownloadURL } from 'firebase/storage'
 
 const authStore = useAuthStore()
+let imageUrl = ref()
+const nuxtApp = useNuxtApp()
 
 const routes = ref([
   {
@@ -72,7 +75,22 @@ const isMidAdmin = computed(() => {
   return authStore.currentUser?.accountType === 'midAdmin'
 })
 
+const fetchImage = async () => {
+  try {
+    if (authStore.currentUser) {
+      const storageReference = storageRef(nuxtApp.$storage, `images/sph-logo.jpeg`)
+      const url = await getDownloadURL(storageReference)
+      imageUrl.value = url
+    } else {
+      console.error("Current user not available.")
+    }
+  } catch (error) {
+    console.error('Error fetching image:', error)
+  }
+}
+
 onMounted(async () => {
+  fetchImage()
   // await authStore.fetchCurrentUser()
   if (authStore.currentUser?.accountType === 'manager' || authStore.currentUser?.accountType === 'midAdmin') {
     authStore.fetchManagerAdmin()

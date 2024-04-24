@@ -4,9 +4,8 @@
       <h1 class="text-xl text-gray-500">
         <Icon name="material-symbols:receipt-long-outline" color="gray" size="25" />
         <span class="text-base md:text-lg font-semibold"> Receipts</span>
-        <br>
-        <span class="text-xs md:text-sm text-gray-400"> There are {{ store.receipts.length }} total receipts</span>
       </h1>
+
       <div class="flex gap-x-[1em] mt-[1em] md:mt-0">
         <el-input
           v-model="search"
@@ -32,6 +31,8 @@
         </el-tooltip>
       </div>
     </div>
+
+    <span class="text-xs md:text-sm text-gray-400"> There are {{ store.receipts.length }} total receipts</span>
 
     <div v-if="dialogVisible" class="fixed inset-0 flex items-center justify-center z-50 px-[1em]">
       <div @click="handleCancel" class="absolute inset-0 bg-gray-900 opacity-50"></div>

@@ -29,7 +29,7 @@
       <div ref="pdfSection" v-loading="loading" class="shadow-lg rounded-lg bg-white">
         <div class="flex justify-between items-center px-4 py-2 bg-sky-100 rounded-t-lg">
           <div class="flex items-center">
-            <img v-if="authStore.currentUser?.imageUrl || authStore.managerAdmin?.imageUrl" :src="authStore.currentUser?.imageUrl || authStore.managerAdmin?.imageUrl" class="w-4 h-4 mr-1" />
+            <img v-if="imageUrl" :src="imageUrl" class="w-4 h-4 mr-1" />
             <p class="font-bold text-xs text-sky-600">{{ authStore.currentUser?.adminName || authStore.managerAdmin?.adminName }}</p>
           </div>
           <p class="text-xs text-sky-600">{{ rpt?.date }}</p>
@@ -103,7 +103,10 @@ import { useStore } from "@/store/receipts"
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 import { useAuthStore } from '~/store/users'
+import { ref as storageRef, getDownloadURL } from 'firebase/storage'
 
+let imageUrl = ref()
+const nuxtApp = useNuxtApp()
 const authStore = useAuthStore()
 const pdfSection = ref<HTMLElement | null>(null)
 const store = useStore()
@@ -124,8 +127,23 @@ const rpt = computed(() => {
   return store.receipts.find(re => re.id == r.value)
 })
 
+const fetchImage = async () => {
+  try {
+    if (authStore.currentUser) {
+      const storageReference = storageRef(nuxtApp.$storage, `images/sph-logo.jpeg`)
+      const url = await getDownloadURL(storageReference)
+      imageUrl.value = url
+    } else {
+      console.error("Current user not available.")
+    }
+  } catch (error) {
+    console.error('Error fetching image:', error)
+  }
+}
+
 onMounted(async () => {
   await store.fetchReceipts()
+  fetchImage()
   isShown()
 })
 
