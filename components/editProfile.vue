@@ -13,20 +13,21 @@
         :label-position="labelPosition"
       >
         <div class="md:grid grid-cols-2 gap-[1em]">
-          <el-upload
-            class="avatar-uploader mb-[1.5em]"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-            ref="uploadRef"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar w-[5em]" />
-            <el-icon v-else class="avatar-uploader-icon rounded-xl p-[1em] border">+</el-icon>
-          </el-upload>
-
-          <el-button @click="uploadImg">
-            Save
-          </el-button>
+          <div>
+            <el-upload
+              class="avatar-uploader mb-[1.5em]"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+              ref="uploadRef"
+            >
+              <img v-if="imageUrl" :src="imageUrl" class="avatar w-[8em]" />
+              <el-icon v-else class="avatar-uploader-icon rounded-xl p-[1em] border">+</el-icon>
+            </el-upload>
+            <el-button class="btn" @click="uploadImg">
+              Upload Logo
+            </el-button>
+          </div>
 
           <div class="mt-[1.5em] md:mt-0">
             <el-form-item label="Company name" prop="name">
@@ -41,7 +42,7 @@
 
             <el-button @click="update(ruleFormRef)"> 
               <Icon class="text-white ml-[0.5rem]" name="tabler:user-plus" size="15" />
-              <span class="ml-[0.2em] text-white">Update</span>
+              <span class="ml-[0.2em] text-white">Update Details</span>
             </el-button> 
           </div>
         </div>
@@ -180,9 +181,8 @@ const update = async (formEl: FormInstance | undefined) => {
 .el-icon.avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 178px;
-  height: 178px;
   text-align: center;
+  @apply w-[8rem] h-[8rem]
 }
 
 ::v-deep(.el-input__wrapper) {
@@ -191,6 +191,10 @@ const update = async (formEl: FormInstance | undefined) => {
 
 ::v-deep(.el-button) {
   @apply bg-sky-600 text-white py-[1.5em] rounded-xl w-full mt-[1.5rem]
+}
+
+::v-deep(.el-button.btn) {
+  @apply bg-sky-600 text-white py-[1.5em] rounded-xl w-[8rem] mt-[1.5rem]
 }
 
 ::v-deep(.el-button):hover {

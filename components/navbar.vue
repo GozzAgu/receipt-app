@@ -44,7 +44,7 @@
               </div>
             </div>
             <div class="flex items-center gap-x-[0.3rem] px-[1.5rem] mb-[2rem]">
-              <img class="w-[2rem] h-[2rem] rounded-md" :src="authStore.currentUser?.imageUrl" />
+              <img class="w-[2rem] h-[2rem] rounded-md" :src="imageUrl" />
               <span class="font-semibold text-sky-600" v-if="authStore.currentUser?.accountType === 'admin'">
                 {{ authStore.currentUser?.adminName }}
               </span>
@@ -123,7 +123,9 @@
 <script setup>
 import { signOut } from '@firebase/auth'
 import { useAuthStore } from '~/store/users'
+import { ref as storageRef, getDownloadURL } from 'firebase/storage'
 
+let imageUrl = ref()
 const route = useRoute()
 const router = useRouter()
 const emit = defineEmits(['signing-out'])
@@ -176,6 +178,24 @@ const routes = ref([
     link: '/profile'
   }
 ])
+
+onMounted(() => {
+  fetchImage()
+})
+
+const fetchImage = async () => {
+  try {
+    if (authStore.currentUser) {
+      const storageReference = storageRef(nuxtApp.$storage, `images/sph-logo.jpeg`)
+      const url = await getDownloadURL(storageReference)
+      imageUrl.value = url
+    } else {
+      console.error("Current user not available.")
+    }
+  } catch (error) {
+    console.error('Error fetching image:', error)
+  }
+}
 
 const logout = () => {
   setTimeout(function(){
