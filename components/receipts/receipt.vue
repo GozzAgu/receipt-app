@@ -130,7 +130,8 @@ const rpt = computed(() => {
 const fetchImage = async () => {
   try {
     if (authStore.currentUser) {
-      const storageReference = storageRef(nuxtApp.$storage, `images/sph-logo.jpeg`)
+      const userId = authStore.currentUser?.id
+      const storageReference = storageRef(nuxtApp.$storage, `images/${userId}`)
       const url = await getDownloadURL(storageReference)
       imageUrl.value = url
     } else {

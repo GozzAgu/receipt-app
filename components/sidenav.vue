@@ -76,11 +76,22 @@ const isMidAdmin = computed(() => {
 })
 
 const fetchImage = async () => {
+  console.log('hiii')
   try {
     if (authStore.currentUser) {
-      const storageReference = storageRef(nuxtApp.$storage, `images/sph-logo.jpeg`)
-      const url = await getDownloadURL(storageReference)
-      imageUrl.value = url
+      if(authStore.currentUser?.accountType === 'admin') {
+        const userId = authStore.currentUser?.id
+        const storageReference = storageRef(nuxtApp.$storage, `images/${userId}`)
+        const url = await getDownloadURL(storageReference)
+        imageUrl.value = url
+        console.log(userId)
+      } else if(authStore.currentUser?.accountType === 'manager') {
+        console.log(authStore.managerAdmin)
+        const userId = authStore.managerAdmin?.id
+        const storageReference = storageRef(nuxtApp.$storage, `images/${userId}`)
+        const url = await getDownloadURL(storageReference)
+        imageUrl.value = url
+      }
     } else {
       console.error("Current user not available.")
     }
@@ -90,11 +101,11 @@ const fetchImage = async () => {
 }
 
 onMounted(async () => {
-  fetchImage()
-  // await authStore.fetchCurrentUser()
   if (authStore.currentUser?.accountType === 'manager' || authStore.currentUser?.accountType === 'midAdmin') {
-    authStore.fetchManagerAdmin()
+    await authStore.fetchManagerAdmin()
   }
+  await fetchImage()
+  // await authStore.fetchCurrentUser()
 })
 
 </script>

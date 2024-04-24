@@ -133,9 +133,18 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 const fetchImage = async () => {
   try {
     if (authStore.currentUser) {
-      const storageReference = storageRef(nuxtApp.$storage, `images/sph-logo.jpeg`)
-      const url = await getDownloadURL(storageReference)
-      imageUrl.value = url
+      if(authStore.managerAdmin?.accountType === 'admin') {
+        const userId = authStore.currentUser?.id
+        const storageReference = storageRef(nuxtApp.$storage, `images/${userId}`)
+        const url = await getDownloadURL(storageReference)
+        imageUrl.value = url
+        console.log(userId)
+      } else if(authStore.managerAdmin?.accountType === 'manager') {
+        const userId = authStore.managerAdmin?.adminId
+        const storageReference = storageRef(nuxtApp.$storage, `images/${userId}`)
+        const url = await getDownloadURL(storageReference)
+        imageUrl.value = url
+      }      
     } else {
       console.error("Current user not available.")
     }
