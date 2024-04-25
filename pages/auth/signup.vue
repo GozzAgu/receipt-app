@@ -75,8 +75,6 @@ import type { Container } from 'tsparticles-engine'
 import { AccountType } from '~/types/types';
 import { doc, setDoc } from "firebase/firestore"; 
 import { useAuthStore } from '~/store/users';
-import type { UploadProps, UploadFile } from 'element-plus'
-import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage'
 
 definePageMeta({
   layout:'auth'
@@ -116,7 +114,6 @@ const options = {
   }
 }
 const onLoad = (container: Container) => {
-  // Do something with the container
   container.pause()
   setTimeout(() => container.play(), 500)
 }
@@ -167,7 +164,7 @@ const rules = reactive<FormRules<RuleForm>>({
   ],
   address: [
     { required: true, message: 'Address required', trigger: 'blur' },
-    { min: 3, max: 30, message: 'Length should be up to 3', trigger: 'blur' },
+    { min: 3, message: 'Length should be up to 3', trigger: 'blur' },
   ],
   phone: [
     { required: true, message: 'Phone number required', trigger: 'blur' },
@@ -195,7 +192,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true
       try {
-        const response = await store.signupAdmin(admin.email, admin.password, admin.accountType)
+        const response = await store.signupAdmin(admin.email, admin.password, admin.accountType, admin.adminName)
         if(response) {
           try {
             await setUserAccountType(response.user.uid, admin)

@@ -1,16 +1,15 @@
 import { defineStore } from 'pinia'
 import { type Manager, type Admin, type MidAdmin } from '../types/types'
 import { collection, onSnapshot, doc, getDoc } from "firebase/firestore"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@firebase/auth';
-import type { User } from 'firebase/auth/web-extension';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@firebase/auth'
+import type { User } from 'firebase/auth/web-extension'
 
 export const useAuthStore = defineStore('users', {
   state: () => ({
     managers: [] as Manager[],
-    managerAdmin: null as null | Admin,
-    midAdmins: [] as MidAdmin[],
+    managerAdmin: null as null | Admin & { adminId: string, adminName: string, id:string },
     admins: [] as Admin[],
-    currentUser: null as null | User & { password: string, accountType: string, id: string },
+    currentUser: null as null | User & { password: string, accountType: string, id: string, adminName?: string },
   }),
 
   actions: {
@@ -21,12 +20,12 @@ export const useAuthStore = defineStore('users', {
       }
     },
 
-    async signupAdmin(email:string, password:string, accountType:string) {
+    async signupAdmin(email:string, password:string, accountType:string, adminName:string) {
       const nuxtApp = useNuxtApp()
       const response = await createUserWithEmailAndPassword(nuxtApp.$auth, email, password)
       const user = response.user
       if (user) {
-        this.currentUser = {...user, password: password, accountType: accountType, id: response.user.uid }
+        this.currentUser = {...user, password: password, accountType: accountType, id: response.user.uid, adminName: adminName }
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
       }
       return response
@@ -82,26 +81,9 @@ export const useAuthStore = defineStore('users', {
         UsersSnapshot.forEach((doc) => {
           let userData = doc.data() as Manager;
           userData.id = doc.id;
-          if (userData.accountType === 'manager' && userData.adminId === this.currentUser?.id 
-          || userData.accountType === 'midAdmin' && userData.adminId === this.currentUser?.id) 
+          if (userData.accountType === 'manager' || userData.accountType === 'midAdmin' && userData.adminId === this.currentUser?.id) 
           {
             this.managers.unshift(userData as Manager)
-          }
-        });
-      })
-    },
-
-    fetchMidAdmins() {
-      const nuxtApp = useNuxtApp()
-      const querySnapshot = collection(nuxtApp.$firestore, "users")
-      onSnapshot(querySnapshot, (UsersSnapshot) => {
-        this.midAdmins = [];
-        UsersSnapshot.forEach((doc) => {
-          let userData = doc.data() as MidAdmin;
-          userData.id = doc.id;
-          console.log(userData)
-          if (userData.accountType === "midAdmin" && userData.adminId === this.currentUser?.id) {
-            this.managers.unshift(userData as MidAdmin)
           }
         });
       })

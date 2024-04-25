@@ -76,7 +76,6 @@ const isMidAdmin = computed(() => {
 })
 
 const fetchImage = async () => {
-  console.log('hiii')
   try {
     if (authStore.currentUser) {
       if(authStore.currentUser?.accountType === 'admin') {
@@ -86,7 +85,6 @@ const fetchImage = async () => {
         imageUrl.value = url
         console.log(userId)
       } else if(authStore.currentUser?.accountType === 'manager') {
-        console.log(authStore.managerAdmin)
         const userId = authStore.managerAdmin?.id
         const storageReference = storageRef(nuxtApp.$storage, `images/${userId}`)
         const url = await getDownloadURL(storageReference)
@@ -105,7 +103,6 @@ onMounted(async () => {
     await authStore.fetchManagerAdmin()
   }
   await fetchImage()
-  // await authStore.fetchCurrentUser()
 })
 
 </script>
