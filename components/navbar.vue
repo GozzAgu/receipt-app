@@ -192,7 +192,7 @@ const fetchImage = async () => {
         const url = await getDownloadURL(storageReference)
         imageUrl.value = url
         console.log(userId)
-      } else if(authStore.currentUser?.accountType === 'manager') {
+      } else if(authStore.currentUser?.accountType === 'manager' || authStore.currentUser?.accountType === 'midAdmin') {
         const userId = authStore.currentUser?.adminId
         const storageReference = storageRef(nuxtApp.$storage, `images/${userId}`)
         const url = await getDownloadURL(storageReference)

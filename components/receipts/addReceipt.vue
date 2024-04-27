@@ -245,7 +245,16 @@ const addR = async (formEl: FormInstance | undefined) => {
               type: 'error',
             });
             loading.value = false;
-            return;
+            return
+          }
+
+          if (inventoryItem.product !== companyDetails.productName) {
+            ElMessage({
+              message: 'Product name in inventory does not match with the selected product',
+              type: 'error',
+            })
+            loading.value = false
+            return
           }
 
           let newCompanyDetails = { ...companyDetails, date: currentDate.value } as Receipt;

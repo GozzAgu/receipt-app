@@ -56,6 +56,11 @@ const routes = ref([
   //   link: '/returns'
   // },
   {
+    name: 'Customers',
+    icon: 'ph:users-four-bold',
+    link: '/customers'
+  },
+  {
     name: 'Staff',
     icon: 'ph:users-three-bold',
     link: '/users'
@@ -84,7 +89,7 @@ const fetchImage = async () => {
         const url = await getDownloadURL(storageReference)
         imageUrl.value = url
         console.log(userId)
-      } else if(authStore.currentUser?.accountType === 'manager') {
+      } else if(authStore.currentUser?.accountType === 'manager' || authStore.currentUser?.accountType === 'midAdmin') {
         const userId = authStore.managerAdmin?.id
         const storageReference = storageRef(nuxtApp.$storage, `images/${userId}`)
         const url = await getDownloadURL(storageReference)

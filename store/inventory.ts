@@ -84,6 +84,6 @@ export const useInventoryStore = defineStore('inventories', {
 
         searchInventoryByIMEI(imei: string){
             return this.inventories.find(item => item.imei === imei)
-        }
+        },
     }
 })

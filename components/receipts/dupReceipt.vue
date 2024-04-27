@@ -253,9 +253,18 @@ const addR = async (formEl: FormInstance | undefined) => {
             ElMessage({
               message: 'This product has been sold',
               type: 'error',
-            });
+            })
             loading.value = false;
-            return;
+            return
+          }
+
+          if (inventoryItem.product !== dup.value!.productName) {
+            ElMessage({
+              message: 'Product name in inventory does not match with the selected product',
+              type: 'error',
+            })
+            loading.value = false
+            return
           }
 
           let newCompanyDetails = { ...dup.value, date: currentDate.value, imei: newImei.value } as Receipt;
