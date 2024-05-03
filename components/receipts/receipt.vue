@@ -27,68 +27,74 @@
       </div>
 
       <div ref="pdfSection" v-loading="loading" class="shadow-lg rounded-lg bg-white">
-        <div class="flex justify-between items-center px-4 py-2 bg-sky-100 rounded-t-lg">
+        <div class="flex justify-between items-center px-4 pt-[0.4rem]  rounded-t-lg">
           <div class="flex items-center">
-            <img v-if="imageUrl" :src="imageUrl" class="w-4 h-4 mr-1" />
-            <p class="font-bold text-xs text-sky-600">{{ authStore.currentUser?.adminName || authStore.managerAdmin?.adminName }}</p>
           </div>
-          <p class="text-xs text-sky-600">{{ rpt?.date }}</p>
         </div>
 
         <div class="px-[1rem] md:px-[3rem] pb-[3rem] text-sm">
           <el-divider content-position="left"><span class="text-base">Transaction Receipt</span></el-divider>
 
-          <div class="font-light mt-4 text-xs md:text-base">
-            <p class="text-xs">Dear {{ rpt?.customerName }},</p>
-            <p class="text-xs">Below are your purchase details from <span class="font-semibold">{{ authStore.currentUser?.adminName || authStore.managerAdmin?.adminName }}</span></p>
-            <p class="text-xs">Address - {{ authStore.currentUser?.address || authStore.managerAdmin?.address }}.</p>
+          <div clss="flex">
+            <div class="font-light mt-4 text-xs md:text-base">
+              <img v-if="imageUrl" :src="imageUrl" class="w-4 h-4 md:w-8 md:h-8 mb-2" />
+              <p class="text-[0.6rem] md:text-xs">Date - {{ rpt?.date }}</p>
+              <p class="text-[0.6rem] md:text-xs">Dear {{ rpt?.customerName }},</p>
+              <p class="text-[0.6rem] md:text-xs">Below are your purchase details from 
+                <span class="font-semibold">{{ authStore.currentUser?.adminName || authStore.managerAdmin?.adminName }}</span>
+              </p>
+              <p class="text-[0.6rem] md:text-xs">Address - {{ authStore.currentUser?.address || authStore.managerAdmin?.address }}.</p>
+            </div>
           </div>
 
-          <div class="text-xs font-light grid md:grid-cols-2 gap-2 mt-4 text-gray-500 border p-[1rem] rounded-lg">
-            <div class="bg-gray-100 rounded-lg p-2">
+          <div class="text-[0.6rem] md:text-xs font-light grid md:grid-cols-2 gap-[0.2rem] mt-4 text-gray-500 border p-[1rem] rounded-lg">
+            <div class="bg-gray-100 rounded-lg px-[0.5rem] md:p-[0.5rem]">
               <p class="font-semibold">Customer Name</p>
               <p>{{ rpt?.customerName }}</p>
             </div>
-            <div class="bg-gray-100 rounded-lg p-2">
+            <div class="bg-gray-100 rounded-lg px-[0.5rem] md:p-[0.5rem]">
               <p class="font-semibold">Customer Address</p>
               <p>{{ rpt?.customerAddress }}</p>
             </div>
-            <div class="grid grid-cols-2 gap-2">
-              <div class="bg-gray-100 rounded-lg p-2">
+            <div class="grid grid-cols-2 gap-[0.2rem]">
+              <div class="bg-gray-100 rounded-lg px-[0.5rem] md:p-[0.5rem]">
                 <p class="font-semibold">Product</p>
                 <p>{{ rpt?.productName }}</p>
               </div>
-              <div v-if="rpt?.swapFrom" class="bg-gray-100 rounded-lg p-2">
+              <div v-if="rpt?.swapFrom" class="bg-gray-100 rounded-lg px-[0.5rem] md:p-[0.5rem]">
                 <p class="font-semibold">Swapped from</p>
                 <p>{{ rpt?.swapFrom }}</p>
               </div>
             </div>
-            <div class="bg-gray-100 rounded-lg p-2">
-              <p class="font-semibold">Quantity</p>
-              <p class="font-mono">{{ rpt?.productQuantity }}</p>
+            <div class="grid grid-cols-2">
+              <div class="bg-gray-100 rounded-lg px-[0.5rem] md:p-[0.5rem]">
+                <p class="font-semibold">Quantity</p>
+                <p class="font-mono">{{ rpt?.productQuantity }}</p>
+              </div>
+              <div class="bg-gray-100 rounded-lg px-[0.5rem] md:p-[0.5rem]">
+                <p class="font-semibold">Paid via</p>
+                <p>{{ rpt?.paidVia }}</p>
+              </div>
             </div>
-            <div class="bg-gray-100 rounded-lg p-2">
+            <div class="bg-gray-100 rounded-lg px-[0.5rem] md:p-[0.5rem]">
               <p class="font-semibold">Description</p>
               <p class="font-mono">{{ rpt?.productDescription }}</p>
             </div>
             
             <div class="grid grid-cols-2 gap-[0.2em]">
-              <div class="bg-gray-100 rounded-lg p-2">
+              <div class="bg-gray-100 rounded-lg px-[0.5rem] md:p-[0.5rem]">
                 <p class="font-semibold">Unit price</p>
                 <p>{{ rpt?.productPrice }}</p>
               </div>
-              <div class="bg-gray-100 rounded-lg p-2">
-                <p class="font-semibold">Paid via</p>
-                <p>{{ rpt?.paidVia }}</p>
-              </div>
-              <div class="bg-gray-100 rounded-lg p-2">
+              
+              <div class="bg-gray-100 rounded-lg px-[0.5rem] md:p-[0.5rem]">
                 <p class="font-bold">Total Price</p>
                 <p class="font-mono">{{ rpt?.newPrice }}</p>
               </div>
             </div>
           </div>
 
-          <div class="bg-gray-100 rounded-lg p-2 text-xs mt-[2rem]">
+          <div class="text-[0.6rem] px-[0.5rem] md:p-[0.5rem] text-xs mt-[1rem]">
             <p>Warranty policy</p>
             <p class="font-mono">{{  }}</p>
           </div>
@@ -111,13 +117,13 @@ const authStore = useAuthStore()
 const pdfSection = ref<HTMLElement | null>(null)
 const store = useStore()
 const route = useRoute()
-const loading = ref(true)
+const loading = ref(false)
 
-const isShown = () => {
-  if(rpt.value) {
-    loading.value = false
-  }
-}
+// const isShown = () => {
+//   if(rpt.value) {
+//     loading.value = false
+//   }
+// }
 
 const r = computed(() => {
   return route.params.id
@@ -145,7 +151,7 @@ const fetchImage = async () => {
 onMounted(async () => {
   await store.fetchReceipts()
   fetchImage()
-  isShown()
+  // isShown()
 })
 
 const exportToPDF = async (filename: string, element: HTMLElement | null) => {

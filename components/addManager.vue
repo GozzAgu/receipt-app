@@ -18,7 +18,7 @@
             <el-input v-model="manager.email" placeholder="" />
           </el-form-item>
           <el-form-item label="Password" prop="password">
-            <el-input v-model="manager.password" placeholder="" />
+            <el-input type="password" v-model="manager.password" placeholder="" />
           </el-form-item>
         </div>
         <el-button @click="addM(ruleFormRef)"> 
