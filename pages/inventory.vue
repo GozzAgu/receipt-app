@@ -164,22 +164,43 @@
               />
             </div>
           </el-tab-pane>
+
           <el-tab-pane label="Inventory Store" name="second">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div v-for="(count, productName) in groupedInventories" :key="productName" class="border border-sky-600 rounded-xl p-2 mb-2 flex justify-between items-center">
-                <h3 class="">{{ productName }} </h3>
-                <div class="flex items-center">
-                  <p class="mr-2">Qty:</p>
-                  <p class="bg-sky-600 w-[4rem] text-white text-2xl font-black rounded-md text-center">{{ count.length }}</p>
-                </div>
+            <div class="most-demanded-products flex gap-x-1 mb-4">
+              <h2 class="text-sm font-light">Your Most Demanded Product is</h2>
+              <div v-for="(count, productName) in sortedDemandedProducts" :key="productName" class="product-demand">
+                <p class="text-sm font-light">
+                  <span class="text-orange-500 font-semibold">{{ productName }}</span> 
+                  and you have sold 
+                  <span class="text-orange-500 font-semibold">{{ count }}</span>
+                </p>
               </div>
             </div>
-          </el-tab-pane>
+            <el-tabs v-model="nestedActiveName" class="demo-tabs" @tab-click="handleClick">
+              <el-tab-pane label="Unsold" name="nestedFirst">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div v-for="(count, productName) in unsoldGroupedInventories" :key="productName" class="border border-sky-200 bg-sky-50 rounded-xl p-2 mb-2 flex justify-between items-center">
+                    <h3 class="text-sm font-semibold">{{ productName }} </h3>
+                    <div class="flex items-center">
+                      <p class="mr-2">Qty:</p>
+                      <p class="bg-sky-600 w-[4rem] text-white text-2xl font-black rounded-md text-center">{{ count.length }}</p>
+                    </div>
+                  </div>
+                </div>
+              </el-tab-pane>
 
-          <el-tab-pane label="Transactions" name="third">
-            <div>
-              {{  }}
-            </div>
+              <el-tab-pane label="Sold" name="nestedSecond">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div v-for="(count, productName) in soldGroupedInventories" :key="productName" class="border border-sky-600 rounded-xl p-2 mb-2 flex justify-between items-center">
+                  <h3 class="">{{ productName }} </h3>
+                  <div class="flex items-center">
+                    <p class="mr-2">Qty:</p>
+                    <p class="bg-sky-600 w-[4rem] text-white text-2xl font-black rounded-md text-center">{{ count.length }}</p>
+                  </div>
+                </div>
+              </div>
+              </el-tab-pane>
+            </el-tabs>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -203,6 +224,7 @@ definePageMeta({
 })
 
 const activeName = ref('first')
+const nestedActiveName = ref('nestedFirst')
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   console.log(tab, event)
@@ -232,21 +254,52 @@ const isImeiInReceipts = async (imei) => {
 
 const totalProducts = computed(() => inventories.value.length);
 
-const imeiInReceiptsCount = computed(() => {
-  return inventories.value.filter(inventory => isImeiInReceipts(inventory.imei)).length;
+const soldProductFrequencies = computed(() => {
+  return inventories.value.reduce((acc, inventory) => {
+    if (inventory.sold) {
+      const productName = inventory.product;
+      if (!acc[productName]) {
+        acc[productName] = 0;
+      }
+      acc[productName]++;
+    }
+    return acc;
+  }, {});
 });
 
-const productsAfterDeduction = computed(() => {
-  return totalProducts.value - imeiInReceiptsCount.value;
+// Sort the products based on their frequency
+const sortedDemandedProducts = computed(() => {
+  const sortedProducts = Object.entries(soldProductFrequencies.value)
+    .sort(([, countA], [, countB]) => countB - countA)
+    .reduce((acc, [productName, count]) => {
+      acc[productName] = count;
+      return acc;
+    }, {});
+  return sortedProducts;
 });
 
-const groupedInventories = computed(() => {
+const unsoldGroupedInventories = computed(() => {
   return inventories.value.reduce((acc, inventory) => {
     const productName = inventory.product;
     if (!acc[productName]) {
       acc[productName] = [];
     }
     if(inventory.sold == false) {
+      
+      acc[productName].push(inventory);
+    }
+    return acc;
+  }, {});
+});
+
+const soldGroupedInventories = computed(() => {
+  return inventories.value.reduce((acc, inventory) => {
+    const productName = inventory.product;
+    if (!acc[productName]) {
+      acc[productName] = [];
+    }
+    if(inventory.sold == true) {
+      
       acc[productName].push(inventory);
     }
     return acc;
