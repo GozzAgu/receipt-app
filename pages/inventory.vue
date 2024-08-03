@@ -166,15 +166,14 @@
           </el-tab-pane>
 
           <el-tab-pane label="Inventory Store" name="second">
-            <div class="most-demanded-products flex gap-x-1 mb-4">
-              <h2 class="text-sm font-light">Your Most Demanded Product is</h2>
-              <div v-for="(count, productName) in sortedDemandedProducts" :key="productName" class="product-demand">
-                <p class="text-sm font-light">
+            <div class="most-demanded-products mb-4">
+              <h2 class="text-sm font-light">Your Most Demanded Product is
+                <span v-for="(count, productName) in sortedDemandedProducts" :key="productName" class="product-demand">
                   <span class="text-orange-500 font-semibold">{{ productName }}</span> 
                   and you have sold 
                   <span class="text-orange-500 font-semibold">{{ count }}</span>
-                </p>
-              </div>
+                </span>
+              </h2>
             </div>
             <el-tabs v-model="nestedActiveName" class="demo-tabs" @tab-click="handleClick">
               <el-tab-pane label="Unsold" name="nestedFirst">
