@@ -177,7 +177,7 @@
             </div>
             <el-tabs v-model="nestedActiveName" class="demo-tabs" @tab-click="handleClick">
               <el-tab-pane label="Unsold" name="nestedFirst">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-x-4 gap-y-1">
                   <div v-for="(count, productName) in unsoldGroupedInventories" :key="productName" class="border border-sky-200 bg-sky-50 rounded-xl p-2 mb-2 flex justify-between items-center">
                     <h3 class="text-sm font-semibold">{{ productName }} </h3>
                     <div class="flex items-center">
@@ -189,7 +189,7 @@
               </el-tab-pane>
 
               <el-tab-pane label="Sold" name="nestedSecond">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-x-4 gap-y-1">
                 <div v-for="(count, productName) in soldGroupedInventories" :key="productName" class="border border-sky-600 rounded-xl p-2 mb-2 flex justify-between items-center">
                   <h3 class="">{{ productName }} </h3>
                   <div class="flex items-center">
