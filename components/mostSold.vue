@@ -1,6 +1,6 @@
 <template>
   <div class="most-demanded-products mb-4">
-    <h2 class="text-sm font-light">Your Most Sold Product is
+    <h2 class="text-xs md:text-sm font-light">Your Most Sold Product is
       <span v-for="(count, productName) in sortedDemandedProducts" :key="productName" class="product-demand">
         <span class="text-orange-500 font-semibold">{{ productName }}</span> 
         and you have sold 
