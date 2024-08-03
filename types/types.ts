@@ -88,5 +88,6 @@ export interface Inventory{
   margin: null | number,
   swap: 'yes' | 'no',
   dateOut: string,
-  inventoryOf: string
+  inventoryOf: string,
+  sold?: boolean
 }

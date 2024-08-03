@@ -1,5 +1,6 @@
 <template>
     <SignoutLoader v-if="isSigningout" />
+  
     <div class="py-[4.5em] mb-[4rem] px-[1em] md:px-[5em] lg:px-[5em] mx-auto">
         <div class="flex flex-col md:flex-row justify-between mb-8 gap-8">
             <div class="flex flex-col sm:flex-row gap-4">
@@ -75,92 +76,113 @@
                     </el-checkbox-group>
                 </div>
             </div>
-            
         </div>
-        <div class="bg-white p-[0.5rem] rounded-2xl">
-            <el-table
-                ref="tableRef"
-                :data="filterTableData"
-                style="width: 100%; max-height: 100%;"
-                @selection-change="handleSelectionChange"
-                highlight-current-row
-            >
-                <el-table-column fixed type="selection" width="40" />
-                <el-table-column v-if="columns.includes('dateIn')" label="DATE IN" property="dateIn" width="120" sortable/>
-                <el-table-column v-if="columns.includes('product')" property="product" label="PRODUCT" width="120" show-overflow-tooltip :filters="[
-                  { text: 'IPhone', value: 'IPhone' },
-                  { text: 'Samsung', value: 'Samsung' },]"
-                  :filter-method="filterProductTag"
-                  filter-placement="bottom-end">
-                    <template #default="scope">
-                       <div>{{ scope.row.product }}</div>
-                    </template>
-                </el-table-column>
-                <el-table-column v-if="columns.includes('supplier')" property="supplier" label="SUPPLIER" width="120" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('grade')" property="grade" width="100" label="GRADE" show-overflow-tooltip :filters="[
-                  { text: 'Used', value: 'Used' },
-                  { text: 'New', value: 'New' },]"
-                  :filter-method="filterGradeTag"
-                  filter-placement="bottom-end">
-                    <template #default="scope">
-                        <el-tag
-                        :type="scope.row.grade === 'Used' ? '' : 'success'"
-                        disable-transitions
-                        >{{ scope.row.grade }}</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column v-if="columns.includes('storage')" property="storage" width="100" label="STORAGE" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('imei')" property="imei" label="IMEI" width="140">
-                    <template #default="scope">
-                      <p :class="{ 'border border-red-400 text-red-400 bg-red-100': isImeiInReceipts(scope.row.imei) }" 
-                        class="border shadow-md rounded-md px-2"
-                      >
-                        {{ scope.row.imei }}
-                      </p>
-                    </template>
-                </el-table-column>
-                <el-table-column v-if="columns.includes('colour')" property="colour" label="COLOUR" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('amount')" property="amount" label="AMOUNT" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('cost')" property="cost" label="COST" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('margin')" property="margin" label="MARGIN" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('swap')" property="swap" label="SWAP" show-overflow-tooltip :filters="[
-                    { text: 'no', value: 'no' },
-                    { text: 'yes', value: 'yes' },]"
-                :filter-method="filterSwapTag"
-                filter-placement="bottom-end">
-                    <template #default="scope">
-                        <el-tag
-                        :type="scope.row.swap === 'yes' ? '' : 'success'"
-                        disable-transitions
-                        >{{ scope.row.swap }}</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column v-if="columns.includes('dateOut')" property="dateOut" label="DATE OUT" show-overflow-tooltip sortable width="120"/>
-                <el-table-column v-if="columns.includes('createdBy')" property="createdBy" label="CREATED BY" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('createdAt')" property="createdAt" label="CREATED AT" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('updatedBy')" property="updatedBy" label="UPDATED BY" show-overflow-tooltip />
-                <el-table-column v-if="columns.includes('updatedAt')" property="updatedAt" label="UPDATED AT" show-overflow-tooltip />
-                <el-table-column fixed="right" width="48" align="center">
-                    <template #default="scope">
-                      <Icon @click="handleEdit(scope.$index, scope.row)" class="text-sky-600 cursor-pointer" name="heroicons:pencil"  size="20" />
-                    </template>
-                </el-table-column>
-                <el-table-column fixed="right" width="48" align="center">
-                    <template #default="scope">
-                      <Icon @click="handleDuplicate(scope.$index, scope.row)" class="text-sky-600 cursor-pointer" name="solar:copy-bold"  size="20" />
-                    </template>
-                </el-table-column>
-            </el-table>
-        </div>
-        <div class="fixed bottom-3 mt-[1em] right-[1em] sm:right-[5em] lg:right-[5em] bg-gray-50 z-10 px-[1rem] rounded-xl">
-          <vue-awesome-paginate
-            v-model="currentPage"
-            :total-items="inventories.length"
-            :items-per-page="10"
-            :max-pages-shown="5"
-          />
-        </div>
-    </div>
+
+        <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+          <el-tab-pane label="All Inventory" name="first">
+            <div class="bg-white p-[0.5rem] rounded-2xl">
+                <el-table
+                    ref="tableRef"
+                    :data="filterTableData"
+                    style="width: 100%; max-height: 100%;"
+                    @selection-change="handleSelectionChange"
+                    highlight-current-row
+                >
+                    <el-table-column fixed type="selection" width="40" />
+                    <el-table-column v-if="columns.includes('dateIn')" label="DATE IN" property="dateIn" width="120" sortable/>
+                    <el-table-column v-if="columns.includes('product')" property="product" label="PRODUCT" width="120" show-overflow-tooltip :filters="[
+                      { text: 'IPhone', value: 'IPhone' },
+                      { text: 'Samsung', value: 'Samsung' },]"
+                      :filter-method="filterProductTag"
+                      filter-placement="bottom-end">
+                        <template #default="scope">
+                          <div>{{ scope.row.product }}</div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column v-if="columns.includes('supplier')" property="supplier" label="SUPPLIER" width="120" show-overflow-tooltip />
+                    <el-table-column v-if="columns.includes('grade')" property="grade" width="100" label="GRADE" show-overflow-tooltip :filters="[
+                      { text: 'Used', value: 'Used' },
+                      { text: 'New', value: 'New' },]"
+                      :filter-method="filterGradeTag"
+                      filter-placement="bottom-end">
+                        <template #default="scope">
+                            <el-tag
+                            :type="scope.row.grade === 'Used' ? '' : 'success'"
+                            disable-transitions
+                            >{{ scope.row.grade }}</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column v-if="columns.includes('storage')" property="storage" width="100" label="STORAGE" show-overflow-tooltip />
+                    <el-table-column v-if="columns.includes('imei')" property="imei" label="IMEI" width="140">
+                        <template #default="scope">
+                          <p :class="{ 'border border-red-400 text-red-400 bg-red-100': imeiStatus[scope.row.imei] }" 
+                            class="border shadow-md rounded-md px-2"
+                          >
+                            {{ scope.row.imei }}
+                          </p>
+                        </template>
+                    </el-table-column>
+                    <el-table-column v-if="columns.includes('colour')" property="colour" label="COLOUR" show-overflow-tooltip />
+                    <el-table-column v-if="columns.includes('amount')" property="amount" label="AMOUNT" show-overflow-tooltip sortable width="120"/>
+                    <el-table-column v-if="columns.includes('cost')" property="cost" label="COST" show-overflow-tooltip sortable width="120"/>
+                    <el-table-column v-if="columns.includes('margin')" property="margin" label="MARGIN" show-overflow-tooltip sortable width="120"/>
+                    <el-table-column v-if="columns.includes('swap')" property="swap" label="SWAP" show-overflow-tooltip :filters="[
+                        { text: 'no', value: 'no' },
+                        { text: 'yes', value: 'yes' },]"
+                    :filter-method="filterSwapTag"
+                    filter-placement="bottom-end">
+                        <template #default="scope">
+                            <el-tag
+                            :type="scope.row.swap === 'yes' ? '' : 'success'"
+                            disable-transitions
+                            >{{ scope.row.swap }}</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column v-if="columns.includes('dateOut')" property="dateOut" label="DATE OUT" show-overflow-tooltip sortable width="120"/>
+                    <el-table-column v-if="columns.includes('createdBy')" property="createdBy" label="CREATED BY" show-overflow-tooltip />
+                    <el-table-column v-if="columns.includes('createdAt')" property="createdAt" label="CREATED AT" show-overflow-tooltip />
+                    <el-table-column v-if="columns.includes('updatedBy')" property="updatedBy" label="UPDATED BY" show-overflow-tooltip />
+                    <el-table-column v-if="columns.includes('updatedAt')" property="updatedAt" label="UPDATED AT" show-overflow-tooltip />
+                    <el-table-column fixed="right" width="48" align="center">
+                        <template #default="scope">
+                          <Icon @click="handleEdit(scope.$index, scope.row)" class="text-sky-600 cursor-pointer" name="heroicons:pencil"  size="20" />
+                        </template>
+                    </el-table-column>
+                    <el-table-column fixed="right" width="48" align="center">
+                        <template #default="scope">
+                          <Icon @click="handleDuplicate(scope.$index, scope.row)" class="text-sky-600 cursor-pointer" name="solar:copy-bold"  size="20" />
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
+            <div class="fixed bottom-3 mt-[1em] right-[1em] sm:right-[5em] lg:right-[5em] bg-gray-50 z-10 px-[1rem] rounded-xl">
+              <vue-awesome-paginate
+                v-model="currentPage"
+                :total-items="inventories.length"
+                :items-per-page="10"
+                :max-pages-shown="5"
+              />
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="Inventory Store" name="second">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div v-for="(count, productName) in groupedInventories" :key="productName" class="border border-sky-600 rounded-xl p-2 mb-2 flex justify-between items-center">
+                <h3 class="">{{ productName }} </h3>
+                <div class="flex items-center">
+                  <p class="mr-2">Qty:</p>
+                  <p class="bg-sky-600 w-[4rem] text-white text-2xl font-black rounded-md text-center">{{ count.length }}</p>
+                </div>
+              </div>
+            </div>
+          </el-tab-pane>
+
+          <el-tab-pane label="Transactions" name="third">
+            <div>
+              {{  }}
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+      </div>
     <el-drawer v-model="showDrawer" title="I am the title" :with-header="false" :size="largerThanXl? '40%' :largerThanlg? '50%':largerThanSm? '70%': '100%'" @closed="closeDrawer">
       <InventoryAddDrawer v-if="showAddDrawer" @close-drawer="closeDrawer"/>
       <InventoryEditDrawer v-if="showEditDrawer" @close-drawer="closeDrawer" :entry="selectedEntry"/>
@@ -168,27 +190,74 @@
     </el-drawer>
 </template>
   
-<script setup>
+<script setup lang="ts">
 import { useInventoryStore } from "~/store/inventory";
 import { useStore } from "../store/receipts"
 import { useAuthStore } from "~/store/users";
 import { Search } from '@element-plus/icons-vue'
+import type { TabsPaneContext } from 'element-plus'
+
 
 definePageMeta({
   layout:'dashboard'
 })
 
-const isImeiInReceipts = (imei) => {
-  return store.receipts.find(receipt => receipt.imei === imei);
+const activeName = ref('first')
+
+const handleClick = (tab: TabsPaneContext, event: Event) => {
+  console.log(tab, event)
 }
+
+const imeiStatus = reactive({});
+
+const checkImeiStatus = async () => {
+  const receipts = store.receipts;
+  inventories.value.forEach(inventory => {
+    imeiStatus[inventory.imei] = receipts.some(receipt => receipt.imei === inventory.imei);
+  });
+};
+
+const isImeiInReceipts = async (imei) => {
+    const receipt = store.receipts.find(receipt => receipt.imei === imei);
+    
+    if (receipt) {
+        await invStore.updateInventorySoldStatus(imei, true); // Update sold status
+        checkImeiStatus()
+    } else {
+        console.log(`No receipt found for IMEI: ${imei}`);
+    }
+    
+    return receipt;
+}
+
+const totalProducts = computed(() => inventories.value.length);
+
+const imeiInReceiptsCount = computed(() => {
+  return inventories.value.filter(inventory => isImeiInReceipts(inventory.imei)).length;
+});
+
+const productsAfterDeduction = computed(() => {
+  return totalProducts.value - imeiInReceiptsCount.value;
+});
+
+const groupedInventories = computed(() => {
+  return inventories.value.reduce((acc, inventory) => {
+    const productName = inventory.product;
+    if (!acc[productName]) {
+      acc[productName] = [];
+    }
+    if(inventory.sold == false) {
+      acc[productName].push(inventory);
+    }
+    return acc;
+  }, {});
+});
 
 const currentPage = ref(1)
 const inventoryStore = useInventoryStore();
 const { inventories } = toRefs(inventoryStore)
   
 const showDropDown = ref(false)
-const parentBorder = ref(true)
-const loading = ref(false)
 const store = useStore()
 const authStore = useAuthStore()
 const invStore = useInventoryStore()
@@ -331,6 +400,7 @@ onMounted(() => {
   invStore.fetchInventories()
   authStore.loadCurrentUserFromStorage()
   authStore.authenticated()
+  checkImeiStatus()
 })
 </script>
 

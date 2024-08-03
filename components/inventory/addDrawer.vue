@@ -314,7 +314,8 @@ const newInventoryData = ref({
   cost: null,
   margin: null,
   swap: '',
-  dateOut:''
+  dateOut:'',
+  sold: false
 })
 
 const grade = ['New', 'Used']

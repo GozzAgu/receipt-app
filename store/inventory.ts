@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { Inventory } from "~/types/types"
-import { collection, addDoc, setDoc, doc, deleteDoc, where, query, onSnapshot, getDoc, getDocs } from "firebase/firestore"
+import { collection, addDoc, updateDoc, setDoc, doc, deleteDoc, where, query, onSnapshot, getDoc, getDocs } from "firebase/firestore"
 import { useAuthStore } from './users'
 
 export const useInventoryStore = defineStore('inventories', {
@@ -45,6 +45,19 @@ export const useInventoryStore = defineStore('inventories', {
               }
             }
         },
+
+        async updateInventorySoldStatus(imei: string, sold: boolean) {
+          const nuxtApp = useNuxtApp();
+          const inventoryItem = this.inventories.find(item => item.imei === imei);
+          
+          if (inventoryItem) {
+              const inventoryRef = doc(nuxtApp.$firestore, "inventories", inventoryItem.id);
+              await updateDoc(inventoryRef, { sold: sold });
+              inventoryItem.sold = sold;
+          } else {
+              console.log(`No inventory item found for IMEI: ${imei}`);
+          }
+      },
 
         async fetchInventories() {
           const nuxtApp = useNuxtApp()

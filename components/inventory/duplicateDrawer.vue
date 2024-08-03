@@ -308,7 +308,8 @@ const duplicateInventoryData = ref({
   cost: entry.cost,
   margin: entry.margin,
   swap: entry.swap,
-  dateOut: entry.dateOut
+  dateOut: entry.dateOut,
+  sold: false
 })
 
 const grade = ['New', 'Used']
