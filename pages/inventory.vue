@@ -185,7 +185,7 @@
               <el-tab-pane label="Sold" name="nestedSecond">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-x-4 gap-y-1">
                 <div v-for="(count, productName) in soldGroupedInventories" :key="productName" class="border border-sky-200 bg-sky-50 rounded-xl p-2 mb-2 flex justify-between items-center">
-                  <h3 class="">{{ productName }} </h3>
+                  <h3 class="ext-sm font-semibold">{{ productName }} </h3>
                   <div class="flex items-center">
                     <p class="mr-2">Qty:</p>
                     <p class="bg-sky-600 w-[4rem] text-white text-2xl font-black rounded-md text-center">{{ count.length }}</p>
