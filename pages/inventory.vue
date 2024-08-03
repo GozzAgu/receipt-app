@@ -167,13 +167,7 @@
 
           <el-tab-pane label="Inventory Store" name="second">
             <div class="most-demanded-products mb-4">
-              <h2 class="text-sm font-light">Your Most Demanded Product is
-                <span v-for="(count, productName) in sortedDemandedProducts" :key="productName" class="product-demand">
-                  <span class="text-orange-500 font-semibold">{{ productName }}</span> 
-                  and you have sold 
-                  <span class="text-orange-500 font-semibold">{{ count }}</span>
-                </span>
-              </h2>
+             <MostSold />
             </div>
             <el-tabs v-model="nestedActiveName" class="demo-tabs" @tab-click="handleClick">
               <el-tab-pane label="Unsold" name="nestedFirst">
@@ -190,7 +184,7 @@
 
               <el-tab-pane label="Sold" name="nestedSecond">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-x-4 gap-y-1">
-                <div v-for="(count, productName) in soldGroupedInventories" :key="productName" class="border border-sky-600 rounded-xl p-2 mb-2 flex justify-between items-center">
+                <div v-for="(count, productName) in soldGroupedInventories" :key="productName" class="border border-sky-200 bg-sky-50 rounded-xl p-2 mb-2 flex justify-between items-center">
                   <h3 class="">{{ productName }} </h3>
                   <div class="flex items-center">
                     <p class="mr-2">Qty:</p>
@@ -237,45 +231,6 @@ const checkImeiStatus = async () => {
     imeiStatus[inventory.imei] = receipts.some(receipt => receipt.imei === inventory.imei);
   });
 };
-
-const isImeiInReceipts = async (imei) => {
-    const receipt = store.receipts.find(receipt => receipt.imei === imei);
-    
-    if (receipt) {
-        await invStore.updateInventorySoldStatus(imei, true); // Update sold status
-        checkImeiStatus()
-    } else {
-        console.log(`No receipt found for IMEI: ${imei}`);
-    }
-    
-    return receipt;
-}
-
-const totalProducts = computed(() => inventories.value.length);
-
-const soldProductFrequencies = computed(() => {
-  return inventories.value.reduce((acc, inventory) => {
-    if (inventory.sold) {
-      const productName = inventory.product;
-      if (!acc[productName]) {
-        acc[productName] = 0;
-      }
-      acc[productName]++;
-    }
-    return acc;
-  }, {});
-});
-
-// Sort the products based on their frequency
-const sortedDemandedProducts = computed(() => {
-  const sortedProducts = Object.entries(soldProductFrequencies.value)
-    .sort(([, countA], [, countB]) => countB - countA)
-    .reduce((acc, [productName, count]) => {
-      acc[productName] = count;
-      return acc;
-    }, {});
-  return sortedProducts;
-});
 
 const unsoldGroupedInventories = computed(() => {
   return inventories.value.reduce((acc, inventory) => {

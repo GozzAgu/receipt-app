@@ -2,7 +2,7 @@
   <div class="px-[1em] pb-[3rem] sm:px-[5em] lg:px-[5em] mt-[2rem] relative">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-y-[2rem] gap-x-[3rem]">
 
-      <div class="lg:grid grid-cols-2">
+      <div class="lg:grid grid-cols-1">
         <div class="shadow-md shadow-slate-100 drop-shadow-sm bg-white p-[1rem] rounded-xl h-[13rem]">
           <div class="flex gap-x-[0.5rem] mb-[1rem]">
             <Icon class="text-2xl text-sky-500" name="solar:list-heart-minimalistic-bold-duotone" />
@@ -16,6 +16,9 @@
                 <span class="percentage-label text-sky-500">Inventories sold</span>
               </template>
             </el-progress>
+          </div>
+          <div class="flex justify-center pb-2">
+            <MostSold />
           </div>
         </div>
       </div>
