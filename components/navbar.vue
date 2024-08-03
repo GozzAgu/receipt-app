@@ -162,11 +162,11 @@ const routes = ref([
     icon: 'material-symbols:inventory-rounded',
     link: '/inventory'
   },
-  // {
-  //   name: 'Returns',
-  //   icon: 'heroicons:receipt-refund',
-  //   link: '/returns'
-  // },
+  {
+    name: 'Customers',
+    icon: 'ph:users-four-bold',
+    link: '/customers'
+  },
   {
     name: 'Staff',
     icon: 'ph:users-three-bold',
