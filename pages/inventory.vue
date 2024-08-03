@@ -227,9 +227,15 @@ const imeiStatus = reactive({});
 
 const checkImeiStatus = async () => {
   const receipts = store.receipts;
-  inventories.value.forEach(inventory => {
-    imeiStatus[inventory.imei] = receipts.some(receipt => receipt.imei === inventory.imei);
+  inventories.value.forEach(async (inventory) => {
+    const isSold = receipts.some(receipt => receipt.imei === inventory.imei);
+    imeiStatus[inventory.imei] = isSold;
+
+    if (inventory.sold !== isSold) {
+      await inventoryStore.updateInventorySoldStatus(inventory.imei, isSold);
+    }
   });
+  localStorage.setItem('imeiStatus', JSON.stringify(imeiStatus));
 };
 
 const unsoldGroupedInventories = computed(() => {
@@ -239,7 +245,6 @@ const unsoldGroupedInventories = computed(() => {
       acc[productName] = [];
     }
     if(inventory.sold == false) {
-      
       acc[productName].push(inventory);
     }
     return acc;
@@ -407,7 +412,13 @@ onMounted(() => {
   invStore.fetchInventories()
   authStore.loadCurrentUserFromStorage()
   authStore.authenticated()
-  checkImeiStatus()
+
+  const savedImeiStatus = localStorage.getItem('imeiStatus');
+  if (savedImeiStatus) {
+    Object.assign(imeiStatus, JSON.parse(savedImeiStatus));
+  }
+
+  checkImeiStatus();
 })
 </script>
 
