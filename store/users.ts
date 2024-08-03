@@ -74,19 +74,23 @@ export const useAuthStore = defineStore('users', {
     },
 
     fetchManagers() {
-      const nuxtApp = useNuxtApp()
-      const querySnapshot = collection(nuxtApp.$firestore, "users")
+      const nuxtApp = useNuxtApp();
+      const querySnapshot = collection(nuxtApp.$firestore, "users");
       onSnapshot(querySnapshot, (UsersSnapshot) => {
         this.managers = [];
         UsersSnapshot.forEach((doc) => {
           let userData = doc.data() as Manager;
+          console.log(userData.adminId, this.currentUser?.id);
           userData.id = doc.id;
-          if (userData.accountType === 'manager' || userData.accountType === 'midAdmin' && userData.adminId === this.currentUser?.id) 
-          {
-            this.managers.unshift(userData as Manager)
+          if ((userData.accountType === 'manager' || userData.accountType === 'midAdmin') && userData.adminId) {
+            if (userData.adminId === this.currentUser?.id) {
+              this.managers.unshift(userData as Manager);
+            }
+          } else if (!userData.adminId) {
+            console.log('no admin id');
           }
         });
-      })
-    },
+      });
+    }    
   },
 })
