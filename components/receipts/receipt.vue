@@ -1,5 +1,5 @@
 <template>
-  <div class="print:m-auto px-4 sm:px-20 py-12 min-h-screen mt-8">
+  <div class="print:m-auto px-4 sm:px-20 py-12 min-h-screen">
     <div class="flex justify-between mt-[4em] mb-[2em]">
       <NuxtLink 
         class="
@@ -39,6 +39,7 @@
           <div>
             <p class="text-xs">Date: {{ rpt?.date }}</p>
             <p class="text-xs">Receipt No: 0001692</p>
+            <!-- <p class="text-xs">Receipt Issued By: {{ rpt?.receiptBy }}</p> -->
           </div>
         </div>
 

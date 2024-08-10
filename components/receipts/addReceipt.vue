@@ -102,6 +102,7 @@ import type { FormProps, FormInstance, FormRules } from 'element-plus'
 import type { Receipt } from '@/types/types'
 
 const store = useStore()
+const authStore = useAuthStore()
 const invStore = useInventoryStore()
 const router = useRouter()
 const labelPosition = ref<FormProps['labelPosition']>('top')
@@ -124,7 +125,8 @@ let companyDetails = reactive<Receipt>({
   paidVia: '',
   swapFrom: '',
   swap: '',
-  grade: ''
+  grade: '',
+  receiptBy: ''
 })
 
 const swap = [
@@ -257,7 +259,9 @@ const addR = async (formEl: FormInstance | undefined) => {
             return
           }
 
-          let newCompanyDetails = { ...companyDetails, date: currentDate.value } as Receipt;
+          companyDetails.receiptBy = authStore.currentUser?.displayName || 'Unknown';
+
+          let newCompanyDetails = { ...companyDetails, date: currentDate.value} as Receipt;
           if (newCompanyDetails.productQuantity > 1) {
             let newPrice = newCompanyDetails.productQuantity * newCompanyDetails.productPrice;
             newCompanyDetails.newPrice = newPrice;
@@ -265,6 +269,7 @@ const addR = async (formEl: FormInstance | undefined) => {
             newCompanyDetails.newPrice = newCompanyDetails.productPrice;
           }
 
+          console.log(newCompanyDetails.receiptBy)
           const res = await store.addReceipt(newCompanyDetails)
           router.push({ path: `/receipt/${res}` })
           newCompanyDetails = {} as Receipt;

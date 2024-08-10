@@ -23,6 +23,7 @@ export interface Receipt {
   swapFrom: string
   swap: string
   grade: string
+  receiptBy: string
 }
 
 export interface User {
