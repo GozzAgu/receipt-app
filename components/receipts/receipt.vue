@@ -33,8 +33,8 @@
               <img v-if="imageUrl" :src="imageUrl" class="w-4 h-4 md:w-8 md:h-8 mb-2" />
               <h2 class="font-bold text-xl">{{ authStore.currentUser?.adminName || authStore.managerAdmin?.adminName }}</h2>
             </div>
-            <p class="text-xs">Address: {{ authStore.currentUser?.address || authStore.managerAdmin?.address }}.</p>
-            <p class="text-xs">Email: {{ authStore.currentUser?.email || authStore.managerAdmin?.email }}.</p>
+            <p class="text-xs">Address: {{ authStore.currentUser?.address || authStore.managerAdmin?.address }}</p>
+            <p class="text-xs">Email: {{ authStore.currentUser?.email || authStore.managerAdmin?.email }}</p>
           </div>
           <div>
             <p class="text-xs">Date: {{ rpt?.date }}</p>
@@ -45,7 +45,7 @@
 
         <!-- Customer Details -->
         <div class="mb-6">
-          <h3 class="font-semibold text-lg mb-2">Customer Details</h3>
+          <h3 class="font-semibold mb-2">Customer Details</h3>
           <div class="text-xs">
             <p class="font-semibold">{{ rpt?.customerName }}</p>
             <p>{{ rpt?.customerAddress }}</p>
@@ -55,7 +55,7 @@
 
         <!-- Devices Purchased -->
         <div class="mb-6">
-          <h3 class="font-semibold text-lg mb-2">Devices Purchased</h3>
+          <h3 class="font-semibold mb-2">Devices Purchased</h3>
           <div class="text-xs border-t border-b py-4">
             <div class="flex justify-between font-semibold">
               <span class="w-1/12">S/No</span>
